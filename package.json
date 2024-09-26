@@ -1,0 +1,31 @@
+{
+  "name": "xellar-ew-sdk",
+  "version": "1.0.0",
+  "description": "Xellar Embedded Wallet SDK for Javascript/Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xellar-Protocol/ew-sdk.git"
+  },
+  "keywords": [
+    "wallet",
+    "crypto"
+  ],
+  "author": "Xellar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xellar-Protocol/ew-sdk/issues"
+  },
+  "homepage": "https://github.com/Xellar-Protocol/ew-sdk#readme",
+  "dependencies": {
+    "axios": "^1.7.7"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
+  }
+}
