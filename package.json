@@ -4,7 +4,8 @@
   "description": "Xellar Embedded Wallet SDK for Javascript/Typescript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:coverage": "jest --collectCoverage"
   },
   "repository": {
     "type": "git",
