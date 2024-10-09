@@ -1,14 +1,27 @@
-import XellarEWBase from "../../base";
+import { isAxiosError } from 'axios';
+import { XellarEWBase } from '../../base';
 
-export default class XellarEWLogin extends XellarEWBase {
+export class XellarEWEmailLogin extends XellarEWBase {
+  /**
+   * Authenticate user with email
+   *
+   * User need to verify email by otp with `verifyEmail` method
+   *
+   * @param email
+   * @returns
+   */
   async loginWithEmail(email: string): Promise<string> {
     try {
-      const response = await this.axiosInstance.post("/auth/login-otp", {
+      const response = await this.axiosInstance.post('/auth/login-otp', {
         email,
       });
       return response.data.data.verificationToken;
     } catch (error) {
-      throw new Error(`Login failed: ${error.message}`);
+      // TODO: Implement in utility
+      if (isAxiosError(error)) {
+        throw new Error(`Login failed: ${error.response?.data}`);
+      }
+      throw new Error(`Login failed: ${error}`);
     }
   }
 }
