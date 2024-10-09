@@ -1,27 +1,21 @@
-import { XellarEWEmailLogin, XellarEWEmailVerify } from './auth/email';
-import { XellarEWBase } from './base';
+import { XellarEWAuth } from './auth';
+import { APIVersion, Config } from './types/config';
 
 // eslint-disable-next-line no-restricted-exports
-export default class XellarEW extends XellarEWBase {
-  private loginInstance: XellarEWEmailLogin;
+export default class XellarSDK {
+  public auth: XellarEWAuth;
 
-  private verifyInstance: XellarEWEmailVerify;
-
-  constructor(clientSecret: string, baseURL: string, version: string = 'v2') {
-    super(clientSecret, baseURL, version);
-    this.loginInstance = new XellarEWEmailLogin(clientSecret, baseURL, version);
-    this.verifyInstance = new XellarEWEmailVerify(
-      clientSecret,
+  constructor(
+    clientSecret: string,
+    baseURL: string,
+    version: APIVersion = 'v2',
+  ) {
+    const config: Config = {
       baseURL,
+      clientSecret,
       version,
-    );
-  }
+    };
 
-  loginWithEmail(email: string): Promise<string> {
-    return this.loginInstance.loginWithEmail(email);
-  }
-
-  verifyEmail(verificationToken: string, otp: string): Promise<any> {
-    return this.verifyInstance.verifyEmail(verificationToken, otp);
+    this.auth = new XellarEWAuth(config);
   }
 }

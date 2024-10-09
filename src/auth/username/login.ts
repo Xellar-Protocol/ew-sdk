@@ -2,25 +2,22 @@ import { XellarEWBase } from '../../base';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
 
-export class XellarEWEmailVerify extends XellarEWBase {
+export class XellarEWUsernameLogin extends XellarEWBase {
   /**
-   * Verify email by given verification token and otp
-   * @param verificationToken
-   * @param otp
-   * @description
-   * If
+   *
+   * @param username
+   * @param password
+   * @returns
    */
-  async verify(
-    verificationToken: string,
-    otp: string,
-  ): Promise<AuthSuccessResponse> {
+  async login(username: string, password: string) {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<AuthSuccessResponse>
-      >('/auth/verify-otp', {
-        verificationToken,
-        otp,
+      >('/auth/login', {
+        username,
+        password,
       });
+
       return response.data.data;
     } catch (error) {
       const handledError = handleError(error);

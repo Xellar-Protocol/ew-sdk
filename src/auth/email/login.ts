@@ -1,6 +1,6 @@
-import { isAxiosError } from 'axios';
-
 import { XellarEWBase } from '../../base';
+import { BaseHttpResponse, EmailLoginResponse } from '../../types/http';
+import { handleError, XellarError } from '../../utils/error';
 
 export class XellarEWEmailLogin extends XellarEWBase {
   /**
@@ -11,18 +11,21 @@ export class XellarEWEmailLogin extends XellarEWBase {
    * @param email
    * @returns
    */
-  async loginWithEmail(email: string): Promise<string> {
+  async login(email: string) {
     try {
-      const response = await this.axiosInstance.post('/auth/login-otp', {
+      const response = await this.axiosInstance.post<
+        BaseHttpResponse<EmailLoginResponse>
+      >('/auth/login-otp', {
         email,
       });
       return response.data.data.verificationToken;
     } catch (error) {
-      // TODO: Implement in utility
-      if (isAxiosError(error)) {
-        throw new Error(`Login failed: ${error.response?.data}`);
-      }
-      throw new Error(`Login failed: ${error}`);
+      const handledError = handleError(error);
+      throw new XellarError(
+        handledError.message,
+        handledError.code,
+        handledError.details,
+      );
     }
   }
 }
