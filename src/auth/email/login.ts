@@ -1,4 +1,5 @@
 import { isAxiosError } from 'axios';
+
 import { XellarEWBase } from '../../base';
 
 export class XellarEWEmailLogin extends XellarEWBase {
