@@ -6,4 +6,5 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
+  coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/src/utils'],
 };

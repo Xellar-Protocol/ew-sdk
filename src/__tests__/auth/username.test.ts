@@ -54,4 +54,47 @@ describe('Username Authentication', () => {
       });
     });
   });
+
+  describe('register', () => {
+    it('should successfully register with correct username and password', async () => {
+      const mockResponse = {
+        data: {
+          data: {
+            accessToken: 'mock-access-token',
+          },
+        },
+      };
+      mockAxiosInstance.post.mockResolvedValue(mockResponse);
+
+      const result = await sdk.auth.username.register('testuser', 'testpass');
+
+      expect(result).toEqual('mock-access-token');
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/register', {
+        username: 'testuser',
+        password: 'testpass',
+      });
+    });
+
+    it('should throw XellarError on failed register', async () => {
+      const mockError = {
+        response: {
+          data: {
+            message: 'Username or password is incorrect',
+            code: 400,
+            details: {},
+          },
+        },
+      };
+      mockAxiosInstance.post.mockRejectedValue(mockError);
+
+      await expect(
+        sdk.auth.username.register('wronguser', 'wrongpass'),
+      ).rejects.toThrow(XellarError);
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/register', {
+        username: 'wronguser',
+        password: 'wrongpass',
+      });
+    });
+  });
 });

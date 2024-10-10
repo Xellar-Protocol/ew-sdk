@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../base';
 import { Config } from '../types/config';
 import { XellarEWEmailLogin, XellarEWEmailVerify } from './email';
+import { XellarEWUGoogleAuthorize } from './google/authorize';
 import { XellarEWUsernameLogin, XellarEWUsernameRegister } from './username';
 
 export class XellarEWAuth extends XellarEWBase {
@@ -12,6 +13,8 @@ export class XellarEWAuth extends XellarEWBase {
 
   protected usernameRegister: XellarEWUsernameRegister;
 
+  protected googleAuthorize: XellarEWUGoogleAuthorize;
+
   constructor(config: Config) {
     super(config);
 
@@ -20,6 +23,8 @@ export class XellarEWAuth extends XellarEWBase {
 
     this.usernameLogin = new XellarEWUsernameLogin(config);
     this.usernameRegister = new XellarEWUsernameRegister(config);
+
+    this.googleAuthorize = new XellarEWUGoogleAuthorize(config);
   }
 
   get email() {
@@ -33,6 +38,12 @@ export class XellarEWAuth extends XellarEWBase {
     return {
       login: this.usernameLogin.login.bind(this),
       register: this.usernameRegister.register.bind(this),
+    };
+  }
+
+  get google() {
+    return {
+      authorize: this.googleAuthorize.authorize.bind(this),
     };
   }
 }
