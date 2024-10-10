@@ -9,22 +9,15 @@ export class XellarEWTelegramAuthorize extends XellarEWBase {
    * @param body (required): The body object containing the user's Telegram information.
    * @description
    *   * `data` **(required if dataString empty)**: The data object containing the user's Telegram information. It should include the following fields:
-   *   - `id`: User's Telegram ID
-   *   - `first_name`: User's first name
-   *   - `last_name`: User's last name (if available)
-   *   - `username`: User's Telegram username (if available)
-   *   - `photo_url`: URL of user's profile photo (if available)
-   *   - `auth_date`: Authentication date
-   *   - `hash`: Authentication hash
-   *
-   *   **Note:** Remember to include all data from the Telegram response. If any of the data is missing, the request will fail.
-   *
+   *     - `id`: User's Telegram ID
+   *     - `first_name`: User's first name
+   *     - `last_name`: User's last name (if available)
+   *     - `username`: User's Telegram username (if available)
+   *     - `photo_url`: URL of user's profile photo (if available)
+   *     - `auth_date`: Authentication date
+   *     - `hash`: Authentication hash
    *   * `dataString` **(required if data empty)**: If you are using **Telegram Mini App**, you can use this parameter instead. The dataString is the Telegram initData that you get from the Telegram Mini App.
-   *
-   *   **Important:** Please do not modify the initData you received, as any changes will cause the request to fail.
-   *
    *   * `botUsername` **(required)**: The bot username which was generated when you created a bot on Telegram.
-   *
    *   * `expireDate` **(optional)**: The expiration date for the JWT token generated from the response.
    *
    * @example

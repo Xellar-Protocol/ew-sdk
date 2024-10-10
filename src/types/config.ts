@@ -1,4 +1,4 @@
-export type APIVersion = 'v1' | 'v2';
+export type APIVersion = 'v2';
 
 export type Config = {
   clientSecret: string;

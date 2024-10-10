@@ -5,11 +5,8 @@ import { Config } from './types/config';
 export class XellarEWBase {
   protected axiosInstance: AxiosInstance;
 
-  // eslint-disable-next-line no-unused-vars
+  protected accessOrWalletToken: string | undefined;
 
-  protected accessToken: string | undefined;
-
-  //* default to use v2
   constructor(config: Config) {
     const { baseURL, clientSecret, version } = config;
 
@@ -18,8 +15,8 @@ export class XellarEWBase {
       headers: {
         'Content-Type': 'application/json',
         'x-client-secret': clientSecret,
-        ...(this.accessToken
-          ? { Authorization: `Bearer ${this.accessToken}` }
+        ...(this.accessOrWalletToken
+          ? { Authorization: `Bearer ${this.accessOrWalletToken}` }
           : {}),
       },
     });

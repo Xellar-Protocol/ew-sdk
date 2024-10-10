@@ -4,6 +4,7 @@ import { XellarEWEmailLogin, XellarEWEmailVerify } from './email';
 import { XellarEWGoogleAuthorize } from './google/authorize';
 import { XellarEWTelegramAuthorize } from './telegram';
 import { XellarEWUsernameLogin, XellarEWUsernameRegister } from './username';
+import { XellarEWWhatsAppLogin, XellarEWWhatsAppVerify } from './whatsapp';
 
 export class XellarEWAuth extends XellarEWBase {
   protected emailLogin: XellarEWEmailLogin;
@@ -18,18 +19,21 @@ export class XellarEWAuth extends XellarEWBase {
 
   protected telegramAuthorize: XellarEWTelegramAuthorize;
 
+  protected whatsappLogin: XellarEWWhatsAppLogin;
+
+  protected whatsappVerify: XellarEWWhatsAppVerify;
+
   constructor(config: Config) {
     super(config);
 
     this.emailLogin = new XellarEWEmailLogin(config);
     this.emailVerify = new XellarEWEmailVerify(config);
-
     this.usernameLogin = new XellarEWUsernameLogin(config);
     this.usernameRegister = new XellarEWUsernameRegister(config);
-
     this.googleAuthorize = new XellarEWGoogleAuthorize(config);
-
     this.telegramAuthorize = new XellarEWTelegramAuthorize(config);
+    this.whatsappLogin = new XellarEWWhatsAppLogin(config);
+    this.whatsappVerify = new XellarEWWhatsAppVerify(config);
   }
 
   get email() {
@@ -55,6 +59,13 @@ export class XellarEWAuth extends XellarEWBase {
   get telegram() {
     return {
       authorize: this.telegramAuthorize.authorize.bind(this),
+    };
+  }
+
+  get whatsapp() {
+    return {
+      login: this.whatsappLogin.login.bind(this),
+      verify: this.whatsappVerify.login.bind(this),
     };
   }
 }
