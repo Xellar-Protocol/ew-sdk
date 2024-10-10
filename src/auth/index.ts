@@ -1,7 +1,8 @@
 import { XellarEWBase } from '../base';
 import { Config } from '../types/config';
 import { XellarEWEmailLogin, XellarEWEmailVerify } from './email';
-import { XellarEWUGoogleAuthorize } from './google/authorize';
+import { XellarEWGoogleAuthorize } from './google/authorize';
+import { XellarEWTelegramAuthorize } from './telegram';
 import { XellarEWUsernameLogin, XellarEWUsernameRegister } from './username';
 
 export class XellarEWAuth extends XellarEWBase {
@@ -13,7 +14,9 @@ export class XellarEWAuth extends XellarEWBase {
 
   protected usernameRegister: XellarEWUsernameRegister;
 
-  protected googleAuthorize: XellarEWUGoogleAuthorize;
+  protected googleAuthorize: XellarEWGoogleAuthorize;
+
+  protected telegramAuthorize: XellarEWTelegramAuthorize;
 
   constructor(config: Config) {
     super(config);
@@ -24,7 +27,9 @@ export class XellarEWAuth extends XellarEWBase {
     this.usernameLogin = new XellarEWUsernameLogin(config);
     this.usernameRegister = new XellarEWUsernameRegister(config);
 
-    this.googleAuthorize = new XellarEWUGoogleAuthorize(config);
+    this.googleAuthorize = new XellarEWGoogleAuthorize(config);
+
+    this.telegramAuthorize = new XellarEWTelegramAuthorize(config);
   }
 
   get email() {
@@ -44,6 +49,12 @@ export class XellarEWAuth extends XellarEWBase {
   get google() {
     return {
       authorize: this.googleAuthorize.authorize.bind(this),
+    };
+  }
+
+  get telegram() {
+    return {
+      authorize: this.telegramAuthorize.authorize.bind(this),
     };
   }
 }

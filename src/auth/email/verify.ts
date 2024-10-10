@@ -4,11 +4,21 @@ import { handleError, XellarError } from '../../utils/error';
 
 export class XellarEWEmailVerify extends XellarEWBase {
   /**
-   * Verify email by given verification token and otp
-   * @param verificationToken
-   * @param otp
-   * @description
-   * If
+   * Allows you to login to your Xellar Embedded wallet account using User’s Email, and receive an **OTP** to verify the account.
+   * @param verificationToken (required): verificationToken from Login method.
+   * @param otp (required): otp sent to the user's email.
+   * @returns
+   *
+   * @example
+   *
+   * const requestBody = {
+   *    "verificationToken": "string",
+   *    "otp": "string"
+   * }
+   *
+   * const response = await sdk.auth.email.verify(requestBody);
+   *
+   * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/email/verify_login/ Xellar Auth Email Docs}
    */
   async verify(
     verificationToken: string,

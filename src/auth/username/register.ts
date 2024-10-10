@@ -4,10 +4,14 @@ import { handleError, XellarError } from '../../utils/error';
 
 export class XellarEWUsernameRegister extends XellarEWBase {
   /**
+   * Allows you to register a new account in your Xellar Embedded wallet using the User’s username and password.
+   * @param username (required): User’s chosen username.
+   * @param password (required): User’s password.
    *
-   * @param username
-   * @param password
-   * @returns accessToken
+   * @example
+   * const response = await sdk.auth.username.register(username, password);
+   *
+   * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/username/register/ Xellar Auth Username Docs}
    */
   async register(username: string, password: string) {
     try {

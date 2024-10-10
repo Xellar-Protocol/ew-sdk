@@ -4,12 +4,14 @@ import { handleError, XellarError } from '../../utils/error';
 
 export class XellarEWEmailLogin extends XellarEWBase {
   /**
-   * Authenticate user with email
-   *
-   * User need to verify email by otp with `verifyEmail` method
-   *
-   * @param email
+   * Allows you to login to your Xellar Embedded wallet account using User’s Email, and receive an **OTP** to verify the account.
+   * @param email (required): User’s chosen email.
    * @returns
+   *
+   * @example
+   * const response = await sdk.auth.email.login(email);
+   *
+   * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/email/login/ Xellar Auth Email Docs}
    */
   async login(email: string) {
     try {
