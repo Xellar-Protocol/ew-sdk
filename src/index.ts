@@ -1,9 +1,13 @@
 import { XellarEWAuth } from './auth';
+import { Container } from './container';
 import { APIVersion, Config } from './types/config';
+import { TokenManager } from './utils/token-manager';
 
 // eslint-disable-next-line no-restricted-exports
 export default class XellarSDK {
   public auth: XellarEWAuth;
+
+  private container: Container;
 
   constructor(
     clientSecret: string,
@@ -16,6 +20,10 @@ export default class XellarSDK {
       version,
     };
 
-    this.auth = new XellarEWAuth(config);
+    this.container = new Container();
+    this.container.register('Config', config);
+    this.container.register('TokenManager', new TokenManager());
+
+    this.auth = new XellarEWAuth(this.container);
   }
 }

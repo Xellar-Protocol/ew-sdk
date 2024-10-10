@@ -1,5 +1,6 @@
 import { XellarEWBase } from '../base';
-import { Config } from '../types/config';
+import { Container } from '../container';
+import { XellarEWAppleAuthorize } from './apple';
 import { XellarEWEmailLogin, XellarEWEmailVerify } from './email';
 import { XellarEWGoogleAuthorize } from './google/authorize';
 import { XellarEWTelegramAuthorize } from './telegram';
@@ -23,17 +24,20 @@ export class XellarEWAuth extends XellarEWBase {
 
   protected whatsappVerify: XellarEWWhatsAppVerify;
 
-  constructor(config: Config) {
-    super(config);
+  protected appleAuthorize: XellarEWAppleAuthorize;
 
-    this.emailLogin = new XellarEWEmailLogin(config);
-    this.emailVerify = new XellarEWEmailVerify(config);
-    this.usernameLogin = new XellarEWUsernameLogin(config);
-    this.usernameRegister = new XellarEWUsernameRegister(config);
-    this.googleAuthorize = new XellarEWGoogleAuthorize(config);
-    this.telegramAuthorize = new XellarEWTelegramAuthorize(config);
-    this.whatsappLogin = new XellarEWWhatsAppLogin(config);
-    this.whatsappVerify = new XellarEWWhatsAppVerify(config);
+  constructor(container: Container) {
+    super(container);
+
+    this.emailLogin = new XellarEWEmailLogin(container);
+    this.emailVerify = new XellarEWEmailVerify(container);
+    this.usernameLogin = new XellarEWUsernameLogin(container);
+    this.usernameRegister = new XellarEWUsernameRegister(container);
+    this.googleAuthorize = new XellarEWGoogleAuthorize(container);
+    this.telegramAuthorize = new XellarEWTelegramAuthorize(container);
+    this.whatsappLogin = new XellarEWWhatsAppLogin(container);
+    this.whatsappVerify = new XellarEWWhatsAppVerify(container);
+    this.appleAuthorize = new XellarEWAppleAuthorize(container);
   }
 
   get email() {
@@ -66,6 +70,12 @@ export class XellarEWAuth extends XellarEWBase {
     return {
       login: this.whatsappLogin.login.bind(this),
       verify: this.whatsappVerify.login.bind(this),
+    };
+  }
+
+  get apple() {
+    return {
+      authorize: this.appleAuthorize.authorize.bind(this),
     };
   }
 }

@@ -73,6 +73,7 @@ describe('Username Authentication', () => {
         walletToken: 'mock-wallet-token',
         refreshToken: 'mock-refresh-token',
       });
+
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/verify-otp', {
         verificationToken: 'mock_verificationToken',
         otp: '123456',
@@ -84,7 +85,7 @@ describe('Username Authentication', () => {
         data: {
           data: {
             isWalletCreated: false,
-            accessToken: 'mock-wallet-token',
+            accessToken: 'mock-access-token',
             refreshToken: 'mock-refresh-token',
           },
         },
@@ -99,9 +100,10 @@ describe('Username Authentication', () => {
 
       expect(result).toEqual({
         isWalletCreated: false,
-        accessToken: 'mock-wallet-token',
+        accessToken: 'mock-access-token',
         refreshToken: 'mock-refresh-token',
       });
+
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/verify-otp', {
         verificationToken: 'mock_verificationToken',
         otp: '123456',
