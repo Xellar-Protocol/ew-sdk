@@ -25,3 +25,11 @@ type WalletNotCreatedResponse = {
 export type AuthSuccessResponse = {
   refreshToken: string;
 } & (WalletCreatedResponse | WalletNotCreatedResponse);
+
+export interface AccountWalletResponse {
+  walletToken: string;
+  refreshToken: string;
+  secret0: string;
+  secret0Link: string;
+  address: string;
+}

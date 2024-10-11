@@ -15,5 +15,3 @@ export class Container {
     return service as T;
   }
 }
-
-export const container = new Container();
