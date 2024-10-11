@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { TokenManager } from '../../utils/token-manager';
 import { TelegramAuthorizeBody } from './types';
 
 export class XellarEWTelegramAuthorize extends XellarEWBase {
@@ -54,6 +55,12 @@ export class XellarEWTelegramAuthorize extends XellarEWBase {
       >('/auth/telegram', {
         ...body,
       });
+
+      const token = response.data.data.isWalletCreated
+        ? response.data.data.walletToken
+        : response.data.data.accessToken;
+
+      this.container.resolve<TokenManager>('TokenManager').setToken(token);
 
       return response.data.data;
     } catch (error) {

@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { TokenManager } from '../../utils/token-manager';
 
 export class XellarEWGoogleAuthorize extends XellarEWBase {
   /**
@@ -21,6 +22,12 @@ export class XellarEWGoogleAuthorize extends XellarEWBase {
         credentials,
         ...(expiredDate ? { expiredDate } : {}),
       });
+
+      const token = response.data.data.isWalletCreated
+        ? response.data.data.walletToken
+        : response.data.data.accessToken;
+
+      this.container.resolve<TokenManager>('TokenManager').setToken(token);
 
       return response.data.data;
     } catch (error) {

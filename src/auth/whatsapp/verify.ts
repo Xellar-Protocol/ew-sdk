@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { TokenManager } from '../../utils/token-manager';
 
 export class XellarEWWhatsAppVerify extends XellarEWBase {
   /**
@@ -21,6 +22,13 @@ export class XellarEWWhatsAppVerify extends XellarEWBase {
         verificationToken,
         otp,
       });
+
+      const token = response.data.data.isWalletCreated
+        ? response.data.data.walletToken
+        : response.data.data.accessToken;
+
+      this.container.resolve<TokenManager>('TokenManager').setToken(token);
+
       return response.data.data;
     } catch (error) {
       const handledError = handleError(error);
