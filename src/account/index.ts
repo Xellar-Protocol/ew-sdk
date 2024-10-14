@@ -2,7 +2,7 @@ import { XellarEWBase } from '../base';
 import { Container } from '../container';
 import { XellarEWAccountWallet } from './wallet';
 
-export class XellarEWAccount extends XellarEWBase {
+export class XellarEWAccountOperations extends XellarEWBase {
   protected accountWallet: XellarEWAccountWallet;
 
   constructor(container: Container) {

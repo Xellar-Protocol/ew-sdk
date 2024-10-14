@@ -3,6 +3,8 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 import { Container } from './container';
 import { Config } from './types/config';
+import { BaseHttpResponse } from './types/http';
+import { handleError, XellarError } from './utils/error';
 import { TokenManager } from './utils/token-manager';
 
 export class XellarEWBase {
@@ -26,9 +28,15 @@ export class XellarEWBase {
 
     // Add request interceptor
     this.axiosInstance.interceptors.request.use(
-      (cfg: InternalAxiosRequestConfig) => {
-        const tokenManager = container.resolve<TokenManager>('TokenManager');
-        const currentToken = tokenManager.getToken();
+      async (cfg: InternalAxiosRequestConfig) => {
+        const tokenManager =
+          this.container.resolve<TokenManager>('TokenManager');
+
+        if (tokenManager.isWalletTokenUsed()) {
+          await this.refreshToken();
+        }
+
+        const currentToken = tokenManager.getWalletToken();
         if (currentToken) {
           cfg.headers = cfg.headers || {};
           cfg.headers.Authorization = `Bearer ${currentToken}`;
@@ -37,5 +45,30 @@ export class XellarEWBase {
       },
       error => Promise.reject(error),
     );
+  }
+
+  async refreshToken(): Promise<void> {
+    try {
+      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
+      const refreshToken = tokenManager.getRefreshToken();
+
+      if (refreshToken) {
+        const response = await this.axiosInstance.post<
+          BaseHttpResponse<{ walletToken: string; refreshToken: string }>
+        >('/wallet/refresh', { refreshToken });
+
+        const newWalletToken = response.data.data.walletToken;
+        const newRefreshToken = response.data.data.refreshToken;
+        tokenManager.setWalletToken(newWalletToken);
+        tokenManager.setRefreshToken(newRefreshToken);
+      }
+    } catch (error) {
+      const handledError = handleError(error);
+      throw new XellarError(
+        handledError.message,
+        handledError.code,
+        handledError.details,
+      );
+    }
   }
 }

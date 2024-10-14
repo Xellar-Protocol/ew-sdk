@@ -33,7 +33,11 @@ export class XellarEWAppleAuthorize extends XellarEWBase {
         ? response.data.data.walletToken
         : response.data.data.accessToken;
 
-      this.container.resolve<TokenManager>('TokenManager').setToken(token);
+      const { refreshToken } = response.data.data;
+      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
+
+      tokenManager.setWalletToken(token);
+      tokenManager.setRefreshToken(refreshToken);
 
       return response.data.data;
     } catch (error) {
