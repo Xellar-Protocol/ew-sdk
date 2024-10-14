@@ -10,6 +10,7 @@ import { XellarEWSendTransaction } from './send-transaction';
 import { XellarEWSign } from './sign';
 import { XellarEWCheckTokenBalance } from './token-balance';
 import { XellarEWTransferERC721 } from './transfer-erc721';
+import { XellarEWTransferERC1155 } from './transfer-erc1155';
 
 export class XellarEWWalletOperations extends XellarEWBase {
   protected sign: XellarEWSign;
@@ -30,6 +31,8 @@ export class XellarEWWalletOperations extends XellarEWBase {
 
   protected xellarTransferERC721: XellarEWTransferERC721;
 
+  protected xellarTransferERC1155: XellarEWTransferERC1155;
+
   constructor(container: Container) {
     super(container);
 
@@ -42,6 +45,7 @@ export class XellarEWWalletOperations extends XellarEWBase {
     this.xellarSendToken = new XellarEWSendToken(container);
     this.xellarSendTransaction = new XellarEWSendTransaction(container);
     this.xellarTransferERC721 = new XellarEWTransferERC721(container);
+    this.xellarTransferERC1155 = new XellarEWTransferERC1155(container);
   }
 
   get signMessage() {
@@ -86,6 +90,10 @@ export class XellarEWWalletOperations extends XellarEWBase {
 
   get transferERC721() {
     return this.xellarTransferERC721.transferERC721.bind(this);
+  }
+
+  get transferERC1155() {
+    return this.xellarTransferERC1155.transferERC1155.bind(this);
   }
 
   get refreshToken() {

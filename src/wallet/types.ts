@@ -191,3 +191,16 @@ export type TransferERC721Config = {
   /** (required): The address of the ERC721 token contract. */
   tokenAddress: string;
 };
+
+export type TransferERC1155Config = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The address of the recipient. */
+  to: string;
+  /** (required): Token amount(s) to transfer. Array for batch transfer, single value for single transfer. */
+  amount: string | string[];
+  /** (required): Token ID(s) to transfer. Array for batch transfer, single value for single transfer. */
+  tokenId: string | string[];
+  /** (required): The address of the ERC1155 token contract. */
+  tokenAddress: string;
+};
