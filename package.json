@@ -4,7 +4,7 @@
   "description": "Xellar Embedded Wallet SDK for Javascript/Typescript",
   "main": "index.js",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --minify",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
     "test": "jest --verbose",
     "test:coverage": "jest --collectCoverage --verbose"
   },
