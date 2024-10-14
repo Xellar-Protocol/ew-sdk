@@ -180,3 +180,14 @@ export type SendTransactionConfig = {
     maxPriorityFeePerGas?: string;
   };
 };
+
+export type TransferERC721Config = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The address of the recipient. */
+  to: string;
+  /** (required): The ID of the ERC721 token to transfer. */
+  tokenId: string;
+  /** (required): The address of the ERC721 token contract. */
+  tokenAddress: string;
+};
