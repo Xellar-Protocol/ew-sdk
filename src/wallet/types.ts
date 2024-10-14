@@ -90,3 +90,74 @@ export type CheckBalanceBatchResponse = {
     decimals: number;
   }[];
 };
+
+export type SendCoinConfig = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The address of the recipient. */
+  to: string;
+  /** (required): The amount of the transaction. */
+  amount: string;
+  /** (optional): The number used once to prevent duplicate transactions (this will be calculated automatically if not provided). */
+  nonce?: string;
+  /** (optional): Gas price in Wei (this will be calculated automatically if not provided). */
+  gasPrice?: string;
+  /** (optional): Gas limit for single transaction, transaction will be reverted if actual gas consumption is higher than gas limit (this will be calculated automatically if not provided). */
+  gasLimit?: string;
+  /** (optional): Maximum priority fee per gas you are willing to pay, this only used in EIP1559 support blockchain */
+  maxPriorityFeePerGas?: string;
+};
+
+// "txReceipt": {
+//             "_type": "TransactionReceipt",
+//             "accessList": null,
+//             "blockNumber": null,
+//             "blockHash": null,
+//             "chainId": "1",
+//             "data": "0x",
+//             "from": "0xBfE64B4b628E0998A03e2522B051Cf1B4661c964",
+//             "gasLimit": "21000",
+//             "gasPrice": "10000000000",
+//             "hash": "0x4ec81ca3d6a112bdf991a220ed84a3458f061f1f818273c93546ea91a4e1d675",
+//             "maxFeePerGas": null,
+//             "maxPriorityFeePerGas": null,
+//             "nonce": 0,
+//             "signature": {
+//                 "_type": "signature",
+//                 "networkV": "230",
+//                 "r": "0xa68e03c27544801a8b6b80fb78be4f9cc2c9aeeeb189e3ae177a0a1155647dee",
+//                 "s": "0x097e8fd0d6922c0766c14279289d0076fdcff8d29f893ce7b78b82e499341cb7",
+//                 "v": 28
+//             },
+//             "to": "0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3",
+//             "type": 0,
+//             "value": "15000000000000000"
+//         }
+
+export type TransactionReceipt = {
+  txReceipt: {
+    _type: string;
+    accessList?: string | null;
+    blockNumber?: string | null;
+    blockHash?: string | null;
+    chainId: string;
+    data: string;
+    from: string;
+    gasLimit: string;
+    gasPrice: string;
+    hash: string;
+    maxFeePerGas?: string | null;
+    maxPriorityFeePerGas?: string | null;
+    nonce: number;
+    signature: {
+      _type: string;
+      networkV: string;
+      r: string;
+      s: string;
+      v: number;
+    };
+    to: string;
+    type: number;
+    value: string;
+  };
+};
