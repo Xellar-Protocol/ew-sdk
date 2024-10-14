@@ -11,6 +11,7 @@ export class XellarEWSendToken extends XellarEWBase {
    *  - `network` (required): The network used for transactions.
    *  - `to` (required): The address of the recipient.
    *  - `amount` (required): The amount of the transaction.
+   *  - `tokenAddress` (required): The address of the token.
    *
    * @returns Object of transaction receipt
    *

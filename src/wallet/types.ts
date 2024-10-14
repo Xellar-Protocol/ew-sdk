@@ -154,3 +154,29 @@ export type TransactionReceipt = {
     value: string;
   };
 };
+
+export type SendTransactionConfig = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The raw transaction data. */
+  transaction: {
+    /** The address of the sender. */
+    from: string;
+    /** The address of the recipient. */
+    to: string;
+    /** The data payload of the transaction. */
+    data: string;
+    /** The amount of native currency to send with the transaction. */
+    value?: string;
+    /** The gas price in Wei. */
+    gasPrice?: string;
+    /** The gas limit for the transaction. */
+    gasLimit?: string;
+    /** The nonce for the transaction. */
+    nonce?: string;
+    /** The maximum fee per gas (for EIP-1559 transactions). */
+    maxFeePerGas?: string;
+    /** The maximum priority fee per gas (for EIP-1559 transactions). */
+    maxPriorityFeePerGas?: string;
+  };
+};
