@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
@@ -33,7 +34,12 @@ export class XellarEWBase {
           this.container.resolve<TokenManager>('TokenManager');
 
         if (tokenManager.isWalletTokenUsed()) {
-          await this.refreshToken();
+          const refreshToken = tokenManager.getRefreshToken();
+          if (refreshToken) {
+            const response = await this._refreshToken(refreshToken);
+            tokenManager.setWalletToken(response.walletToken);
+            tokenManager.setRefreshToken(response.refreshToken);
+          }
         }
 
         const currentToken = tokenManager.getWalletToken();
@@ -47,21 +53,27 @@ export class XellarEWBase {
     );
   }
 
-  async refreshToken(): Promise<void> {
+  protected async _refreshToken(
+    refreshToken: string,
+  ): Promise<{ walletToken: string; refreshToken: string }> {
+    const { baseURL, clientSecret, version } =
+      this.container.resolve<Config>('Config');
+
     try {
-      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
-      const refreshToken = tokenManager.getRefreshToken();
+      const response = await axios.request<
+        BaseHttpResponse<{ walletToken: string; refreshToken: string }>
+      >({
+        method: 'POST',
+        baseURL: `${baseURL}/api/${version}`,
+        url: 'wallet/refresh',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-client-secret': clientSecret,
+        },
+        data: { refreshToken },
+      });
 
-      if (refreshToken) {
-        const response = await this.axiosInstance.post<
-          BaseHttpResponse<{ walletToken: string; refreshToken: string }>
-        >('/wallet/refresh', { refreshToken });
-
-        const newWalletToken = response.data.data.walletToken;
-        const newRefreshToken = response.data.data.refreshToken;
-        tokenManager.setWalletToken(newWalletToken);
-        tokenManager.setRefreshToken(newRefreshToken);
-      }
+      return response.data.data;
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(

@@ -1,13 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 export class TokenManager {
-  private _walletToken: string | undefined;
+  private _walletOrAccessToken: string | undefined;
 
   private _refreshToken: string | undefined;
 
   private _isWalletTokenUsed: boolean = false;
 
   setWalletToken(token: string) {
-    this._walletToken = token;
+    this._walletOrAccessToken = token;
     this._isWalletTokenUsed = false;
   }
 
@@ -16,7 +16,7 @@ export class TokenManager {
       return undefined;
     }
     this._isWalletTokenUsed = true;
-    return this._walletToken;
+    return this._walletOrAccessToken;
   }
 
   setRefreshToken(token: string) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { XellarEWBase } from '../base';
 import { Container } from '../container';
 import { XellarEWCancelTransaction } from './cancel-transaction';
@@ -53,5 +54,9 @@ export class XellarEWWalletOperations extends XellarEWBase {
 
   get estimateGas() {
     return this.xellarEstimateGas.estimateGas.bind(this);
+  }
+
+  get refreshToken() {
+    return this._refreshToken.bind(this);
   }
 }
