@@ -5,14 +5,14 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "type": "module",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "test": "jest --verbose",
     "test:coverage": "jest --collectCoverage --verbose",
     "prepare": "husky",
     "lint": "eslint ./src/**/*.ts --max-warnings=0",
-    "lint:fix": "eslint ./src/**/*.ts --fix"
+    "lint:fix": "eslint ./src/**/*.ts --fix",
+    "checker": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,11 @@
+echo '🏗️👷 styling and testing your project before pushing'
+
+# Check ESLint Standards
+npm run checker ||
+    (
+        echo 'Please re-check your code. Check linter error. Add Changes and try add additional commit 🙈👷🔨❌'
+        false
+    )
+
+# If there is no error linter, the codes will be commited
+echo '🎉🎉🎉🎉 No Error found ✨🚀🏄‍♂️🍻'
