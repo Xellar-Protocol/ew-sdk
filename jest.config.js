@@ -6,5 +6,10 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
-  coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/src/utils'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/utils',
+    '<rootDir>/src/types',
+    '<rootDir>/src/base.ts',
+  ],
 };
