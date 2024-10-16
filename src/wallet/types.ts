@@ -48,25 +48,33 @@ export type CancelTransactionConfig = {
 export type EstimateGasConfig = {
   /** (required): The network used for transactions. */
   network: Network;
-  /** (required): The raw data you get from dApps or WalletConnect. */
-  data: string;
-  /** (required): Type of transaction user want to estimate the gas. Available options are send-coin, send-token, transfer-erc721, transfer-erc1155, custom. */
+  /** (required): Type of transaction user want to estimate the gas. */
   type:
     | 'send-coin'
     | 'send-token'
     | 'transfer-erc721'
     | 'transfer-erc1155'
     | 'custom';
-  /** (optional): Recipient wallet address. */
+  /** (required for send-coin, send-token, transfer-erc721, transfer-erc1155): Recipient wallet address. */
   to?: string;
-  /** (optional): Amount to send in decimal units (e.g., 0.123) (e.g., [2, 4] for batch transfer of ERC-1155 tokens) */
-  amount?: number | number[];
-  /** (optional): Token id of the ERC-721 or ERC-1155 token user want to send (input array of tokenId for batch transfer, input single tokenId for single transfer). */
-  tokenId?: number | number[];
-  /** (optional): Address of the token user want to send. */
+  /** (required for send-coin, send-token): Amount to send in decimal units (e.g., 0.123). */
+  amount?: string;
+  /** (required for transfer-erc721, transfer-erc1155): Token id of the ERC-721 or ERC-1155 token user want to send. For ERC-1155, use an array for batch transfer. */
+  tokenId?: string | string[];
+  /** (required for send-token, transfer-erc721, transfer-erc1155): Address of the token contract. */
   tokenAddress?: string;
-  /** (optional): Raw transaction data user want to estimate the gas. */
-  transaction?: object;
+  /** (required for transfer-erc1155): Amount of tokens to transfer. Use an array for batch transfer. */
+  tokenAmount?: string | string[];
+  /** (required for custom): Raw transaction data user want to estimate the gas. */
+  transaction?: {
+    from: string;
+    to: string;
+    data: string;
+    nonce?: string;
+    gasPrice?: string;
+    gasLimit?: string;
+    value?: string;
+  };
 };
 
 export type EstimateGasResponse = {

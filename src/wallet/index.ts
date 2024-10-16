@@ -68,6 +68,10 @@ export class XellarEWWalletOperations extends XellarEWBase {
     return this.checkTokenBalance.balanceToken.bind(this);
   }
 
+  get balanceTokenBatch() {
+    return this.checkTokenBalance.balanceTokenBatch.bind(this);
+  }
+
   get balanceCoin() {
     return this.checkCoinBalance.balanceCoin.bind(this);
   }
