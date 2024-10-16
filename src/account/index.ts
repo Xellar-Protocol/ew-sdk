@@ -11,11 +11,10 @@ export class XellarEWAccountOperations extends XellarEWBase {
     this.accountWallet = new XellarEWAccountWallet(container);
   }
 
-  get create() {
-    return this.accountWallet.create.bind(this);
-  }
-
-  get recover() {
-    return this.accountWallet.recover.bind(this);
+  get wallet() {
+    return {
+      create: this.accountWallet.create.bind(this),
+      recover: this.accountWallet.recover.bind(this),
+    };
   }
 }
