@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 1.1.1
+
+### Patch Changes
+
+- [#4](https://github.com/Xellar-Protocol/ew-sdk/pull/4) [`60605c5`](https://github.com/Xellar-Protocol/ew-sdk/commit/60605c55e6e5cb58f6ea31f41f48f4a0123aa6fd) Thanks [@iyansr](https://github.com/iyansr)! - Add Check Balance Batch
+
 ## 1.1.0
 
 ### Minor Changes
