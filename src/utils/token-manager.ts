@@ -4,18 +4,13 @@ export class TokenManager {
 
   private _refreshToken: string | undefined;
 
-  private _isWalletTokenUsed: boolean = false;
+  private _rampableAccessToken: string | undefined;
 
   setWalletToken(token: string) {
     this._walletOrAccessToken = token;
-    this._isWalletTokenUsed = false;
   }
 
   getWalletToken(): string | undefined {
-    if (this._isWalletTokenUsed) {
-      return undefined;
-    }
-    this._isWalletTokenUsed = true;
     return this._walletOrAccessToken;
   }
 
@@ -27,7 +22,11 @@ export class TokenManager {
     return this._refreshToken;
   }
 
-  isWalletTokenUsed(): boolean {
-    return this._isWalletTokenUsed;
+  setRampableAccessToken(token: string) {
+    this._rampableAccessToken = token;
+  }
+
+  getRampableAccessToken(): string | undefined {
+    return this._rampableAccessToken;
   }
 }

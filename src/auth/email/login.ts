@@ -4,11 +4,12 @@ import { handleError, XellarError } from '../../utils/error';
 
 export class XellarEWEmailLogin extends XellarEWBase {
   /**
-   * Allows you to login to your Xellar Embedded wallet account using User’s Email, and receive an **OTP** to verify the account.
-   * @param email (required): User’s chosen email.
-   * @returns
+   * Allows you to initiate the login process for your Xellar Embedded wallet account using the User's Email. An OTP will be sent to the provided email for verification.
+   * @param email (required): User's email address.
+   * @returns A verification token.
    *
    * @example
+   * // Basic usage
    * const response = await sdk.auth.email.login(email);
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/email/login/ Xellar Auth Email Docs}
@@ -20,6 +21,7 @@ export class XellarEWEmailLogin extends XellarEWBase {
       >('/auth/login-otp', {
         email,
       });
+
       return response.data.data.verificationToken;
     } catch (error) {
       const handledError = handleError(error);

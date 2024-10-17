@@ -24,6 +24,12 @@ type WalletNotCreatedResponse = {
 
 export type AuthSuccessResponse = {
   refreshToken: string;
+  /** (optional)
+   * JWT token used to access the Rampable Operation endpoint.
+   * This token will only be available if the account already create a rampable account
+   * and the organization has enabled the rampable feature.
+   */
+  rampableAccessToken?: string;
 } & (WalletCreatedResponse | WalletNotCreatedResponse);
 
 export interface AccountWalletResponse {
@@ -32,4 +38,16 @@ export interface AccountWalletResponse {
   secret0: string;
   secret0Link: string;
   address: string;
+  /** (optional)
+   * JWT token used to access the Rampable Operation endpoint.
+   * This token will only be available if the account already create a rampable account
+   * and the organization has enabled the rampable feature.
+   */
+  rampableAccessToken?: string;
 }
+
+export type RampableAccount = {
+  userName: string;
+  fullName: string;
+  password: string;
+};

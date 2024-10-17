@@ -1,3 +1,5 @@
+import { RampableAccount } from '../../types/http';
+
 export type BaseTelegramBody = {
   botUsername: string;
   expiredDate?: string;
@@ -20,3 +22,7 @@ export type TelegramBodyDataString = {
 } & BaseTelegramBody;
 
 export type TelegramAuthorizeBody = TelegramBodyData | TelegramBodyDataString;
+
+export type TelegramAuthOptions = {
+  rampable?: RampableAccount;
+};

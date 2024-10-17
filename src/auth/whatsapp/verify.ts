@@ -2,6 +2,7 @@ import { XellarEWBase } from '../../base';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
 import { TokenManager } from '../../utils/token-manager';
+import { WhatsAppAuthOptions } from './types';
 
 export class XellarEWWhatsAppVerify extends XellarEWBase {
   /**
@@ -14,7 +15,11 @@ export class XellarEWWhatsAppVerify extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/whatsapp/verify_otp/ Xellar Auth WhatsApp Verify Docs}
    */
-  async login(verificationToken: string, otp: string) {
+  async login(
+    verificationToken: string,
+    otp: string,
+    options?: WhatsAppAuthOptions,
+  ) {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<AuthSuccessResponse>
@@ -32,6 +37,17 @@ export class XellarEWWhatsAppVerify extends XellarEWBase {
 
       tokenManager.setWalletToken(token);
       tokenManager.setRefreshToken(refreshToken);
+
+      if (!response.data?.data?.rampableAccessToken && options?.rampable) {
+        const rampableAccessToken = await this.createRampableAccount(
+          options.rampable,
+        );
+
+        return {
+          ...response.data.data,
+          rampableAccessToken,
+        };
+      }
 
       return response.data.data;
     } catch (error) {

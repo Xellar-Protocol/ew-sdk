@@ -2,6 +2,7 @@ import { XellarEWBase } from '../../base';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
 import { TokenManager } from '../../utils/token-manager';
+import { UsernameAuthOptions } from './type';
 
 export class XellarEWUsernameLogin extends XellarEWBase {
   /**
@@ -14,7 +15,11 @@ export class XellarEWUsernameLogin extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/username/login/ Xellar Auth Username Docs}
    */
-  async login(username: string, password: string) {
+  async login(
+    username: string,
+    password: string,
+    options?: UsernameAuthOptions,
+  ) {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<AuthSuccessResponse>
@@ -32,6 +37,17 @@ export class XellarEWUsernameLogin extends XellarEWBase {
 
       tokenManager.setWalletToken(token);
       tokenManager.setRefreshToken(refreshToken);
+
+      if (!response.data?.data?.rampableAccessToken && options?.rampable) {
+        const rampableAccessToken = await this.createRampableAccount(
+          options.rampable,
+        );
+
+        return {
+          ...response.data.data,
+          rampableAccessToken,
+        };
+      }
 
       return response.data.data;
     } catch (error) {
