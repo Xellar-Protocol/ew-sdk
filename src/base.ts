@@ -6,6 +6,7 @@ import axios, {
   isAxiosError,
 } from 'axios';
 
+import { RAMPABLE_API_URL, XELLAR_API_URL } from './constants';
 import { Container } from './container';
 import { Config } from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
@@ -15,16 +16,24 @@ import { TokenManager } from './utils/token-manager';
 export class XellarEWBase {
   protected axiosInstance: AxiosInstance;
 
+  protected rampableAxiosInstance: AxiosInstance;
+
   protected container: Container;
 
   constructor(container: Container) {
-    const { baseURL, clientSecret, version } =
-      container.resolve<Config>('Config');
-
     this.container = container;
+    this.axiosInstance = this._setupAxiosInstance();
+    this.rampableAxiosInstance = this._setupRampableAxiosInstance();
+  }
 
-    this.axiosInstance = axios.create({
-      baseURL: `${baseURL}/api/${version}`,
+  private _setupAxiosInstance() {
+    const { clientSecret, env = 'sandbox' } =
+      this.container.resolve<Config>('Config');
+
+    const baseURL = XELLAR_API_URL[env];
+
+    const instance = axios.create({
+      baseURL: `${baseURL}/api/v2`,
       headers: {
         'Content-Type': 'application/json',
         'x-client-secret': clientSecret,
@@ -32,7 +41,7 @@ export class XellarEWBase {
     });
 
     // Add request interceptor
-    this.axiosInstance.interceptors.request.use(
+    instance.interceptors.request.use(
       async (cfg: InternalAxiosRequestConfig) => {
         const tokenManager =
           this.container.resolve<TokenManager>('TokenManager');
@@ -44,6 +53,12 @@ export class XellarEWBase {
         }
         return cfg;
       },
+      error => Promise.reject(error),
+    );
+
+    // Interceptor for handling 401 errors
+    instance.interceptors.request.use(
+      cfg => cfg,
       async error => {
         if (isAxiosError(error)) {
           if (error.response && error.response.status === 401) {
@@ -72,7 +87,7 @@ export class XellarEWBase {
 
                 error.config.headers.Authorization = `Bearer ${refreshTokenResponse.walletToken}`;
 
-                return this.axiosInstance(error.config);
+                return instance(error.config);
               }
             }
           }
@@ -81,20 +96,55 @@ export class XellarEWBase {
         return Promise.reject(error);
       },
     );
+
+    return instance;
+  }
+
+  private _setupRampableAxiosInstance() {
+    const { env = 'sandbox' } = this.container.resolve<Config>('Config');
+
+    const baseURL = RAMPABLE_API_URL[env];
+
+    const instance = axios.create({
+      baseURL: `${baseURL}/api/v1`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Add request interceptor
+    instance.interceptors.request.use(
+      async (cfg: InternalAxiosRequestConfig) => {
+        const tokenManager =
+          this.container.resolve<TokenManager>('TokenManager');
+
+        const accessToken = tokenManager.getRampableAccessToken();
+        if (accessToken) {
+          cfg.headers = cfg.headers || {};
+          cfg.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return cfg;
+      },
+      error => Promise.reject(error),
+    );
+
+    return instance;
   }
 
   protected async _refreshToken(
     refreshToken: string,
   ): Promise<{ walletToken: string; refreshToken: string }> {
-    const { baseURL, clientSecret, version } =
+    const { clientSecret, env = 'sandbox' } =
       this.container.resolve<Config>('Config');
+
+    const baseURL = XELLAR_API_URL[env];
 
     try {
       const response = await axios.request<
         BaseHttpResponse<{ walletToken: string; refreshToken: string }>
       >({
         method: 'POST',
-        baseURL: `${baseURL}/api/${version}`,
+        baseURL: `${baseURL}/api/v2`,
         url: 'wallet/refresh',
         headers: {
           'Content-Type': 'application/json',
@@ -122,6 +172,10 @@ export class XellarEWBase {
     >('account/rampable/create', {
       ...rampable,
     });
+
+    const tokenManager = this.container.resolve<TokenManager>('TokenManager');
+
+    tokenManager.setRampableAccessToken(response.data.data.rampableAccessToken);
 
     return response.data.data.rampableAccessToken;
   }

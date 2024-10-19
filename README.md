@@ -34,7 +34,10 @@ To start using the Xellar SDK, follow these steps:
    ```typescript
    import XellarSDK from 'xellar-ew-sdk';
 
-   const xellar = new XellarSDK('YOUR_CLIENT_SECRET', 'BASE_URL');
+   const xellar = new XellarSDK({
+      clientSecret: 'YOUR_CLIENT_SECRET',
+      env: 'sandbox | production',
+   });
    ```
 
 3. **Use the SDK's features:**

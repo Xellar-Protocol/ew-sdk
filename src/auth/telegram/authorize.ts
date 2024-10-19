@@ -77,6 +77,12 @@ export class XellarEWTelegramAuthorize extends XellarEWBase {
       tokenManager.setWalletToken(token);
       tokenManager.setRefreshToken(refreshToken);
 
+      if (response.data?.data?.rampableAccessToken) {
+        tokenManager.setRampableAccessToken(
+          response.data.data.rampableAccessToken,
+        );
+      }
+
       if (!response.data?.data?.rampableAccessToken && options?.rampable) {
         const rampableAccessToken = await this.createRampableAccount(
           options.rampable,
