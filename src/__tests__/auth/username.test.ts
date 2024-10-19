@@ -68,18 +68,76 @@ describe('Username Authentication', () => {
 
       const result = await sdk.auth.username.register('testuser', 'testpass');
 
-      expect(result).toEqual('mock-access-token');
+      expect(result).toEqual({ accessToken: 'mock-access-token' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/register', {
         username: 'testuser',
         password: 'testpass',
       });
     });
 
+    it('should successfully register with rampable option', async () => {
+      const mockRegisterResponse = {
+        data: {
+          data: {
+            accessToken: 'mock-access-token',
+          },
+        },
+      };
+      const mockRampableResponse = {
+        data: {
+          data: {
+            rampableAccessToken: 'mock-rampable-token',
+          },
+        },
+      };
+
+      mockAxiosInstance.post.mockImplementation(url => {
+        if (url === '/auth/register') {
+          return Promise.resolve(mockRegisterResponse);
+        }
+        if (url === 'account/rampable/create') {
+          return Promise.resolve(mockRampableResponse);
+        }
+        return Promise.reject(new Error('Unexpected URL'));
+      });
+
+      const result = await sdk.auth.username.register('testuser', 'testpass', {
+        rampable: {
+          userName: 'rampuser',
+          fullName: 'Ramp User',
+          password: 'ramppass',
+        },
+      });
+
+      expect(result).toEqual({
+        accessToken: 'mock-access-token',
+        rampableAccessToken: 'mock-rampable-token',
+      });
+      expect(mockAxiosInstance.post).toHaveBeenCalledTimes(2);
+      expect(mockAxiosInstance.post).toHaveBeenNthCalledWith(
+        1,
+        '/auth/register',
+        {
+          username: 'testuser',
+          password: 'testpass',
+        },
+      );
+      expect(mockAxiosInstance.post).toHaveBeenNthCalledWith(
+        2,
+        'account/rampable/create',
+        {
+          userName: 'rampuser',
+          fullName: 'Ramp User',
+          password: 'ramppass',
+        },
+      );
+    });
+
     it('should throw XellarError on failed register', async () => {
       const mockError = {
         response: {
           data: {
-            message: 'Username or password is incorrect',
+            message: 'Username already exists',
             code: 400,
             details: {},
           },
@@ -88,12 +146,12 @@ describe('Username Authentication', () => {
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
       await expect(
-        sdk.auth.username.register('wronguser', 'wrongpass'),
+        sdk.auth.username.register('existinguser', 'testpass'),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/register', {
-        username: 'wronguser',
-        password: 'wrongpass',
+        username: 'existinguser',
+        password: 'testpass',
       });
     });
   });
