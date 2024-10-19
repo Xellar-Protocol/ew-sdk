@@ -146,6 +146,24 @@ export type XellarOffRampTransactionDetailResponse = TransactionDocs & {
   activityHistory: ActivityHistory[];
 };
 
+export type AdminNoteActivity = {
+  message: string;
+  time: Date;
+  sender: string;
+  _id: string;
+};
+
+export type XelalrOffRampsReplyInfo = TransactionDocs & {
+  activityHistory: ActivityHistory[];
+  adminNotesActivities: AdminNoteActivity[];
+  createdAt: Date;
+  updatedAt: Date;
+  transactionHash: string;
+  adminNotesDate: string;
+  adminNotesReply: string | null;
+  adminNotesReplyDate: string | null;
+};
+
 export type XellarOffRampTransactionListResponse = {
   docs: TransactionDocs[];
   totalDocs: number;

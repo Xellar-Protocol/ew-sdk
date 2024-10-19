@@ -157,3 +157,39 @@ export type XellarOnRampTransactionListResponse = {
   prevPage: number | null;
   nextPage: number | null;
 };
+
+export type XellarOnRampQuoteResponse = {
+  status: boolean;
+  acceptance_method: string;
+  onramp_service: string;
+  coin: string;
+  currency: string;
+  amount_in_crypto: number;
+  amount_in_currency: number;
+  rate_amount: number;
+  total_fee_percentage: number;
+  total_fee_amount: number;
+  total_fee_amount_in_currency: number;
+  total_received_amount_in_crypto: number;
+  total_received_amount_in_currency: number;
+  expiry_time: string;
+};
+
+export type XellarOnRampQuoteRequest = {
+  /** (requried) The amount of the offramp transaction in the input currency. */
+  amount: number;
+  /** (required) The currency id of the offramp transaction (e.g."IDR") */
+  inputCurrency: string;
+  /** (required) The crypto of the offramp transaction (e.g.  usdc-polygon) */
+  outputCurrency: string;
+
+  /**
+   * Using the withLimit option allows you to get a quote using only the client secret,
+   * without including your user access token in request headers. This is useful for
+   * client-side applications.
+   *
+   * When withLimit is set to false, no daily limit calculation is applied to the quote
+   * based on the user's limits (pure quote only).
+   */
+  withLimit?: boolean;
+};
