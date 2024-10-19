@@ -9,9 +9,8 @@ jest.mock('axios');
 
 export const setupTests = () => {
   const mockConfig: Config = {
-    baseURL: 'https://api.test.com',
     clientSecret: 'test-client-secret',
-    version: 'v2',
+    env: 'sandbox',
   };
 
   const mockAxiosInstance = {
@@ -28,7 +27,7 @@ export const setupTests = () => {
 
   mockedAxios.create.mockReturnValue(mockAxiosInstance as any);
 
-  const sdk = new XellarSDK(mockConfig.baseURL, mockConfig.clientSecret, 'v2');
+  const sdk = new XellarSDK(mockConfig);
 
   return { sdk, mockedAxios, mockAxiosInstance };
 };

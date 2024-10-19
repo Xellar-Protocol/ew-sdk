@@ -1,5 +1,9 @@
 import { XellarEWBase } from '../base';
-import { AccountWalletResponse, BaseHttpResponse } from '../types/http';
+import {
+  AccountWalletResponse,
+  BaseHttpResponse,
+  RampableAccount,
+} from '../types/http';
 import { handleError, XellarError } from '../utils/error';
 
 export class XellarEWAccountWallet extends XellarEWBase {
@@ -18,12 +22,13 @@ export class XellarEWAccountWallet extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/account_operation/Create_New_Wallet/ Xellar Create New Wallet Docs}
    */
-  async create(expireDate?: string) {
+  async create(expireDate?: string, options?: { rampable?: RampableAccount }) {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<AccountWalletResponse>
       >('/account/create', {
         expireDate,
+        rampable: options?.rampable,
       });
 
       return response.data.data;

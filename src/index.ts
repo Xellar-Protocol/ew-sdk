@@ -1,7 +1,11 @@
 import { XellarEWAccountOperations } from './account';
 import { XellarEWAuth } from './auth';
 import { Container } from './container';
-import { APIVersion, Config } from './types/config';
+import { XellarEWOffRamp } from './rampable/off-ramps';
+import { XellarEWOnRamp } from './rampable/on-ramps';
+import { XellarEWRampableRecipients } from './rampable/recipients';
+import { XellarEWRampableReference } from './rampable/references';
+import { Config } from './types/config';
 import { TokenManager } from './utils/token-manager';
 import { XellarEWWalletOperations } from './wallet';
 
@@ -15,15 +19,18 @@ export default class XellarSDK {
 
   private container: Container;
 
-  constructor(
-    clientSecret: string,
-    baseURL: string,
-    version: APIVersion = 'v2',
-  ) {
+  public offRamp: XellarEWOffRamp;
+
+  public onRamp: XellarEWOnRamp;
+
+  public rampableReference: XellarEWRampableReference;
+
+  public rampableRecipients: XellarEWRampableRecipients;
+
+  constructor({ clientSecret, env = 'sandbox' }: Config) {
     const config: Config = {
-      baseURL,
       clientSecret,
-      version,
+      env,
     };
 
     this.container = new Container();
@@ -33,5 +40,9 @@ export default class XellarSDK {
     this.auth = new XellarEWAuth(this.container);
     this.account = new XellarEWAccountOperations(this.container);
     this.wallet = new XellarEWWalletOperations(this.container);
+    this.offRamp = new XellarEWOffRamp(this.container);
+    this.onRamp = new XellarEWOnRamp(this.container);
+    this.rampableReference = new XellarEWRampableReference(this.container);
+    this.rampableRecipients = new XellarEWRampableRecipients(this.container);
   }
 }
