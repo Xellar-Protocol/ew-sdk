@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.0.0
+
+### Major Changes
+
+- [#7](https://github.com/Xellar-Protocol/ew-sdk/pull/7) [`5b87618`](https://github.com/Xellar-Protocol/ew-sdk/commit/5b87618a5a545f3beb054c9d16acfd8ffa8798eb) Thanks [@iyansr](https://github.com/iyansr)! - Add On / Off Ramps Functionality
+
 ## 2.0.0
 
 ### Major Changes
