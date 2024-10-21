@@ -95,7 +95,7 @@ export class XellarEWBase {
     const baseURL = RAMPABLE_API_URL[env];
 
     const instance = axios.create({
-      baseURL: `${baseURL}/api/v1`,
+      baseURL: `${baseURL}/v1`,
       headers: {
         'Content-Type': 'application/json',
       },
