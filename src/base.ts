@@ -57,42 +57,31 @@ export class XellarEWBase {
     );
 
     // Interceptor for handling 401 errors
-    instance.interceptors.request.use(
-      cfg => cfg,
+    instance.interceptors.response.use(
+      response => response, // Pass successful responses through
       async error => {
-        if (isAxiosError(error)) {
-          if (error.response && error.response.status === 401) {
-            const tokenManager =
-              this.container.resolve<TokenManager>('TokenManager');
+        if (isAxiosError(error) && error.response?.status === 401) {
+          const tokenManager =
+            this.container.resolve<TokenManager>('TokenManager');
+          const refreshToken = tokenManager.getRefreshToken();
 
-            const refreshToken = tokenManager.getRefreshToken();
+          if (refreshToken) {
+            try {
+              const refreshTokenResponse =
+                await this._refreshToken(refreshToken);
+              tokenManager.setWalletToken(refreshTokenResponse.walletToken);
+              tokenManager.setRefreshToken(refreshTokenResponse.refreshToken);
 
-            if (refreshToken) {
-              let refreshTokenResponse: {
-                walletToken: string;
-                refreshToken: string;
-              };
-
-              try {
-                refreshTokenResponse = await this._refreshToken(refreshToken);
-
-                tokenManager.setWalletToken(refreshTokenResponse.walletToken);
-                tokenManager.setRefreshToken(refreshTokenResponse.refreshToken);
-              } catch (refreshTokenError) {
-                return Promise.reject(refreshTokenError);
-              }
-
+              // Retry the original request with the new token
               if (error.config) {
-                // Repeat the failed request using the renewed access token
-
                 error.config.headers.Authorization = `Bearer ${refreshTokenResponse.walletToken}`;
-
                 return instance(error.config);
               }
+            } catch (refreshTokenError) {
+              return Promise.reject(refreshTokenError);
             }
           }
         }
-
         return Promise.reject(error);
       },
     );
