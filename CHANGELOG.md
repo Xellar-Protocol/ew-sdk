@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.1.1
+
+### Patch Changes
+
+- [`4c54a3c`](https://github.com/Xellar-Protocol/ew-sdk/commit/4c54a3c814959a24f373252000e8a6043b12a72c) Thanks [@iyansr](https://github.com/iyansr)! - Fix refresh token not working
+
 ## 3.1.0
 
 ### Minor Changes
