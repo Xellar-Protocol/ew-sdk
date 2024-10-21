@@ -5,6 +5,7 @@ import {
   RampableAccount,
 } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
+import { TokenManager } from '../utils/token-manager';
 
 export class XellarEWAccountWallet extends XellarEWBase {
   /**
@@ -30,6 +31,20 @@ export class XellarEWAccountWallet extends XellarEWBase {
         expireDate,
         rampable: options?.rampable,
       });
+
+      const { walletToken } = response.data.data;
+      const { refreshToken } = response.data.data;
+
+      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
+
+      tokenManager.setWalletToken(walletToken);
+      tokenManager.setRefreshToken(refreshToken);
+
+      if (response.data.data.rampableAccessToken) {
+        tokenManager.setRampableAccessToken(
+          response.data.data.rampableAccessToken,
+        );
+      }
 
       return response.data.data;
     } catch (error) {
@@ -69,6 +84,20 @@ export class XellarEWAccountWallet extends XellarEWBase {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<AccountWalletResponse>
       >('/account/recover', formData);
+
+      const { walletToken } = response.data.data;
+      const { refreshToken } = response.data.data;
+
+      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
+
+      tokenManager.setWalletToken(walletToken);
+      tokenManager.setRefreshToken(refreshToken);
+
+      if (response.data.data.rampableAccessToken) {
+        tokenManager.setRampableAccessToken(
+          response.data.data.rampableAccessToken,
+        );
+      }
 
       return response.data.data;
     } catch (error) {
