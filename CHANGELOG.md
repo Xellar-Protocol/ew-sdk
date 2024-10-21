@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.1.2
+
+### Patch Changes
+
+- [`397d986`](https://github.com/Xellar-Protocol/ew-sdk/commit/397d986f9ac6591b663e351c6339f38dad218914) Thanks [@iyansr](https://github.com/iyansr)! - fix rampable endpoint
+
 ## 3.1.1
 
 ### Patch Changes
