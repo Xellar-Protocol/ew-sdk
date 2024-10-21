@@ -23,7 +23,7 @@ export class XellarEWRampableBank extends XellarEWBase {
   async listBanks(params?: ListBanksParams) {
     try {
       const response = await this.rampableAxiosInstance.get<
-        BaseHttpResponse<ListBanksResponse[]>
+        BaseHttpResponse<ListBanksResponse>
       >('/reference/banks', {
         params,
       });
