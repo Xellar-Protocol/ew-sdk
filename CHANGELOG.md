@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.1.0
+
+### Minor Changes
+
+- [`dd21c12`](https://github.com/Xellar-Protocol/ew-sdk/commit/dd21c12c48af84dbe8e80bfaa0d51dd19331a568) Thanks [@iyansr](https://github.com/iyansr)! - Fix Wallet Token Not Set when creating / recover wallet
+
 ## 3.0.0
 
 ### Major Changes
