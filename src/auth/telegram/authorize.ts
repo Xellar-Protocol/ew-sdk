@@ -51,7 +51,7 @@ export class XellarEWTelegramAuthorize extends XellarEWBase {
    * // With rampable option
    * const response = await sdk.auth.telegram.authorize(body, {
    *   rampable: {
-   *     userName: 'username',
+   *     username: 'username',
    *     fullName: 'full name',
    *     password: 'password',
    *   },

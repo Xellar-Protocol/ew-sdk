@@ -20,7 +20,7 @@ export class XellarEWGoogleAuthorize extends XellarEWBase {
    *   credentials,
    *   expiredDate,
    *   rampable: {
-   *     userName: 'username',
+   *     username: 'username',
    *     fullName: 'full name',
    *     password: 'password',
    *   },

@@ -103,7 +103,7 @@ describe('Username Authentication', () => {
 
       const result = await sdk.auth.username.register('testuser', 'testpass', {
         rampable: {
-          userName: 'rampuser',
+          username: 'rampuser',
           fullName: 'Ramp User',
           password: 'ramppass',
         },
@@ -126,7 +126,7 @@ describe('Username Authentication', () => {
         2,
         'account/rampable/create',
         {
-          userName: 'rampuser',
+          username: 'rampuser',
           fullName: 'Ramp User',
           password: 'ramppass',
         },

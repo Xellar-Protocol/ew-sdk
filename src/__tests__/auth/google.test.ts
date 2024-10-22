@@ -94,7 +94,7 @@ describe('Google Authentication', () => {
         undefined,
         {
           rampable: {
-            userName: 'testUser',
+            username: 'testUser',
             fullName: 'Test User',
             password: 'testPassword',
           },
@@ -119,7 +119,7 @@ describe('Google Authentication', () => {
         2,
         'account/rampable/create',
         {
-          userName: 'testUser',
+          username: 'testUser',
           fullName: 'Test User',
           password: 'testPassword',
         },

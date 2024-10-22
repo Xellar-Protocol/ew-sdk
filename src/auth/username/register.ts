@@ -18,7 +18,7 @@ export class XellarEWUsernameRegister extends XellarEWBase {
    * // With rampable
    * const response = await sdk.auth.username.register(username, password, {
    *   rampable: {
-   *     userName: 'username',
+   *     username: 'username',
    *     fullName: 'full name',
    *     password: 'password',
    *   },

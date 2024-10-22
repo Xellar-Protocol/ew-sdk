@@ -1,6 +1,6 @@
 export interface AppleAuthorizeOptions {
   rampable?: {
-    userName: string;
+    username: string;
     fullName: string;
     password: string;
   };

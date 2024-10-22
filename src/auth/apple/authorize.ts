@@ -16,7 +16,7 @@ export class XellarEWAppleAuthorize extends XellarEWBase {
    *
    * // With optional parameters
    * const response = await sdk.auth.apple.authorize('credential', '2023-12-31', { rampable: {
-   *     userName: 'username',
+   *     username: 'username',
    *     fullName: 'full name',
    *     password: 'password',
    *   },

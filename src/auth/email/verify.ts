@@ -20,7 +20,7 @@ export class XellarEWEmailVerify extends XellarEWBase {
    * // With rampable option
    * const response = await sdk.auth.email.verify(verificationToken, otp, {
    *   rampable: {
-   *     userName: 'username',
+   *     username: 'username',
    *     fullName: 'full name',
    *     password: 'password',
    *   },
