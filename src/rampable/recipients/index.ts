@@ -29,7 +29,7 @@ export class XellarEWRampableRecipients extends XellarEWBase {
     );
   }
 
-  get listRecipient() {
+  get listRecipients() {
     return this.rampableListRecipient.listRecipients.bind(this);
   }
 

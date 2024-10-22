@@ -25,7 +25,7 @@ export class XellarEWRampableListRecipients extends XellarEWBase {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<ListRecipientsResponse>
-      >('/recipients', {
+      >('/recipient', {
         params,
       });
 

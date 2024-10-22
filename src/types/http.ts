@@ -10,6 +10,7 @@ export interface EmailLoginResponse {
 
 export interface UsernameRegisterResponse {
   accessToken: string;
+  isWalletCreated: boolean;
 }
 
 type WalletCreatedResponse = {
@@ -47,7 +48,7 @@ export interface AccountWalletResponse {
 }
 
 export type RampableAccount = {
-  userName: string;
+  username: string;
   fullName: string;
   password: string;
 };

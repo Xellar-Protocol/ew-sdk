@@ -35,9 +35,10 @@ export function handleError(error: any): ErrorResponse {
   if (isAxiosError(error)) {
     return formatAxiosError(error);
   }
+
   return {
     message: error.message || 'An unknown error occurred',
-    code: 'UNKNOWN_ERROR',
+    code: error?.code || 'UNKNOWN_ERROR',
   };
 }
 

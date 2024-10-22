@@ -6,6 +6,8 @@ export class TokenManager {
 
   private _rampableAccessToken: string | undefined;
 
+  private _rampableClientSecret: string | undefined;
+
   setWalletToken(token: string) {
     this._walletOrAccessToken = token;
   }
@@ -22,11 +24,19 @@ export class TokenManager {
     return this._refreshToken;
   }
 
-  setRampableAccessToken(token: string) {
+  setRampableAccessToken(token: string | undefined) {
     this._rampableAccessToken = token;
   }
 
   getRampableAccessToken(): string | undefined {
     return this._rampableAccessToken;
+  }
+
+  setRampableClientSecret(secret: string | undefined) {
+    this._rampableClientSecret = secret;
+  }
+
+  getRampableClientSecret(): string | undefined {
+    return this._rampableClientSecret;
   }
 }

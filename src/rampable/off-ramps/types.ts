@@ -180,6 +180,22 @@ export type XellarOffRampTransactionListResponse = {
 
 export type CreateOffRampRequest = {
   /**
+   * The wallet address of the sender.
+   * Optional, include this attribute if you want to speed up the validation of offramp process.
+   */
+  walletAddress?: string;
+
+  /**
+   * The amount of the offramp in the input currency.
+   */
+  inputAmount: number;
+
+  /**
+   * The name of the sender.
+   */
+  senderName: string;
+
+  /**
    * The email address of the sender.
    */
   senderEmail: string;
