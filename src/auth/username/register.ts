@@ -32,6 +32,14 @@ export class XellarEWUsernameRegister extends XellarEWBase {
     options?: UsernameAuthOptions,
   ) {
     try {
+      let rampableAccessToken: string | undefined;
+
+      if (options?.rampable) {
+        rampableAccessToken = await this.createRampableAccount(
+          options.rampable,
+        );
+      }
+
       const response = await this.axiosInstance.post<
         BaseHttpResponse<UsernameRegisterResponse>
       >('/auth/register', {
@@ -44,10 +52,8 @@ export class XellarEWUsernameRegister extends XellarEWBase {
       const tokenManager = this.container.resolve<TokenManager>('TokenManager');
       tokenManager.setWalletToken(token);
 
-      if (options?.rampable) {
-        const rampableAccessToken = await this.createRampableAccount(
-          options.rampable,
-        );
+      if (rampableAccessToken) {
+        tokenManager.setRampableAccessToken(rampableAccessToken);
 
         return {
           ...response.data.data,

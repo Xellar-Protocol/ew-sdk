@@ -9,9 +9,21 @@ export class XellarEWWhatsAppVerify extends XellarEWBase {
    * Allows you to login to your Xellar Embedded wallet account using User’s whatsapp number.
    * @param verificationToken (required): verificationToken from Login.
    * @param otp (required): otp sent to the user's whatsapp account.
+   * @param options (optional): WhatsApp auth options.
+   *    - rampable (optional): Rampable account configuration.
    *
    * @example
+   * // Basic usage
    * const response = await sdk.auth.whatsapp.verify(verificationToken, otp);
+   *
+   * // With rampable option
+   * const response = await sdk.auth.whatsapp.verify(verificationToken, otp, {
+   *   rampable: {
+   *     username: 'username',
+   *     fullName: 'full name',
+   *     password: 'password',
+   *   },
+   * });
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/whatsapp/verify_otp/ Xellar Auth WhatsApp Verify Docs}
    */

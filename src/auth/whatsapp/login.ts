@@ -10,7 +10,7 @@ export class XellarEWWhatsAppLogin extends XellarEWBase {
    * @returns `WhatsAppLoginResponse`: An object containing the `verifyToken` and `isWalletCreated` indicating whether the user has created a wallet or not.
    *
    * @example
-   * const response = await sdk.auth.whatsapp.login(email);
+   * const response = await sdk.auth.whatsapp.login(phoneNumber);
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/whatsapp/login/ Xellar Auth WhatsApp Docs}
    */
