@@ -15,6 +15,7 @@ describe('Username Authentication', () => {
           data: {
             accessToken: 'mock-access-token',
             refreshToken: 'mock-refresh-token',
+            isWalletCreated: false,
           },
         },
       };
@@ -25,6 +26,7 @@ describe('Username Authentication', () => {
       expect(result).toEqual({
         accessToken: 'mock-access-token',
         refreshToken: 'mock-refresh-token',
+        isWalletCreated: false,
       });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/login', {
         username: 'testuser',
@@ -61,6 +63,7 @@ describe('Username Authentication', () => {
         data: {
           data: {
             accessToken: 'mock-access-token',
+            isWalletCreated: false,
           },
         },
       };
@@ -68,7 +71,10 @@ describe('Username Authentication', () => {
 
       const result = await sdk.auth.username.register('testuser', 'testpass');
 
-      expect(result).toEqual({ accessToken: 'mock-access-token' });
+      expect(result).toEqual({
+        accessToken: 'mock-access-token',
+        isWalletCreated: false,
+      });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/register', {
         username: 'testuser',
         password: 'testpass',
@@ -80,6 +86,7 @@ describe('Username Authentication', () => {
         data: {
           data: {
             accessToken: 'mock-access-token',
+            isWalletCreated: false,
           },
         },
       };
@@ -111,24 +118,25 @@ describe('Username Authentication', () => {
 
       expect(result).toEqual({
         accessToken: 'mock-access-token',
+        isWalletCreated: false,
         rampableAccessToken: 'mock-rampable-token',
       });
       expect(mockAxiosInstance.post).toHaveBeenCalledTimes(2);
       expect(mockAxiosInstance.post).toHaveBeenNthCalledWith(
         1,
-        '/auth/register',
-        {
-          username: 'testuser',
-          password: 'testpass',
-        },
-      );
-      expect(mockAxiosInstance.post).toHaveBeenNthCalledWith(
-        2,
         'account/rampable/create',
         {
           username: 'rampuser',
           fullName: 'Ramp User',
           password: 'ramppass',
+        },
+      );
+      expect(mockAxiosInstance.post).toHaveBeenNthCalledWith(
+        2,
+        '/auth/register',
+        {
+          username: 'testuser',
+          password: 'testpass',
         },
       );
     });
