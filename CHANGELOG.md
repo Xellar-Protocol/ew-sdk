@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.2.1
+
+### Patch Changes
+
+- [`70a6bf2`](https://github.com/Xellar-Protocol/ew-sdk/commit/70a6bf2112cfc8c5e2ae4084c43667e9f5318160) Thanks [@iyansr](https://github.com/iyansr)! - Fix username register flow
+
 ## 3.2.0
 
 ### Minor Changes
