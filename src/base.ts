@@ -11,6 +11,7 @@ import { Container } from './container';
 import { Config } from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
 import { handleError, XellarError } from './utils/error';
+import { generateAssymetricSignature } from './utils/generate-signature';
 import { TokenManager } from './utils/token-manager';
 
 export class XellarEWBase {
@@ -114,31 +115,53 @@ export class XellarEWBase {
         const tokenManager =
           this.container.resolve<TokenManager>('TokenManager');
 
-        const { rampableClientSecret } =
+        const { rampableClientSecret, rampable } =
           this.container.resolve<Config>('Config');
 
         const accessToken = tokenManager.getRampableAccessToken();
 
-        if (accessToken) {
+        if (rampable) {
+          const timeStamp = new Date().toISOString();
+          const signature = generateAssymetricSignature({
+            body: cfg.data,
+            timeStamp,
+            method: cfg.method?.toUpperCase() as
+              | 'GET'
+              | 'DELETE'
+              | 'POST'
+              | 'PUT'
+              | 'PATCH',
+            clientID: rampable.clientId,
+            privateKey: rampable.privateKey,
+          });
+
           cfg.headers = cfg.headers || {};
-          cfg.headers.Authorization = `Bearer ${accessToken}`;
-        }
+          cfg.headers['x-timestamp'] = timeStamp;
+          cfg.headers['x-signature'] = signature;
+          cfg.headers['x-client-id'] = rampable.clientId;
+        } else {
+          if (accessToken) {
+            cfg.headers = cfg.headers || {};
+            cfg.headers.Authorization = `Bearer ${accessToken}`;
+          }
 
-        let rampableClientSecretFromTokenManager =
-          rampableClientSecret || tokenManager.getRampableClientSecret();
+          let rampableClientSecretFromTokenManager =
+            rampableClientSecret || tokenManager.getRampableClientSecret();
 
-        if (!rampableClientSecretFromTokenManager) {
-          const organizationInfo = await this.getOrganizationInfo();
-          rampableClientSecretFromTokenManager =
-            organizationInfo.rampableClientSecret;
-          tokenManager.setRampableClientSecret(
-            organizationInfo.rampableClientSecret,
-          );
-        }
+          if (!rampableClientSecretFromTokenManager) {
+            const organizationInfo = await this.getOrganizationInfo();
+            rampableClientSecretFromTokenManager =
+              organizationInfo.rampableClientSecret;
+            tokenManager.setRampableClientSecret(
+              organizationInfo.rampableClientSecret,
+            );
+          }
 
-        if (rampableClientSecretFromTokenManager) {
-          cfg.headers = cfg.headers || {};
-          cfg.headers['x-client-secret'] = rampableClientSecretFromTokenManager;
+          if (rampableClientSecretFromTokenManager) {
+            cfg.headers = cfg.headers || {};
+            cfg.headers['x-client-secret'] =
+              rampableClientSecretFromTokenManager;
+          }
         }
 
         return cfg;

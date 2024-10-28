@@ -27,11 +27,17 @@ export default class XellarSDK {
 
   public rampableRecipients: XellarEWRampableRecipients;
 
-  constructor({ clientSecret, env = 'sandbox', rampableClientSecret }: Config) {
+  constructor({
+    clientSecret,
+    env = 'sandbox',
+    rampableClientSecret,
+    rampable,
+  }: Config) {
     const config: Config = {
       clientSecret,
       env,
       rampableClientSecret,
+      rampable,
     };
 
     this.container = new Container();

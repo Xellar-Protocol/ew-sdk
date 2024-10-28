@@ -152,7 +152,7 @@ export type TransactionReceipt = {
     nonce: number;
     signature: {
       _type: string;
-      networkV: string;
+      network: string;
       r: string;
       s: string;
       v: number;

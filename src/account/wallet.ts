@@ -11,6 +11,9 @@ export class XellarEWAccountWallet extends XellarEWBase {
   /**
    * Allows you to create a new MPC wallet for a particular account
    * @param expireDate - (optional): The expiration date for the JWT token generated from the response.
+   * @param options (optional): Options for the create wallet request.
+   *  - rampable (optional): Rampable account configuration.
+   *
    * @returns An object containing the user access token, secret0, secret0Link & wallet address
    *  - `walletToken`: JWT token used to access the Wallet Operation endpoint.
    *  - `refreshToken`: Refresh token used to generate a new wallet token.
