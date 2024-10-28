@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.3.0
+
+### Minor Changes
+
+- [`bc30c7d`](https://github.com/Xellar-Protocol/ew-sdk/commit/bc30c7db7c3e10acba004c09973910630e193b69) Thanks [@iyansr](https://github.com/iyansr)! - Add rampable Personal Token
+
 ## 3.2.1
 
 ### Patch Changes
