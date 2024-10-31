@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.4.1
+
+### Patch Changes
+
+- [`3741aed`](https://github.com/Xellar-Protocol/ew-sdk/commit/3741aed7028a7e9833f9c5ebcbd9c796b798f29a) Thanks [@iyansr](https://github.com/iyansr)! - Add page in bank reference
+
 ## 3.4.0
 
 ### Minor Changes
