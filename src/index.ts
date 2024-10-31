@@ -53,3 +53,16 @@ export default class XellarSDK {
     this.rampableRecipients = new XellarEWRampableRecipients(this.container);
   }
 }
+
+export type {
+  RampableRecipient,
+  RecipientBank,
+} from './rampable/recipients/types';
+export type {
+  RampableBank,
+  RampableCrypto,
+  RampableCurrency,
+  RampablePaymentMethod,
+} from './rampable/references/types';
+export type { Network } from './types/chain';
+export type { RampableAccount } from './types/http';
