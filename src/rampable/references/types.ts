@@ -76,6 +76,11 @@ export type ListBanksParams = {
   limit?: number;
 
   /**
+   * The page number to return.
+   */
+  page?: number;
+
+  /**
    * Sort the recipients by a specific field. You can sort by createdAt or updatedAt. By default, recipients are sorted by createdAt. You can also sort in reverse order by adding a hyphen (-) before the field you want to sort by.
    */
   sort?: string;
