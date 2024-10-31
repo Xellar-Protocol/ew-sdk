@@ -1,5 +1,12 @@
 # xellar-ew-sdk
 
+## 3.4.0
+
+### Minor Changes
+
+- [`d5fd8d4`](https://github.com/Xellar-Protocol/ew-sdk/commit/d5fd8d45843c8ae38ac8b4a8d5e5cbf11faa5d29) Thanks [@iyansr](https://github.com/iyansr)! - - Expose types for rampable recipients, references, network, payment methods, etc.
+  - Remove unused options from username login.
+
 ## 3.3.0
 
 ### Minor Changes
