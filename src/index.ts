@@ -54,15 +54,19 @@ export default class XellarSDK {
   }
 }
 
+export type * from './rampable/off-ramps/types';
 export type {
-  RampableRecipient,
-  RecipientBank,
-} from './rampable/recipients/types';
-export type {
-  RampableBank,
-  RampableCrypto,
-  RampableCurrency,
-  RampablePaymentMethod,
-} from './rampable/references/types';
+  XellarOnRampQuoteRequest,
+  XellarOnRampQuoteResponse,
+  XellarOnRampTransactionListParams,
+  XellarOnRampTransactionListResponse,
+} from './rampable/on-ramps/types';
+export type * from './rampable/recipients/types';
+export type * from './rampable/references/types';
 export type { Network } from './types/chain';
-export type { RampableAccount } from './types/http';
+export type {
+  AccountWalletResponse,
+  AuthSuccessResponse,
+  RampableAccount,
+} from './types/http';
+export type * from './wallet/types';
