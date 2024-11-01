@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.4.2
+
+### Patch Changes
+
+- [`0da1cc2`](https://github.com/Xellar-Protocol/ew-sdk/commit/0da1cc2b5fda54507f145b2b88ef6aeb0689d773) Thanks [@iyansr](https://github.com/iyansr)! - Expose more types
+
 ## 3.4.1
 
 ### Patch Changes
