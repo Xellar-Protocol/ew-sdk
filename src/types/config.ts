@@ -9,4 +9,5 @@ export type Config = {
     clientId: string;
     privateKey: string;
   };
+  platform?: 'react-native' | 'web' | 'node';
 };

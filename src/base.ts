@@ -12,6 +12,7 @@ import { Config } from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
 import { handleError, XellarError } from './utils/error';
 import { generateAssymetricSignature } from './utils/generate-signature';
+import { generateAssymetricSignatureRN } from './utils/generate-signature-react-native';
 import { TokenManager } from './utils/token-manager';
 
 export class XellarEWBase {
@@ -115,14 +116,19 @@ export class XellarEWBase {
         const tokenManager =
           this.container.resolve<TokenManager>('TokenManager');
 
-        const { rampableClientSecret, rampable } =
+        const { rampableClientSecret, rampable, platform } =
           this.container.resolve<Config>('Config');
 
         const accessToken = tokenManager.getRampableAccessToken();
 
         if (rampable) {
           const timeStamp = new Date().toISOString();
-          const signature = generateAssymetricSignature({
+          const generateSignatureFn =
+            platform === 'react-native'
+              ? generateAssymetricSignatureRN
+              : generateAssymetricSignature;
+
+          const signature = generateSignatureFn({
             body: cfg.data,
             timeStamp,
             method: cfg.method?.toUpperCase() as

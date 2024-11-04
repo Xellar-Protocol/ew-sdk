@@ -32,12 +32,14 @@ export default class XellarSDK {
     env = 'sandbox',
     rampableClientSecret,
     rampable,
+    platform = 'node',
   }: Config) {
     const config: Config = {
       clientSecret,
       env,
       rampableClientSecret,
       rampable,
+      platform,
     };
 
     this.container = new Container();
