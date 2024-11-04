@@ -11,8 +11,6 @@ import { Container } from './container';
 import { Config } from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
 import { handleError, XellarError } from './utils/error';
-import { generateAssymetricSignature } from './utils/generate-signature';
-import { generateAssymetricSignatureRN } from './utils/generate-signature-react-native';
 import { TokenManager } from './utils/token-manager';
 
 export class XellarEWBase {
@@ -125,8 +123,10 @@ export class XellarEWBase {
           const timeStamp = new Date().toISOString();
           const generateSignatureFn =
             platform === 'react-native'
-              ? generateAssymetricSignatureRN
-              : generateAssymetricSignature;
+              ? (await import('./utils/generate-signature-react-native'))
+                  .generateAssymetricSignatureRN
+              : (await import('./utils/generate-signature'))
+                  .generateAssymetricSignature;
 
           const signature = generateSignatureFn({
             body: cfg.data,

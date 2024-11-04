@@ -11,6 +11,7 @@ export const setupTests = () => {
   const mockConfig: Config = {
     clientSecret: 'test-client-secret',
     env: 'sandbox',
+    platform: 'node',
   };
 
   const mockAxiosInstance = {
