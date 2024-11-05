@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.6.4
+
+### Patch Changes
+
+- [`5bc7b8b`](https://github.com/Xellar-Protocol/ew-sdk/commit/5bc7b8b39b3d4aba481565ccd1fac4eee82c4618) Thanks [@iyansr](https://github.com/iyansr)! - Fix Encoding
+
 ## 3.6.3
 
 ### Patch Changes
