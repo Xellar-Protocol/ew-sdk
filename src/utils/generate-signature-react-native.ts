@@ -67,11 +67,8 @@ export const generateAssymetricSignatureRN = ({
     {
       key: myPemKey,
     },
-    'hex',
+    'base64',
   ) as string;
 
-  // Encode the signature to base64
-  const base64Signature = Buffer.from(signature, 'hex').toString('base64');
-
-  return base64Signature;
+  return signature;
 };
