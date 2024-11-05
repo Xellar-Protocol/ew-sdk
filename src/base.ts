@@ -8,7 +8,7 @@ import axios, {
 
 import { RAMPABLE_API_URL, XELLAR_API_URL } from './constants';
 import { Container } from './container';
-import { Config } from './types/config';
+import { Config, GenerateAssymetricSignatureParams } from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
 import { handleError, XellarError } from './utils/error';
 import { TokenManager } from './utils/token-manager';
@@ -20,10 +20,18 @@ export class XellarEWBase {
 
   protected container: Container;
 
+  protected generateAssymetricSignature: (
+    // eslint-disable-next-line no-unused-vars
+    _params: GenerateAssymetricSignatureParams,
+  ) => string;
+
   constructor(container: Container) {
     this.container = container;
     this.axiosInstance = this._setupAxiosInstance();
     this.rampableAxiosInstance = this._setupRampableAxiosInstance();
+    this.generateAssymetricSignature = this.container.resolve(
+      'GenerateAssymetricSignature',
+    );
   }
 
   private _setupAxiosInstance() {
@@ -114,19 +122,14 @@ export class XellarEWBase {
         const tokenManager =
           this.container.resolve<TokenManager>('TokenManager');
 
-        const { rampableClientSecret, rampable, platform } =
+        const { rampableClientSecret, rampable } =
           this.container.resolve<Config>('Config');
 
         const accessToken = tokenManager.getRampableAccessToken();
 
         if (rampable) {
           const timeStamp = new Date().toISOString();
-          const generateSignatureFn =
-            platform === 'react-native'
-              ? (await import('./utils/generate-signature-react-native'))
-                  .generateAssymetricSignatureRN
-              : (await import('./utils/generate-signature'))
-                  .generateAssymetricSignature;
+          const generateSignatureFn = this.generateAssymetricSignature;
 
           const signature = generateSignatureFn({
             body: cfg.data,

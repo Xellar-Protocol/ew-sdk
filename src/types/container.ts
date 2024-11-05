@@ -1,1 +1,4 @@
-export type ContainerName = 'TokenManager' | 'Config';
+export type ContainerName =
+  | 'TokenManager'
+  | 'Config'
+  | 'GenerateAssymetricSignature';

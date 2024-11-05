@@ -1,12 +1,6 @@
 import crypto from 'react-native-quick-crypto';
 
-type RNGenerateAssymetricSignatureParams = {
-  body: Record<string, unknown>;
-  timeStamp: string;
-  method: 'GET' | 'DELETE' | 'POST' | 'PATCH' | 'PUT';
-  clientID: string;
-  privateKey: string;
-};
+import { GenerateAssymetricSignatureParams } from '../types/config';
 
 export const generateAssymetricSignatureRN = ({
   body,
@@ -14,7 +8,7 @@ export const generateAssymetricSignatureRN = ({
   method,
   clientID,
   privateKey,
-}: RNGenerateAssymetricSignatureParams) => {
+}: GenerateAssymetricSignatureParams) => {
   const myPemKey = privateKey;
 
   // Asymmetric Key Generation

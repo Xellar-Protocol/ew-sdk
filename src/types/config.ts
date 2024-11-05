@@ -9,5 +9,12 @@ export type Config = {
     clientId: string;
     privateKey: string;
   };
-  platform?: 'react-native' | 'web' | 'node';
+};
+
+export type GenerateAssymetricSignatureParams = {
+  body: Record<string, unknown>;
+  timeStamp: string;
+  method: 'GET' | 'DELETE' | 'POST' | 'PATCH' | 'PUT';
+  clientID: string;
+  privateKey: string;
 };

@@ -1,12 +1,6 @@
 import crypto from 'crypto';
 
-type GenerateAssymetricSignatureParams = {
-  body: Record<string, unknown>;
-  timeStamp: string;
-  method: 'GET' | 'DELETE' | 'POST' | 'PATCH' | 'PUT';
-  clientID: string;
-  privateKey: string;
-};
+import { GenerateAssymetricSignatureParams } from '../types/config';
 
 export const generateAssymetricSignature = ({
   body,
