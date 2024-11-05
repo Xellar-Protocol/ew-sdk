@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.6.0
+
+### Minor Changes
+
+- [`5cba230`](https://github.com/Xellar-Protocol/ew-sdk/commit/5cba23099bf90b062e3b2ef418d182f29d90a1e5) Thanks [@iyansr](https://github.com/iyansr)! - Fix Support for React Native
+
 ## 3.5.0
 
 ### Minor Changes
