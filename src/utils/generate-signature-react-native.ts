@@ -60,7 +60,7 @@ export const generateAssymetricSignatureRN = ({
   const sign = crypto.createSign('SHA256');
 
   // Update the signer object with the data to be signed
-  sign.update(stringToSign);
+  sign.update(stringToSign, 'utf8');
 
   // Sign the data
   const signature = sign.sign(
