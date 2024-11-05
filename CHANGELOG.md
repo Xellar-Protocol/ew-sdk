@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.6.5
+
+### Patch Changes
+
+- [`1782579`](https://github.com/Xellar-Protocol/ew-sdk/commit/1782579a125714813cae7b64ef95c5d90d0b2fa7) Thanks [@iyansr](https://github.com/iyansr)! - Fix Encoding RN
+
 ## 3.6.4
 
 ### Patch Changes
