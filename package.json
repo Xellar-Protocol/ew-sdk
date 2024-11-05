@@ -5,8 +5,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "./react-native": {
-    "require": "./dist/react-native/index.js"
+  "exports": {
+    ".": "./dist/index.js",
+    "./react-native": "./dist/react-native/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts src/react-native/index.ts --format cjs,esm --dts",
