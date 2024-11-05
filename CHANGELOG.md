@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.6.2
+
+### Patch Changes
+
+- [`13fbc61`](https://github.com/Xellar-Protocol/ew-sdk/commit/13fbc618668fd7e1e01137f0d941f504439c4454) Thanks [@iyansr](https://github.com/iyansr)! - Fix Import
+
 ## 3.6.1
 
 ### Patch Changes
