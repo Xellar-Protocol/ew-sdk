@@ -1,0 +1,5 @@
+{
+   "main": "../dist/react-native/index.js",
+   "module": "../dist/react-native/index.mjs",
+   "types": "../dist/react-native/index.d.ts"
+}

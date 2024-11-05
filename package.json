@@ -6,8 +6,16 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./react-native": "./dist/react-native/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./react-native": {
+      "types": "./dist/react-native/index.d.ts",
+      "require": "./dist/react-native/index.js",
+      "import": "./dist/react-native/index.mjs"
+    }
   },
   "scripts": {
     "build": "tsup src/index.ts src/react-native/index.ts --format cjs,esm --dts",
@@ -60,6 +68,7 @@
     "react-native-quick-crypto": "^0.7.6"
   },
   "files": [
-    "dist"
+    "dist",
+    "react-native"
   ]
 }
