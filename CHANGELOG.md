@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.6.3
+
+### Patch Changes
+
+- [`ee5861a`](https://github.com/Xellar-Protocol/ew-sdk/commit/ee5861a028a0146e2f27fd08315a23e582ef8a4d) Thanks [@iyansr](https://github.com/iyansr)! - Fix RN
+
 ## 3.6.2
 
 ### Patch Changes
