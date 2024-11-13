@@ -1,5 +1,10 @@
 import { XellarEWBase } from '../base';
 import {
+  RAMPABLE_ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  WALLET_OR_ACCESS_TOKEN_KEY,
+} from '../constants';
+import {
   AccountWalletResponse,
   BaseHttpResponse,
   RampableAccount,
@@ -38,13 +43,12 @@ export class XellarEWAccountWallet extends XellarEWBase {
       const { walletToken } = response.data.data;
       const { refreshToken } = response.data.data;
 
-      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
-
-      tokenManager.setWalletToken(walletToken);
-      tokenManager.setRefreshToken(refreshToken);
+      await this.storage.setItem(WALLET_OR_ACCESS_TOKEN_KEY, walletToken);
+      await this.storage.setItem(REFRESH_TOKEN_KEY, refreshToken);
 
       if (response.data.data.rampableAccessToken) {
-        tokenManager.setRampableAccessToken(
+        await this.storage.setItem(
+          RAMPABLE_ACCESS_TOKEN_KEY,
           response.data.data.rampableAccessToken,
         );
       }

@@ -1,4 +1,5 @@
 export type ContainerName =
   | 'TokenManager'
   | 'Config'
-  | 'GenerateAssymetricSignature';
+  | 'GenerateAssymetricSignature'
+  | 'Storage';

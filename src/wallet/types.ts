@@ -189,6 +189,30 @@ export type SendTransactionConfig = {
   };
 };
 
+export type TransactionDetailConfig = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The transaction hash. */
+  transactionHash: string;
+};
+
+export type TransactionDetailResponse = {
+  _type: string;
+  blockHash: string;
+  blockNumber: number;
+  contractAddress: string | null;
+  cumulativeGasUsed: string;
+  from: string;
+  gasPrice: string;
+  gasUsed: string;
+  hash: string;
+  index: number;
+  logs: any[];
+  logsBloom: string;
+  status: number;
+  to: string;
+};
+
 export type TransferERC721Config = {
   /** (required): The network used for transactions. */
   network: Network;
@@ -211,4 +235,19 @@ export type TransferERC1155Config = {
   tokenId: string | string[];
   /** (required): The address of the ERC1155 token contract. */
   tokenAddress: string;
+};
+
+export type DecodedWalletToken = {
+  version: number;
+  uid: string;
+  username: string;
+  provider: string;
+  address: Address[];
+  mode: string;
+  iat: number;
+};
+
+export type Address = {
+  network: string;
+  address: string;
 };

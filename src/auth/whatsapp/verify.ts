@@ -1,7 +1,11 @@
 import { XellarEWBase } from '../../base';
+import {
+  RAMPABLE_ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  WALLET_OR_ACCESS_TOKEN_KEY,
+} from '../../constants';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
-import { TokenManager } from '../../utils/token-manager';
 import { WhatsAppAuthOptions } from './types';
 
 export class XellarEWWhatsAppVerify extends XellarEWBase {
@@ -45,13 +49,13 @@ export class XellarEWWhatsAppVerify extends XellarEWBase {
         : response.data.data.accessToken;
 
       const { refreshToken } = response.data.data;
-      const tokenManager = this.container.resolve<TokenManager>('TokenManager');
 
-      tokenManager.setWalletToken(token);
-      tokenManager.setRefreshToken(refreshToken);
+      await this.storage.setItem(WALLET_OR_ACCESS_TOKEN_KEY, token);
+      await this.storage.setItem(REFRESH_TOKEN_KEY, refreshToken);
 
       if (response.data?.data?.rampableAccessToken) {
-        tokenManager.setRampableAccessToken(
+        await this.storage.setItem(
+          RAMPABLE_ACCESS_TOKEN_KEY,
           response.data.data.rampableAccessToken,
         );
       }

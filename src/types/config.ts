@@ -1,3 +1,5 @@
+import { StateStorage } from '../utils/storage';
+
 export type Config = {
   clientSecret: string;
   rampableClientSecret?: string;
@@ -9,6 +11,7 @@ export type Config = {
     clientId: string;
     privateKey: string;
   };
+  storage?: StateStorage;
 };
 
 export type GenerateAssymetricSignatureParams = {

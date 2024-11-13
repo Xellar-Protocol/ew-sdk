@@ -7,3 +7,7 @@ export const RAMPABLE_API_URL = {
   sandbox: 'https://staging.rampable.co',
   production: 'https://api.rampable.co',
 };
+
+export const WALLET_OR_ACCESS_TOKEN_KEY = 'walletOrAccessToken';
+export const REFRESH_TOKEN_KEY = 'refreshToken';
+export const RAMPABLE_ACCESS_TOKEN_KEY = 'rampableAccessToken';
