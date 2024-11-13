@@ -5,7 +5,7 @@ import { TransactionDetailConfig, TransactionDetailResponse } from './types';
 
 export class XellarEWTransactionDetail extends XellarEWBase {
   /**
-   * Allows you to send a custom transaction on a blockchain network
+   * Allows you to get the transaction detail
    * @param config Configuration object.
    *
    *  - `network` (required): The network used for transactions.
