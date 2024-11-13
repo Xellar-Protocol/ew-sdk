@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 3.7.0
+
+### Minor Changes
+
+- [`3f7451d`](https://github.com/Xellar-Protocol/ew-sdk/commit/3f7451da04a6ebcfb76f17b06c0949568833b428) Thanks [@iyansr](https://github.com/iyansr)! - Add get addresses, get transaction detail
+
 ## 3.6.5
 
 ### Patch Changes
