@@ -26,20 +26,30 @@ describe('Wallet Transfer ERC1155', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const transferERC1155Config: TransferERC1155Config = {
+      const result = await sdk.wallet.transferERC1155({
         network: Network.ETHEREUM,
         to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
         tokenId: '123',
         amount: '5',
         tokenAddress: '0x1234567890123456789012345678901234567890',
-      };
-
-      const result = await sdk.wallet.transferERC1155(transferERC1155Config);
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual(mockResponse.data.data);
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/transfer-erc1155',
-        transferERC1155Config,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          tokenId: '123',
+          amount: '5',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -55,21 +65,31 @@ describe('Wallet Transfer ERC1155', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const transferERC1155Config: TransferERC1155Config = {
-        network: Network.ETHEREUM,
-        to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
-        tokenId: '123',
-        amount: '5',
-        tokenAddress: '0x1234567890123456789012345678901234567890',
-      };
-
       await expect(
-        sdk.wallet.transferERC1155(transferERC1155Config),
+        sdk.wallet.transferERC1155({
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          tokenId: '123',
+          amount: '5',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/transfer-erc1155',
-        transferERC1155Config,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          tokenId: '123',
+          amount: '5',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

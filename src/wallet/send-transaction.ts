@@ -1,7 +1,11 @@
 import { XellarEWBase } from '../base';
 import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
-import { SendTransactionConfig, TransactionReceipt } from './types';
+import {
+  SendTransactionConfig,
+  TransactionReceipt,
+  WithTokenResponse,
+} from './types';
 
 export class XellarEWSendTransaction extends XellarEWBase {
   /**
@@ -10,8 +14,13 @@ export class XellarEWSendTransaction extends XellarEWBase {
    *
    *  - `network` (required): The network used for transactions.
    *  - `transaction` (required): The raw transaction data.
+   *  - `walletToken` (required): The wallet token for authentication.
+   *  - `refreshToken` (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token.
    *
-   * @returns Object of transaction receipt
+   * @returns Object of transaction receipt. If you provide `refreshToken`, the SDK will return the new wallet token and refresh token.
+   *  - `txReceipt`: The transaction receipt.
+   *  - `refreshToken`?: The new refresh token.
+   *  - `walletToken`?: The new wallet token.
    *
    * @example
    *
@@ -26,18 +35,51 @@ export class XellarEWSendTransaction extends XellarEWBase {
    *     gasPrice: '0x09184e72a000',
    *     gasLimit: '0x5208'
    *   }
+   *   walletToken: "your-wallet-token",
    * });
    * ```
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/wallet_operation/Send_Transaction/ Xellar Wallet Send Transaction Docs}
    */
-  async sendTransaction(config: SendTransactionConfig) {
+  async sendTransaction(
+    config: SendTransactionConfig & { refreshToken: string },
+  ): Promise<WithTokenResponse<TransactionReceipt>>;
+
+  async sendTransaction(
+    config: SendTransactionConfig & { refreshToken?: undefined },
+  ): Promise<TransactionReceipt>;
+
+  async sendTransaction({
+    walletToken,
+    refreshToken,
+    ...config
+  }: SendTransactionConfig): Promise<
+    WithTokenResponse<TransactionReceipt> | TransactionReceipt
+  > {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<TransactionReceipt>
-      >('/wallet/send-transaction', {
-        ...config,
-      });
+      >(
+        '/wallet/send-transaction',
+        {
+          ...config,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${walletToken}`,
+          },
+        },
+      );
+
+      if (refreshToken) {
+        const refreshTokenResult = await this._refreshToken(refreshToken);
+
+        return {
+          txReceipt: response.data.data.txReceipt,
+          refreshToken: refreshTokenResult.refreshToken,
+          walletToken: refreshTokenResult.walletToken,
+        };
+      }
 
       return response.data.data;
     } catch (error) {

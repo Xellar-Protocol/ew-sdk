@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { RampablePaymentMethod } from './types';
 
 export class XellarEWRampablePaymentMethod extends XellarEWBase {
@@ -10,16 +11,26 @@ export class XellarEWRampablePaymentMethod extends XellarEWBase {
    *
    * @example
    * ```typescript
-   * const paymentMethods = await xellar.rampableReference.listPaymentMethods();
+   * const paymentMethods = await xellar.rampableReference.listPaymentMethods({
+   *   rampableAccessToken: 'your_rampable_access_token'
+   * });
    * ```
    *
    * @see {@link https://docs.rampable.co/references#list-all-payment-methods Rampable Payment Method API}
    */
-  async listPaymentMethods() {
+  async listPaymentMethods({
+    rampableAccessToken,
+  }: WithRampableAccessToken<{}> = {}) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<RampablePaymentMethod[]>
-      >('/reference/payment-methods');
+      >('/reference/payment-methods', {
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
+      });
 
       return response.data.data;
     } catch (error) {

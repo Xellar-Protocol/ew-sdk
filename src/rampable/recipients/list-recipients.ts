@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { ListRecipientsParams, ListRecipientsResponse } from './types';
 
 export class XellarEWRampableListRecipients extends XellarEWBase {
@@ -16,17 +17,26 @@ export class XellarEWRampableListRecipients extends XellarEWBase {
    *   page: 1,
    *   sort: '-createdAt',
    *   search: 'John',
+   *   rampableAccessToken: 'your_rampable_access_token'
    * });
    * ```
    *
    * @see {@link https://docs.rampable.co/recipients#list-all-recipients Rampable List Recipients API}
    */
-  async listRecipients(params?: ListRecipientsParams) {
+  async listRecipients({
+    rampableAccessToken,
+    ...params
+  }: WithRampableAccessToken<ListRecipientsParams> = {}) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<ListRecipientsResponse>
       >('/recipient', {
-        params,
+        params: { ...params },
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
       });
 
       return response.data.data;

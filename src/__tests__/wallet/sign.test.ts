@@ -25,17 +25,24 @@ describe('Wallet Sign', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const signMessageConfig: SignMessageConfig = {
+      const result = await sdk.wallet.signMessage({
         network: Network.ETHEREUM,
         message: 'Hello, world!',
-      };
+        walletToken: 'mock-wallet-token',
+      });
 
-      const result = await sdk.wallet.signMessage(signMessageConfig);
-
-      expect(result).toEqual('0x1234567890abcdef');
+      expect(result).toEqual({ signature: '0x1234567890abcdef' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
-        signMessageConfig,
+        {
+          network: Network.ETHEREUM,
+          message: 'Hello, world!',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -51,18 +58,25 @@ describe('Wallet Sign', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const signMessageConfig: SignMessageConfig = {
-        network: Network.ETHEREUM,
-        message: 'Hello, world!',
-      };
-
-      await expect(sdk.wallet.signMessage(signMessageConfig)).rejects.toThrow(
-        XellarError,
-      );
+      await expect(
+        sdk.wallet.signMessage({
+          network: Network.ETHEREUM,
+          message: 'Hello, world!',
+          walletToken: 'mock-wallet-token',
+        }),
+      ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
-        signMessageConfig,
+        {
+          network: Network.ETHEREUM,
+          message: 'Hello, world!',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });
@@ -78,7 +92,7 @@ describe('Wallet Sign', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const signTransactionConfig: SignTransactionConfig = {
+      const result = await sdk.wallet.signTransaction({
         network: Network.ETHEREUM,
         transaction: {
           from: '0x1234567890123456789012345678901234567890',
@@ -86,14 +100,26 @@ describe('Wallet Sign', () => {
           value: '0x00',
           data: '0x',
         },
-      };
+        walletToken: 'mock-wallet-token',
+      });
 
-      const result = await sdk.wallet.signTransaction(signTransactionConfig);
-
-      expect(result).toEqual('0xabcdef1234567890');
+      expect(result).toEqual({ signedTransaction: '0xabcdef1234567890' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
-        signTransactionConfig,
+        {
+          network: Network.ETHEREUM,
+          transaction: {
+            from: '0x1234567890123456789012345678901234567890',
+            to: '0x0987654321098765432109876543210987654321',
+            value: '0x00',
+            data: '0x',
+          },
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -109,23 +135,35 @@ describe('Wallet Sign', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const signTransactionConfig: SignTransactionConfig = {
-        network: Network.ETHEREUM,
-        transaction: {
-          from: '0x1234567890123456789012345678901234567890',
-          to: '0x0987654321098765432109876543210987654321',
-          value: '0x00',
-          data: '0x',
-        },
-      };
-
       await expect(
-        sdk.wallet.signTransaction(signTransactionConfig),
+        sdk.wallet.signTransaction({
+          network: Network.ETHEREUM,
+          transaction: {
+            from: '0x1234567890123456789012345678901234567890',
+            to: '0x0987654321098765432109876543210987654321',
+            value: '0x00',
+            data: '0x',
+          },
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
-        signTransactionConfig,
+        {
+          network: Network.ETHEREUM,
+          transaction: {
+            from: '0x1234567890123456789012345678901234567890',
+            to: '0x0987654321098765432109876543210987654321',
+            value: '0x00',
+            data: '0x',
+          },
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

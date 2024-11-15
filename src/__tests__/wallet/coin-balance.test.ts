@@ -22,7 +22,10 @@ describe('Wallet Check Coin Balance', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const result = await sdk.wallet.balanceCoin(Network.ETHEREUM);
+      const result = await sdk.wallet.balanceCoin({
+        network: Network.ETHEREUM,
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual({
         balance: '1000000000000000000',
@@ -33,6 +36,11 @@ describe('Wallet Check Coin Balance', () => {
         '/wallet/balance-coin',
         {
           network: Network.ETHEREUM,
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -49,14 +57,22 @@ describe('Wallet Check Coin Balance', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      await expect(sdk.wallet.balanceCoin(Network.ETHEREUM)).rejects.toThrow(
-        XellarError,
-      );
+      await expect(
+        sdk.wallet.balanceCoin({
+          network: Network.ETHEREUM,
+          walletToken: 'mock-wallet-token',
+        }),
+      ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/balance-coin',
         {
           network: Network.ETHEREUM,
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });

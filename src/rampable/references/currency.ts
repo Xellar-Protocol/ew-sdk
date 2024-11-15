@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { RampableCurrency } from './types';
 
 export class XellarEWRampableCurrency extends XellarEWBase {
@@ -10,16 +11,26 @@ export class XellarEWRampableCurrency extends XellarEWBase {
    *
    * @example
    * ```typescript
-   * const currencies = await xellar.rampableReference.listCurrencies();
+   * const currencies = await xellar.rampableReference.listCurrencies({
+   *   rampableAccessToken: 'your_rampable_access_token'
+   * });
    * ```
    *
    * @see {@link https://docs.rampable.co/references#list-all-currencies Rampable Currency API}
    */
-  async listCurrencies() {
+  async listCurrencies({
+    rampableAccessToken,
+  }: WithRampableAccessToken<{}> = {}) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<RampableCurrency[]>
-      >('/reference/currencies');
+      >('/reference/currencies', {
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
+      });
 
       return response.data.data;
     } catch (error) {

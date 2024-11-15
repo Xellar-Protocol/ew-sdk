@@ -5,6 +5,10 @@ export type SignMessageConfig = {
   message: string;
   /** (required): The network used for transactions. */
   network: Network;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type SignTransactionConfig = {
@@ -29,6 +33,32 @@ export type SignTransactionConfig = {
     /** (optional): Maximum priority fee per gas you are willing to pay, this only used in EIP1559 support blockchain */
     maxPriorityFeePerGas?: string;
   };
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
+};
+
+export type BalanceTokenConfig = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The address of the token. */
+  tokenAddress: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
+};
+
+export type BalanceTokenBatchConfig = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The addresses of the token. */
+  tokenAddresses: string[];
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type SignTypedDataConfig = {
@@ -43,6 +73,19 @@ export type CancelTransactionConfig = {
   network: Network;
   /** (required): This is a number that must be unique for each transaction, please provide the nonce of the transaction you want to cancel. */
   nonce: number;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
+};
+
+export type GetCoinBalanceConfig = {
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (optional): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type EstimateGasConfig = {
@@ -75,6 +118,10 @@ export type EstimateGasConfig = {
     gasLimit?: string;
     value?: string;
   };
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type EstimateGasResponse = {
@@ -114,6 +161,10 @@ export type SendCoinConfig = {
   gasLimit?: string;
   /** (optional): Maximum priority fee per gas you are willing to pay, this only used in EIP1559 support blockchain */
   maxPriorityFeePerGas?: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type SendTokenConfig = {
@@ -133,6 +184,10 @@ export type SendTokenConfig = {
   gasLimit?: string;
   /** (optional): Maximum priority fee per gas you are willing to pay, this only used in EIP1559 support blockchain */
   maxPriorityFeePerGas?: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type TransactionReceipt = {
@@ -187,6 +242,10 @@ export type SendTransactionConfig = {
     /** The maximum priority fee per gas (for EIP-1559 transactions). */
     maxPriorityFeePerGas?: string;
   };
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type TransactionDetailConfig = {
@@ -194,6 +253,10 @@ export type TransactionDetailConfig = {
   network: Network;
   /** (required): The transaction hash. */
   transactionHash: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type TransactionDetailResponse = {
@@ -222,6 +285,10 @@ export type TransferERC721Config = {
   tokenId: string;
   /** (required): The address of the ERC721 token contract. */
   tokenAddress: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type TransferERC1155Config = {
@@ -235,6 +302,10 @@ export type TransferERC1155Config = {
   tokenId: string | string[];
   /** (required): The address of the ERC1155 token contract. */
   tokenAddress: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type DecodedWalletToken = {
@@ -250,4 +321,9 @@ export type DecodedWalletToken = {
 export type Address = {
   network: string;
   address: string;
+};
+
+export type WithTokenResponse<T> = T & {
+  refreshToken: string;
+  walletToken: string;
 };

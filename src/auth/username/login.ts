@@ -1,9 +1,4 @@
 import { XellarEWBase } from '../../base';
-import {
-  RAMPABLE_ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
-  WALLET_OR_ACCESS_TOKEN_KEY,
-} from '../../constants';
 import { AuthSuccessResponse, BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
 import { UsernameAuthOptions } from './type';
@@ -42,22 +37,6 @@ export class XellarEWUsernameLogin extends XellarEWBase {
         username,
         password,
       });
-
-      const token = response.data.data.isWalletCreated
-        ? response.data.data.walletToken
-        : response.data.data.accessToken;
-
-      const { refreshToken } = response.data.data;
-
-      await this.storage.setItem(WALLET_OR_ACCESS_TOKEN_KEY, token);
-      await this.storage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-
-      if (response.data?.data?.rampableAccessToken) {
-        await this.storage.setItem(
-          RAMPABLE_ACCESS_TOKEN_KEY,
-          response.data.data.rampableAccessToken,
-        );
-      }
 
       if (!response.data?.data?.rampableAccessToken && options?.rampable) {
         const rampableAccessToken = await this.createRampableAccount(

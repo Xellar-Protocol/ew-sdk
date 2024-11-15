@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { XellarOnRampQuoteRequest, XellarOnRampQuoteResponse } from './types';
 
 export class XellarEWOnRampQuote extends XellarEWBase {
@@ -18,17 +19,26 @@ export class XellarEWOnRampQuote extends XellarEWBase {
    *   amount: 100,
    *   inputCurrency: 'IDR',
    *   outputCurrency: 'usdt-polygon',
-   *   withLimit: true
+   *   withLimit: true,
+   *   rampableAccessToken: 'your_rampable_access_token'
    * });
    *
    * @see {@link https://docs.rampable.co/onramps#quote Rampable On-Ramp Quote API}
    */
-  async quote(params: XellarOnRampQuoteRequest) {
+  async quote({
+    rampableAccessToken,
+    ...params
+  }: WithRampableAccessToken<XellarOnRampQuoteRequest>) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<XellarOnRampQuoteResponse>
       >('/onramp/quote', {
         params,
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
       });
 
       return response.data.data;

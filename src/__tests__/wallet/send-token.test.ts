@@ -26,14 +26,13 @@ describe('Wallet Send Token', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const sendTokenConfig: SendTokenConfig = {
+      const result = await sdk.wallet.sendToken({
         network: Network.ETHEREUM,
         to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
         amount: '10',
         tokenAddress: '0x1234567890123456789012345678901234567890',
-      };
-
-      const result = await sdk.wallet.sendToken(sendTokenConfig);
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual({
         txReceipt: {
@@ -45,7 +44,17 @@ describe('Wallet Send Token', () => {
       });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/send-token',
-        sendTokenConfig,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          amount: '10',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -61,20 +70,29 @@ describe('Wallet Send Token', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const sendTokenConfig: SendTokenConfig = {
-        network: Network.ETHEREUM,
-        to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
-        amount: '10',
-        tokenAddress: '0x1234567890123456789012345678901234567890',
-      };
-
-      await expect(sdk.wallet.sendToken(sendTokenConfig)).rejects.toThrow(
-        XellarError,
-      );
+      await expect(
+        sdk.wallet.sendToken({
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          amount: '10',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+          walletToken: 'mock-wallet-token',
+        }),
+      ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/send-token',
-        sendTokenConfig,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          amount: '10',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

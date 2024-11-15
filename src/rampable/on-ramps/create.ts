@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { CreateOnRampRequest, OnRampTransaction } from './types';
 
 export class XellarEWOnRampCreate extends XellarEWBase {
@@ -39,11 +40,20 @@ export class XellarEWOnRampCreate extends XellarEWBase {
    *
    * @see {@link https://docs.rampable.co/onramps#create-onramp Rampable Create On-Ramp API}
    */
-  async create(request: CreateOnRampRequest) {
+  async create({
+    rampableAccessToken,
+    ...request
+  }: WithRampableAccessToken<CreateOnRampRequest>) {
     try {
       const response = await this.rampableAxiosInstance.post<
         BaseHttpResponse<OnRampTransaction>
-      >('/onramp', request);
+      >('/onramp', request, {
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
+      });
 
       return response.data.data;
     } catch (error) {

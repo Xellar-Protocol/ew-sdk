@@ -23,14 +23,20 @@ describe('Wallet Cancel Transaction', () => {
       const result = await sdk.wallet.cancelTransaction({
         network: Network.ETHEREUM,
         nonce: 1234567890,
+        walletToken: 'mock-wallet-token',
       });
 
-      expect(result).toEqual('mock-transaction-hash');
+      expect(result).toEqual({ hash: 'mock-transaction-hash' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/cancel-transaction',
         {
           network: Network.ETHEREUM,
           nonce: 1234567890,
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -51,6 +57,7 @@ describe('Wallet Cancel Transaction', () => {
         sdk.wallet.cancelTransaction({
           network: Network.ETHEREUM,
           nonce: 1234567890,
+          walletToken: 'mock-wallet-token',
         }),
       ).rejects.toThrow(XellarError);
 
@@ -59,6 +66,11 @@ describe('Wallet Cancel Transaction', () => {
         {
           network: Network.ETHEREUM,
           nonce: 1234567890,
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });

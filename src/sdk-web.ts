@@ -7,7 +7,6 @@ import { XellarEWRampableRecipients } from './rampable/recipients';
 import { XellarEWRampableReference } from './rampable/references';
 import { Config } from './types/config';
 import { generateAssymetricSignature } from './utils/generate-signature';
-import { Storage } from './utils/storage';
 import { TokenManager } from './utils/token-manager';
 import { XellarEWWalletOperations } from './wallet';
 
@@ -33,14 +32,12 @@ export class XellarSDK {
     env = 'sandbox',
     rampableClientSecret,
     rampable,
-    storage,
   }: Config) {
     const config: Config = {
       clientSecret,
       env,
       rampableClientSecret,
       rampable,
-      storage,
     };
 
     this.container = new Container();
@@ -50,7 +47,6 @@ export class XellarSDK {
       'GenerateAssymetricSignature',
       generateAssymetricSignature,
     );
-    this.container.register('Storage', new Storage());
 
     this.auth = new XellarEWAuth(this.container);
     this.account = new XellarEWAccountOperations(this.container);

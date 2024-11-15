@@ -1,14 +1,24 @@
 import { XellarEWBase } from '../base';
 import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
-import { EstimateGasConfig, EstimateGasResponse } from './types';
+import {
+  EstimateGasConfig,
+  EstimateGasResponse,
+  WithTokenResponse,
+} from './types';
 
 export class XellarEWEstimateGas extends XellarEWBase {
   /**
    * Allows users to estimate gas for transaction using their MPC wallet.
    * @param {EstimateGasConfig} config The configuration for estimating gas.
    *
-   * @returns Object of gasLimit, gasPrice, maxFeePerGas, and maxPriorityFeePerGas
+   * @returns Object of gasLimit, gasPrice, maxFeePerGas, and maxPriorityFeePerGas. If you provide `refreshToken`, the SDK will return the new wallet token and refresh token.
+   *  - `gasLimit`: The gas limit for the transaction.
+   *  - `gasPrice`: The gas price for the transaction.
+   *  - `maxFeePerGas`: The max fee per gas for the transaction.
+   *  - `maxPriorityFeePerGas`: The max priority fee per gas for the transaction.
+   *  - `refreshToken`?: The new refresh token.
+   *  - `walletToken`?: The new wallet token.
    *
    * @example
    *
@@ -72,13 +82,45 @@ export class XellarEWEstimateGas extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/wallet_operation/Estimate_Gas/ Xellar Wallet Estimate Gas Docs}
    */
-  async estimateGas(config: EstimateGasConfig) {
+  async estimateGas(
+    config: EstimateGasConfig & { refreshToken: string },
+  ): Promise<WithTokenResponse<EstimateGasResponse>>;
+
+  async estimateGas(
+    config: EstimateGasConfig & { refreshToken?: undefined },
+  ): Promise<EstimateGasResponse>;
+
+  async estimateGas({
+    walletToken,
+    refreshToken,
+    ...config
+  }: EstimateGasConfig): Promise<
+    WithTokenResponse<EstimateGasResponse> | EstimateGasResponse
+  > {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<{ estimateGas: EstimateGasResponse }>
-      >('/wallet/estimate-gas"', {
-        ...config,
-      });
+      >(
+        '/wallet/estimate-gas"',
+        {
+          ...config,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${walletToken}`,
+          },
+        },
+      );
+
+      if (refreshToken) {
+        const refreshTokenResult = await this._refreshToken(refreshToken);
+
+        return {
+          ...response.data.data.estimateGas,
+          refreshToken: refreshTokenResult.refreshToken,
+          walletToken: refreshTokenResult.walletToken,
+        };
+      }
 
       return response.data.data.estimateGas;
     } catch (error) {

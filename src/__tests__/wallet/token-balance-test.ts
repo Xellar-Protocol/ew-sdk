@@ -22,10 +22,11 @@ describe('Wallet Check Token Balance', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const result = await sdk.wallet.balanceToken(
-        '0x1234567890123456789012345678901234567890',
-        Network.ETHEREUM,
-      );
+      const result = await sdk.wallet.balanceToken({
+        tokenAddress: '0x1234567890123456789012345678901234567890',
+        network: Network.ETHEREUM,
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual({
         balance: '1000000000000000000',
@@ -37,6 +38,11 @@ describe('Wallet Check Token Balance', () => {
         {
           network: Network.ETHEREUM,
           tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -54,10 +60,11 @@ describe('Wallet Check Token Balance', () => {
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
       await expect(
-        sdk.wallet.balanceToken(
-          '0x1234567890123456789012345678901234567890',
-          Network.ETHEREUM,
-        ),
+        sdk.wallet.balanceToken({
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+          network: Network.ETHEREUM,
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
@@ -65,6 +72,11 @@ describe('Wallet Check Token Balance', () => {
         {
           network: Network.ETHEREUM,
           tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -90,13 +102,14 @@ describe('Wallet Check Token Balance', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const result = await sdk.wallet.balanceTokenBatch(
-        [
+      const result = await sdk.wallet.balanceTokenBatch({
+        tokenAddresses: [
           '0x1234567890123456789012345678901234567890',
           '0x0987654321098765432109876543210987654321',
         ],
-        Network.ETHEREUM,
-      );
+        network: Network.ETHEREUM,
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual([
         {
@@ -119,6 +132,11 @@ describe('Wallet Check Token Balance', () => {
             '0x0987654321098765432109876543210987654321',
           ],
         },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -135,13 +153,14 @@ describe('Wallet Check Token Balance', () => {
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
       await expect(
-        sdk.wallet.balanceTokenBatch(
-          [
+        sdk.wallet.balanceTokenBatch({
+          tokenAddresses: [
             '0x1234567890123456789012345678901234567890',
             '0x0987654321098765432109876543210987654321',
           ],
-          Network.ETHEREUM,
-        ),
+          network: Network.ETHEREUM,
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
@@ -152,6 +171,11 @@ describe('Wallet Check Token Balance', () => {
             '0x1234567890123456789012345678901234567890',
             '0x0987654321098765432109876543210987654321',
           ],
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });

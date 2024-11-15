@@ -27,21 +27,32 @@ describe('Wallet Send Transaction', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const sendTransactionConfig: SendTransactionConfig = {
+      const result = await sdk.wallet.sendTransaction({
         network: Network.ETHEREUM,
         transaction: {
           to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
           data: '0x1234567890abcdef',
           from: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
         },
-      };
-
-      const result = await sdk.wallet.sendTransaction(sendTransactionConfig);
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual(mockResponse.data.data);
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/send-transaction',
-        sendTransactionConfig,
+        {
+          network: Network.ETHEREUM,
+          transaction: {
+            to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+            data: '0x1234567890abcdef',
+            from: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
+          },
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -57,22 +68,33 @@ describe('Wallet Send Transaction', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const sendTransactionConfig: SendTransactionConfig = {
-        network: Network.ETHEREUM,
-        transaction: {
-          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
-          data: '0x1234567890abcdef',
-          from: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
-        },
-      };
-
       await expect(
-        sdk.wallet.sendTransaction(sendTransactionConfig),
+        sdk.wallet.sendTransaction({
+          network: Network.ETHEREUM,
+          transaction: {
+            to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+            data: '0x1234567890abcdef',
+            from: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
+          },
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/send-transaction',
-        sendTransactionConfig,
+        {
+          network: Network.ETHEREUM,
+          transaction: {
+            to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+            data: '0x1234567890abcdef',
+            from: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
+          },
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

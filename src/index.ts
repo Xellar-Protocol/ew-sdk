@@ -1,8 +1,3 @@
-import { XellarSDK } from './sdk-web';
-
-// eslint-disable-next-line no-restricted-exports
-export default XellarSDK;
-
 export type * from './rampable/off-ramps/types';
 export type {
   XellarOnRampQuoteRequest,
@@ -12,6 +7,7 @@ export type {
 } from './rampable/on-ramps/types';
 export type * from './rampable/recipients/types';
 export type * from './rampable/references/types';
+export { XellarSDK } from './sdk-web';
 export { Network } from './types/chain';
 export type {
   AccountWalletResponse,

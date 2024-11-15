@@ -26,19 +26,28 @@ describe('Wallet Transfer ERC721', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const transferERC721Config: TransferERC721Config = {
+      const result = await sdk.wallet.transferERC721({
         network: Network.ETHEREUM,
         to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
         tokenId: '123',
         tokenAddress: '0x1234567890123456789012345678901234567890',
-      };
-
-      const result = await sdk.wallet.transferERC721(transferERC721Config);
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual(mockResponse.data.data);
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/transfer-erc721',
-        transferERC721Config,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          tokenId: '123',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -54,20 +63,29 @@ describe('Wallet Transfer ERC721', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const transferERC721Config: TransferERC721Config = {
-        network: Network.ETHEREUM,
-        to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
-        tokenId: '123',
-        tokenAddress: '0x1234567890123456789012345678901234567890',
-      };
-
       await expect(
-        sdk.wallet.transferERC721(transferERC721Config),
+        sdk.wallet.transferERC721({
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          tokenId: '123',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/transfer-erc721',
-        transferERC721Config,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          tokenId: '123',
+          tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

@@ -1,33 +1,23 @@
-import { XellarEWBase } from '../base';
-import { WALLET_OR_ACCESS_TOKEN_KEY } from '../constants';
 import { handleError, XellarError } from '../utils/error';
 import { decodeJWT } from '../utils/jwt';
-import { DecodedWalletToken } from './types';
+import { Address, DecodedWalletToken } from './types';
 
-export class XellarEWGetAddresses extends XellarEWBase {
+export class XellarEWGetAddresses {
   /**
    * Allows you to get the addresses from the wallet token
+   * @param {string} walletToken The wallet token for authentication.
    *
-   * @returns Array of addresses
+   * @returns Array of addresses or null if the wallet token is invalid.
    *
    * @example
    *
    * ```typescript
-   * const addresses = await sdk.wallet.getAddresses();
+   * const addresses = await sdk.wallet.getAddresses("your-wallet-token");
    * ```
-   *
    */
-  async getAddresses() {
+  static async getAddresses(walletToken: string): Promise<Address[] | null> {
     try {
-      const walletToken = await this.storage.getItem<string | undefined>(
-        WALLET_OR_ACCESS_TOKEN_KEY,
-      );
-
-      if (!walletToken) {
-        return null;
-      }
-
-      return decodeJWT<DecodedWalletToken>(walletToken).address;
+      return decodeJWT<DecodedWalletToken>(walletToken)?.address || null;
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(

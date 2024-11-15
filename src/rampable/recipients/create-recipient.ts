@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { CreateRecipientBody, CreateRecipientResponse } from './types';
 
 export class XellarEWRampableCreateRecipient extends XellarEWBase {
@@ -32,17 +33,31 @@ export class XellarEWRampableCreateRecipient extends XellarEWBase {
    *   city: "New York",
    *   postCode: "1234",
    *   address: "NY Street 123",
-   *   reference: "XXXXX"
+   *   reference: "XXXXX",
+   *   rampableAccessToken: 'your_rampable_access_token'
    * });
    * ```
    *
    * @see {@link https://docs.rampable.co/recipients#create-a-recipient Rampable Create Recipient API}
    */
-  async createRecipient(body: CreateRecipientBody) {
+  async createRecipient({
+    rampableAccessToken,
+    ...body
+  }: WithRampableAccessToken<CreateRecipientBody>) {
     try {
       const response = await this.rampableAxiosInstance.post<
         BaseHttpResponse<CreateRecipientResponse>
-      >('/recipient', body);
+      >(
+        '/recipient',
+        { ...body },
+        {
+          headers: {
+            ...(rampableAccessToken
+              ? { Authorization: `Bearer ${rampableAccessToken}` }
+              : {}),
+          },
+        },
+      );
 
       return response.data.data;
     } catch (error) {

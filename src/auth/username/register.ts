@@ -1,8 +1,4 @@
 import { XellarEWBase } from '../../base';
-import {
-  RAMPABLE_ACCESS_TOKEN_KEY,
-  WALLET_OR_ACCESS_TOKEN_KEY,
-} from '../../constants';
 import { BaseHttpResponse, UsernameRegisterResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
 import { UsernameAuthOptions } from './type';
@@ -50,16 +46,7 @@ export class XellarEWUsernameRegister extends XellarEWBase {
         password,
       });
 
-      const token = response.data.data.accessToken;
-
-      await this.storage.setItem(WALLET_OR_ACCESS_TOKEN_KEY, token);
-
       if (rampableAccessToken) {
-        await this.storage.setItem(
-          RAMPABLE_ACCESS_TOKEN_KEY,
-          rampableAccessToken,
-        );
-
         return {
           ...response.data.data,
           rampableAccessToken,

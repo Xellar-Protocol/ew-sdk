@@ -23,7 +23,9 @@ describe('Account Wallet', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const result = await sdk.account.wallet.create();
+      const result = await sdk.account.wallet.create({
+        accessToken: 'mock-access-token',
+      });
 
       expect(result).toEqual({
         walletToken: 'mock-wallet-token',
@@ -35,6 +37,11 @@ describe('Account Wallet', () => {
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/account/create',
         {},
+        {
+          headers: {
+            Authorization: 'Bearer mock-access-token',
+          },
+        },
       );
     });
 
@@ -52,7 +59,10 @@ describe('Account Wallet', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const result = await sdk.account.wallet.create('2024-01-01');
+      const result = await sdk.account.wallet.create({
+        accessToken: 'mock-access-token',
+        expiredDate: '2024-01-01',
+      });
 
       expect(result).toEqual({
         walletToken: 'mock-wallet-token',
@@ -61,9 +71,17 @@ describe('Account Wallet', () => {
         secret0Link: 'mock-secret0-link',
         address: 'mock-address',
       });
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith('/account/create', {
-        expireDate: '2024-01-01',
-      });
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/account/create',
+        {
+          expireDate: '2024-01-01',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-access-token',
+          },
+        },
+      );
     });
 
     it('should throw XellarError on failed wallet creation', async () => {
@@ -78,11 +96,20 @@ describe('Account Wallet', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      await expect(sdk.account.wallet.create()).rejects.toThrow(XellarError);
+      await expect(
+        sdk.account.wallet.create({
+          accessToken: 'mock-access-token',
+        }),
+      ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/account/create',
         {},
+        {
+          headers: {
+            Authorization: 'Bearer mock-access-token',
+          },
+        },
       );
     });
   });
@@ -109,7 +136,10 @@ describe('Account Wallet', () => {
         'secret.txt',
       );
 
-      const result = await sdk.account.wallet.recover(mockFormData);
+      const result = await sdk.account.wallet.recover({
+        accessToken: 'mock-access-token',
+        formData: mockFormData,
+      });
 
       expect(result).toEqual({
         walletToken: 'mock-wallet-token',
@@ -121,6 +151,11 @@ describe('Account Wallet', () => {
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/account/recover',
         mockFormData,
+        {
+          headers: {
+            Authorization: 'Bearer mock-access-token',
+          },
+        },
       );
     });
 
@@ -143,13 +178,21 @@ describe('Account Wallet', () => {
         'secret.txt',
       );
 
-      await expect(sdk.account.wallet.recover(mockFormData)).rejects.toThrow(
-        XellarError,
-      );
+      await expect(
+        sdk.account.wallet.recover({
+          accessToken: 'mock-access-token',
+          formData: mockFormData,
+        }),
+      ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/account/recover',
         mockFormData,
+        {
+          headers: {
+            Authorization: 'Bearer mock-access-token',
+          },
+        },
       );
     });
   });

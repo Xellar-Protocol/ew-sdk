@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { UpdateRecipientBody, UpdateRecipientResponse } from './types';
 
 export class XellarEWRampableUpdateRecipient extends XellarEWBase {
@@ -16,17 +17,31 @@ export class XellarEWRampableUpdateRecipient extends XellarEWBase {
    *   name: "John Doe",
    *   bank: {
    *     currency: "USD"
-   *   }
+   *   },
+   *   rampableAccessToken: 'your_rampable_access_token'
    * });
    * ```
    *
    * @see {@link https://docs.rampable.co/recipients#update-a-recipient Rampable Update Recipient API}
    */
-  async updateRecipient(recipientId: string, body: UpdateRecipientBody) {
+  async updateRecipient({
+    rampableAccessToken,
+    recipientId,
+    body,
+  }: WithRampableAccessToken<{
+    recipientId: string;
+    body: UpdateRecipientBody;
+  }>) {
     try {
       const response = await this.rampableAxiosInstance.patch<
         BaseHttpResponse<UpdateRecipientResponse>
-      >(`/recipient/${recipientId}`, body);
+      >(`/recipient/${recipientId}`, body, {
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
+      });
 
       return response.data.data;
     } catch (error) {

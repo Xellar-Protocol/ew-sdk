@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { ListCryptosParams, RampableCrypto } from './types';
 
 export class XellarEWRampableCrypto extends XellarEWBase {
@@ -12,17 +13,21 @@ export class XellarEWRampableCrypto extends XellarEWBase {
    * ```typescript
    * const cryptos = await xellar.rampableReference.listCryptos({
    *   blockchainType: 'EVM',
+   *   rampableAccessToken: 'your_rampable_access_token'
    * });
    * ```
    *
    * @see {@link https://docs.rampable.co/references#list-all-crypto Rampable Crypto API}
    */
-  async listCryptos(params?: ListCryptosParams) {
+  async listCryptos({
+    rampableAccessToken,
+    ...params
+  }: WithRampableAccessToken<ListCryptosParams> = {}) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<RampableCrypto[]>
       >('/reference/cryptos', {
-        params,
+        params: { ...params },
       });
 
       return response.data.data;

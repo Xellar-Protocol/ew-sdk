@@ -1,23 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
-import axios, {
-  AxiosInstance,
-  InternalAxiosRequestConfig,
-  isAxiosError,
-} from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
-import {
-  RAMPABLE_ACCESS_TOKEN_KEY,
-  RAMPABLE_API_URL,
-  REFRESH_TOKEN_KEY,
-  WALLET_OR_ACCESS_TOKEN_KEY,
-  XELLAR_API_URL,
-} from './constants';
+import { RAMPABLE_API_URL, XELLAR_API_URL } from './constants';
 import { Container } from './container';
 import { Config, GenerateAssymetricSignatureParams } from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
 import { handleError, XellarError } from './utils/error';
-import { StateStorage } from './utils/storage';
 import { TokenManager } from './utils/token-manager';
 
 export class XellarEWBase {
@@ -32,8 +21,6 @@ export class XellarEWBase {
     _params: GenerateAssymetricSignatureParams,
   ) => string;
 
-  protected storage: StateStorage;
-
   protected tokenManager: TokenManager;
 
   constructor(container: Container) {
@@ -43,7 +30,6 @@ export class XellarEWBase {
     this.generateAssymetricSignature = this.container.resolve(
       'GenerateAssymetricSignature',
     );
-    this.storage = this.container.resolve('Storage');
     this.tokenManager = this.container.resolve('TokenManager');
   }
 
@@ -60,65 +46,6 @@ export class XellarEWBase {
         'x-client-secret': clientSecret,
       },
     });
-
-    // Add request interceptor
-    instance.interceptors.request.use(
-      async (cfg: InternalAxiosRequestConfig) => {
-        const currentToken = await this.storage.getItem(
-          WALLET_OR_ACCESS_TOKEN_KEY,
-        );
-
-        if (currentToken) {
-          cfg.headers = cfg.headers || {};
-          cfg.headers.Authorization = `Bearer ${currentToken}`;
-        }
-        return cfg;
-      },
-      error => Promise.reject(error),
-    );
-
-    // Interceptor for handling 401 errors
-    instance.interceptors.response.use(
-      response => response, // Pass successful responses through
-      async error => {
-        const originalRequest = error.config;
-        if (
-          isAxiosError(error) &&
-          error.response?.status === 401 &&
-          !originalRequest._retry
-        ) {
-          originalRequest._retry = true;
-
-          const refreshToken = await this.storage.getItem(REFRESH_TOKEN_KEY);
-
-          if (refreshToken) {
-            try {
-              const refreshTokenResponse =
-                await this._refreshToken(refreshToken);
-
-              await this.storage.setItem(
-                WALLET_OR_ACCESS_TOKEN_KEY,
-                refreshTokenResponse.walletToken,
-              );
-
-              await this.storage.setItem(
-                REFRESH_TOKEN_KEY,
-                refreshTokenResponse.refreshToken,
-              );
-
-              // Retry the original request with the new token
-              if (error.config) {
-                error.config.headers.Authorization = `Bearer ${refreshTokenResponse.walletToken}`;
-                return instance(error.config);
-              }
-            } catch (refreshTokenError) {
-              return Promise.reject(refreshTokenError);
-            }
-          }
-        }
-        return Promise.reject(error);
-      },
-    );
 
     return instance;
   }
@@ -140,10 +67,6 @@ export class XellarEWBase {
       async (cfg: InternalAxiosRequestConfig) => {
         const { rampableClientSecret, rampable } =
           this.container.resolve<Config>('Config');
-
-        const accessToken = await this.storage.getItem(
-          RAMPABLE_ACCESS_TOKEN_KEY,
-        );
 
         if (rampable) {
           const timeStamp = new Date().toISOString();
@@ -167,11 +90,6 @@ export class XellarEWBase {
           cfg.headers['x-signature'] = signature;
           cfg.headers['x-client-id'] = rampable.clientId;
         } else {
-          if (accessToken) {
-            cfg.headers = cfg.headers || {};
-            cfg.headers.Authorization = `Bearer ${accessToken}`;
-          }
-
           const storageRampableClientSecret =
             this.tokenManager.getRampableClientSecret();
 
@@ -197,46 +115,6 @@ export class XellarEWBase {
         return cfg;
       },
       error => Promise.reject(error),
-    );
-
-    // Interceptor for handling 401 errors
-    instance.interceptors.response.use(
-      response => response, // Pass successful responses through
-      async error => {
-        const originalRequest = error.config;
-        if (
-          isAxiosError(error) &&
-          error.response?.status === 401 &&
-          !originalRequest._retry
-        ) {
-          originalRequest._retry = true;
-
-          if (error?.response?.data?.message === 'Unauthorized Client') {
-            throw new XellarError(
-              'Unauthorized Client',
-              'RAMPABLE_UNAUTHORIZED_CLIENT',
-            );
-          }
-
-          try {
-            const newAccessToken = await this._refreshRampableToken();
-
-            await this.storage.setItem(
-              RAMPABLE_ACCESS_TOKEN_KEY,
-              newAccessToken,
-            );
-
-            // Retry the original request with the new token
-            if (originalRequest.headers) {
-              originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-              return instance(originalRequest);
-            }
-          } catch (refreshError) {
-            return Promise.reject(refreshError);
-          }
-        }
-        return Promise.reject(error);
-      },
     );
 
     return instance;
@@ -275,17 +153,15 @@ export class XellarEWBase {
     }
   }
 
-  protected async _refreshRampableToken(): Promise<string> {
+  protected async _refreshRampableToken(
+    rampableAccessToken: string,
+  ): Promise<string> {
     const { clientSecret, env = 'sandbox' } =
       this.container.resolve<Config>('Config');
 
     const baseURL = XELLAR_API_URL[env];
 
     try {
-      const rampableAccessToken = await this.storage.getItem(
-        RAMPABLE_ACCESS_TOKEN_KEY,
-      );
-
       const response = await axios.request<
         BaseHttpResponse<{ rampableAccessToken: string }>
       >({
@@ -318,11 +194,6 @@ export class XellarEWBase {
     >('account/rampable/create', {
       ...rampable,
     });
-
-    await this.storage.setItem(
-      RAMPABLE_ACCESS_TOKEN_KEY,
-      response.data.data.rampableAccessToken,
-    );
 
     return response.data.data.rampableAccessToken;
   }
@@ -359,17 +230,11 @@ export class XellarEWBase {
       });
 
       if (!response.data.data.isRampableEnabled) {
-        this.tokenManager.setRampableClientSecret(undefined);
-
         throw new XellarError(
           'Please enable the rampable integration through the xellar client dashboard',
           'RAMPABLE_NOT_ENABLED',
         );
       }
-
-      this.tokenManager.setRampableClientSecret(
-        response.data.data.rampableClientSecret,
-      );
 
       return response.data.data;
     } catch (error) {

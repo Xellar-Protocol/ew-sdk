@@ -26,13 +26,12 @@ describe('Wallet Send Coin', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const sendCoinConfig: SendCoinConfig = {
+      const result = await sdk.wallet.sendCoin({
         network: Network.ETHEREUM,
         to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
         amount: '0.015',
-      };
-
-      const result = await sdk.wallet.sendCoin(sendCoinConfig);
+        walletToken: 'mock-wallet-token',
+      });
 
       expect(result).toEqual({
         txReceipt: {
@@ -44,7 +43,16 @@ describe('Wallet Send Coin', () => {
       });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/send-coin',
-        sendCoinConfig,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          amount: '0.015',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -60,19 +68,27 @@ describe('Wallet Send Coin', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const sendCoinConfig: SendCoinConfig = {
-        network: Network.ETHEREUM,
-        to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
-        amount: '0.015',
-      };
-
-      await expect(sdk.wallet.sendCoin(sendCoinConfig)).rejects.toThrow(
-        XellarError,
-      );
+      await expect(
+        sdk.wallet.sendCoin({
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          amount: '0.015',
+          walletToken: 'mock-wallet-token',
+        }),
+      ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/send-coin',
-        sendCoinConfig,
+        {
+          network: Network.ETHEREUM,
+          to: '0x9B9ef330B204bf33316FAf24E3Ed4FfCf57F02C3',
+          amount: '0.015',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

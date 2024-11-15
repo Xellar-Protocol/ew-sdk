@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { XellarOffRampQuoteRequest, XellarOffRampQuoteResponse } from './types';
 
 export class XellarEWOffRampQuote extends XellarEWBase {
@@ -23,12 +24,20 @@ export class XellarEWOffRampQuote extends XellarEWBase {
    *
    * @see {@link https://docs.rampable.co/offramps#quote Rampable Off-Ramp Quote API}
    */
-  async quote(params: XellarOffRampQuoteRequest) {
+  async quote({
+    rampableAccessToken,
+    ...params
+  }: WithRampableAccessToken<XellarOffRampQuoteRequest>) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<XellarOffRampQuoteResponse>
       >('/offramp/quote', {
         params,
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
       });
 
       return response.data.data;

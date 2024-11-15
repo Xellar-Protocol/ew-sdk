@@ -31,6 +31,7 @@ describe('Wallet Estimate Gas', () => {
         network: Network.ETHEREUM,
         to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
         amount: '0.015',
+        walletToken: 'mock-wallet-token',
       });
 
       expect(result).toEqual(mockEstimateGasResponse.data.data.estimateGas);
@@ -41,6 +42,11 @@ describe('Wallet Estimate Gas', () => {
           network: Network.ETHEREUM,
           to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
           amount: '0.015',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -54,6 +60,7 @@ describe('Wallet Estimate Gas', () => {
         to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
         amount: '10',
         tokenAddress: '0x1234567890123456789012345678901234567890',
+        walletToken: 'mock-wallet-token',
       });
 
       expect(result).toEqual(mockEstimateGasResponse.data.data.estimateGas);
@@ -65,6 +72,11 @@ describe('Wallet Estimate Gas', () => {
           to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
           amount: '10',
           tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -78,6 +90,7 @@ describe('Wallet Estimate Gas', () => {
         to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
         tokenId: '123',
         tokenAddress: '0x1234567890123456789012345678901234567890',
+        walletToken: 'mock-wallet-token',
       });
 
       expect(result).toEqual(mockEstimateGasResponse.data.data.estimateGas);
@@ -89,6 +102,11 @@ describe('Wallet Estimate Gas', () => {
           to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
           tokenId: '123',
           tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -103,6 +121,7 @@ describe('Wallet Estimate Gas', () => {
         tokenId: '123',
         amount: '5',
         tokenAddress: '0x1234567890123456789012345678901234567890',
+        walletToken: 'mock-wallet-token',
       });
 
       expect(result).toEqual(mockEstimateGasResponse.data.data.estimateGas);
@@ -115,6 +134,11 @@ describe('Wallet Estimate Gas', () => {
           tokenId: '123',
           amount: '5',
           tokenAddress: '0x1234567890123456789012345678901234567890',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });
@@ -134,6 +158,7 @@ describe('Wallet Estimate Gas', () => {
           gasLimit: '0x5208',
           value: '0x00',
         },
+        walletToken: 'mock-wallet-token',
       });
 
       expect(result).toEqual(mockEstimateGasResponse.data.data.estimateGas);
@@ -150,6 +175,11 @@ describe('Wallet Estimate Gas', () => {
             gasPrice: '0x1cb3fa334b',
             gasLimit: '0x5208',
             value: '0x00',
+          },
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
           },
         },
       );
@@ -173,6 +203,7 @@ describe('Wallet Estimate Gas', () => {
           network: Network.ETHEREUM,
           to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
           amount: '0.015',
+          walletToken: 'mock-wallet-token',
         }),
       ).rejects.toThrow(XellarError);
 
@@ -183,6 +214,11 @@ describe('Wallet Estimate Gas', () => {
           network: Network.ETHEREUM,
           to: '0xBfE64B4b628E0998A03e2522B051Cf1B4661c964',
           amount: '0.015',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
         },
       );
     });

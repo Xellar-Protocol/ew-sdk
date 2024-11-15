@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import { XelalrOffRampsReplyInfo } from './types';
 
 export class XellarEWOffRampReplyInfo extends XellarEWBase {
@@ -20,13 +21,26 @@ export class XellarEWOffRampReplyInfo extends XellarEWBase {
    * @see {@link https://docs.rampable.co/offramps#reply-info Rampable Off-Ramp Reply Info API}
    */
 
-  async detailTransaction(message: string) {
+  async detailTransaction({
+    rampableAccessToken,
+    message,
+  }: WithRampableAccessToken<{ message: string }>) {
     try {
       const response = await this.rampableAxiosInstance.patch<
         BaseHttpResponse<XelalrOffRampsReplyInfo>
-      >(`/offramp/reply`, {
-        message,
-      });
+      >(
+        `/offramp/reply`,
+        {
+          message,
+        },
+        {
+          headers: {
+            ...(rampableAccessToken
+              ? { Authorization: `Bearer ${rampableAccessToken}` }
+              : {}),
+          },
+        },
+      );
 
       return response.data.data;
     } catch (error) {

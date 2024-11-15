@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
+import { WithRampableAccessToken } from '../types';
 import {
   XellarOffRampTransactionDetailResponse,
   XellarOffRampTransactionListParams,
@@ -22,12 +23,20 @@ export class XellarEWOffRampTransactions extends XellarEWBase {
    *
    * @see {@link https://docs.rampable.co/offramps#list-all-offramp-transactions Rampable Off-Ramp List Transactions API}
    */
-  async transactions(params: XellarOffRampTransactionListParams) {
+  async transactions({
+    rampableAccessToken,
+    ...params
+  }: WithRampableAccessToken<XellarOffRampTransactionListParams>) {
     try {
       const response = await this.rampableAxiosInstance.get<
         BaseHttpResponse<XellarOffRampTransactionListResponse>
       >('/offramp', {
         params,
+        headers: {
+          ...(rampableAccessToken
+            ? { Authorization: `Bearer ${rampableAccessToken}` }
+            : {}),
+        },
       });
 
       return response.data.data;

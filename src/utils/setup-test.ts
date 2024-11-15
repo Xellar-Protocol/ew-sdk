@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import XellarSDK from '..';
+import { XellarSDK } from '..';
 import { Config } from '../types/config';
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
