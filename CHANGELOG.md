@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.0.0
+
+### Major Changes
+
+- [`a934d7d`](https://github.com/Xellar-Protocol/ew-sdk/commit/a934d7da690f66c18f00aafa5aabbcb9dd59f5b7) Thanks [@iyansr](https://github.com/iyansr)! - Revamp all Operations
+
 ## 3.7.0
 
 ### Minor Changes
