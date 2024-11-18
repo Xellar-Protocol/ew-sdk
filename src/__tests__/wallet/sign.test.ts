@@ -103,7 +103,7 @@ describe('Wallet Sign', () => {
         walletToken: 'mock-wallet-token',
       });
 
-      expect(result).toEqual({ signedTransaction: '0xabcdef1234567890' });
+      expect(result).toEqual({ signature: '0xabcdef1234567890' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
         {
@@ -179,17 +179,24 @@ describe('Wallet Sign', () => {
       };
       mockAxiosInstance.post.mockResolvedValue(mockResponse);
 
-      const signTypedDataConfig: SignTypedDataConfig = {
+      const result = await sdk.wallet.signTypedData({
         network: Network.ETHEREUM,
         data: '0x1234567890abcdef',
-      };
+        walletToken: 'mock-wallet-token',
+      });
 
-      const result = await sdk.wallet.signTypedData(signTypedDataConfig);
-
-      expect(result).toEqual('0xfedcba0987654321');
+      expect(result).toEqual({ signature: '0xfedcba0987654321' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
-        signTypedDataConfig,
+        {
+          network: Network.ETHEREUM,
+          data: '0x1234567890abcdef',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
@@ -205,18 +212,25 @@ describe('Wallet Sign', () => {
       };
       mockAxiosInstance.post.mockRejectedValue(mockError);
 
-      const signTypedDataConfig: SignTypedDataConfig = {
-        network: Network.ETHEREUM,
-        data: '0x1234567890abcdef',
-      };
-
       await expect(
-        sdk.wallet.signTypedData(signTypedDataConfig),
+        sdk.wallet.signTypedData({
+          network: Network.ETHEREUM,
+          data: '0x1234567890abcdef',
+          walletToken: 'mock-wallet-token',
+        }),
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/wallet/sign-message',
-        signTypedDataConfig,
+        {
+          network: Network.ETHEREUM,
+          data: '0x1234567890abcdef',
+        },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
   });

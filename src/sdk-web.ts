@@ -64,12 +64,6 @@ export class XellarSDK {
   }
 
   get refreshRampableToken() {
-    return this.rampableRefreshToken.refreshRampableToken.bind(this);
+    return this.rampableRefreshToken.refreshRampableToken;
   }
 }
-
-const d = new XellarSDK({
-  clientSecret: 'client_secret',
-  env: 'sandbox',
-  rampableClientSecret: 'rampable_client_secret',
-});
