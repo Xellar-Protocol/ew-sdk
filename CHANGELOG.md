@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.1.0
+
+### Minor Changes
+
+- [`6d81a28`](https://github.com/Xellar-Protocol/ew-sdk/commit/6d81a28e5fa671fca90b6cf8c188a00a9eba66ee) Thanks [@iyansr](https://github.com/iyansr)! - Fix missing function
+
 ## 4.0.0
 
 ### Major Changes
