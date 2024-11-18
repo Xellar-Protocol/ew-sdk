@@ -5,6 +5,7 @@ import { XellarEWOffRamp } from './rampable/off-ramps';
 import { XellarEWOnRamp } from './rampable/on-ramps';
 import { XellarEWRampableRecipients } from './rampable/recipients';
 import { XellarEWRampableReference } from './rampable/references';
+import { XellarEWRampableRefreshToken } from './rampable/refresh-token';
 import { Config } from './types/config';
 import { generateAssymetricSignature } from './utils/generate-signature';
 import { TokenManager } from './utils/token-manager';
@@ -26,6 +27,8 @@ export class XellarSDK {
   public rampableReference: XellarEWRampableReference;
 
   public rampableRecipients: XellarEWRampableRecipients;
+
+  private rampableRefreshToken: XellarEWRampableRefreshToken;
 
   constructor({
     clientSecret,
@@ -55,5 +58,18 @@ export class XellarSDK {
     this.onRamp = new XellarEWOnRamp(this.container);
     this.rampableReference = new XellarEWRampableReference(this.container);
     this.rampableRecipients = new XellarEWRampableRecipients(this.container);
+    this.rampableRefreshToken = new XellarEWRampableRefreshToken(
+      this.container,
+    );
+  }
+
+  get refreshRampableToken() {
+    return this.rampableRefreshToken.refreshRampableToken.bind(this);
   }
 }
+
+const d = new XellarSDK({
+  clientSecret: 'client_secret',
+  env: 'sandbox',
+  rampableClientSecret: 'rampable_client_secret',
+});

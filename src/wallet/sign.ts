@@ -119,14 +119,24 @@ export class XellarEWSign extends XellarEWBase {
    *     gasPrice: "0x1cb3fa334b",
    *     gasLimit: "0x5208",
    *     value: "0x00"
-   *   }
-   * }
+   *   },
+   *   walletToken: "your-wallet-token",
+   * };
    *
-   * const signature = await sdk.wallet.signTransaction(body);
+   * const { signature}  = await sdk.wallet.signTransaction(body);
    * ```
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/wallet_operation/Sign_Message/ Xellar Wallet Sign Message Docs}
    */
+
+  async signTransaction(
+    config: SignTransactionConfig & { refreshToken: string },
+  ): Promise<WithTokenResponse<{ signature: string }>>;
+
+  async signTransaction(
+    config: SignTransactionConfig & { refreshToken?: undefined },
+  ): Promise<{ signature: string }>;
+
   async signTransaction({
     walletToken,
     refreshToken,
@@ -151,13 +161,13 @@ export class XellarEWSign extends XellarEWBase {
         const refreshTokenResult = await this._refreshToken(refreshToken);
 
         return {
-          signedTransaction: response.data.data.signedTransaction,
+          signature: response.data.data.signedTransaction,
           refreshToken: refreshTokenResult.refreshToken,
           walletToken: refreshTokenResult.walletToken,
         };
       }
 
-      return { signedTransaction: response.data.data.signedTransaction };
+      return { signature: response.data.data.signedTransaction };
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(
@@ -190,15 +200,46 @@ export class XellarEWSign extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/wallet_operation/Sign_Typed_Data/ Xellar Wallet Signed Typed Data Docs}
    */
-  async signTypedData(config: SignTypedDataConfig) {
+
+  async signTypedData(
+    config: SignTypedDataConfig & { refreshToken: string },
+  ): Promise<WithTokenResponse<{ signature: string }>>;
+
+  async signTypedData(
+    config: SignTypedDataConfig & { refreshToken?: undefined },
+  ): Promise<{ signature: string }>;
+
+  async signTypedData({
+    walletToken,
+    refreshToken,
+    ...config
+  }: SignTypedDataConfig) {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<{ signature: string }>
-      >('/wallet/sign-message', {
-        ...config,
-      });
+      >(
+        '/wallet/sign-message',
+        {
+          ...config,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${walletToken}`,
+          },
+        },
+      );
 
-      return response.data.data.signature;
+      if (refreshToken) {
+        const refreshTokenResult = await this._refreshToken(refreshToken);
+
+        return {
+          signature: response.data.data.signature,
+          refreshToken: refreshTokenResult.refreshToken,
+          walletToken: refreshTokenResult.walletToken,
+        };
+      }
+
+      return { signature: response.data.data.signature };
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(

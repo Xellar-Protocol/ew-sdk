@@ -66,6 +66,10 @@ export type SignTypedDataConfig = {
   network: Network;
   /** (required): The raw data you get from dApps or WalletConnect. */
   data: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
 };
 
 export type CancelTransactionConfig = {
