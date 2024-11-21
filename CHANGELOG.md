@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.0
+
+### Minor Changes
+
+- [`2c1d63a`](https://github.com/Xellar-Protocol/ew-sdk/commit/2c1d63a53f684139d3a07721d7c031fc55c0bfe9) Thanks [@iyansr](https://github.com/iyansr)! - Fix username register function failed with rampable object
+
 ## 4.1.0
 
 ### Minor Changes
