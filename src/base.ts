@@ -188,12 +188,21 @@ export class XellarEWBase {
 
   protected async createRampableAccount(
     rampable: RampableAccount,
+    walletToken: string,
   ): Promise<string> {
     const response = await this.axiosInstance.post<
       BaseHttpResponse<{ rampableAccessToken: string }>
-    >('account/rampable/create', {
-      ...rampable,
-    });
+    >(
+      'account/rampable/create',
+      {
+        ...rampable,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${walletToken}`,
+        },
+      },
+    );
 
     return response.data.data.rampableAccessToken;
   }

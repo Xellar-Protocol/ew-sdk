@@ -36,9 +36,14 @@ export class XellarEWAppleAuthorize extends XellarEWBase {
         expireDate,
       });
 
-      if (!response.data?.data?.rampableAccessToken && options?.rampable) {
+      if (
+        !response.data?.data?.rampableAccessToken &&
+        options?.rampable &&
+        !!response.data.data.isWalletCreated
+      ) {
         const rampableAccessToken = await this.createRampableAccount(
           options.rampable,
+          response.data.data.walletToken,
         );
 
         return {

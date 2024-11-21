@@ -123,6 +123,11 @@ describe('Google Authentication', () => {
           fullName: 'Test User',
           password: 'testPassword',
         },
+        {
+          headers: {
+            Authorization: 'Bearer mock-wallet-token',
+          },
+        },
       );
     });
 
