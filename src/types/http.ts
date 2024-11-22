@@ -33,12 +33,17 @@ export type AuthSuccessResponse = {
   rampableAccessToken?: string;
 } & (WalletCreatedResponse | WalletNotCreatedResponse);
 
+export type XellarAddress = {
+  network: string;
+  address: string;
+};
+
 export interface AccountWalletResponse {
   walletToken: string;
   refreshToken: string;
   secret0: string;
   secret0Link: string;
-  address: string;
+  address: XellarAddress[];
   /** (optional)
    * JWT token used to access the Rampable Operation endpoint.
    * This token will only be available if the account already create a rampable account
