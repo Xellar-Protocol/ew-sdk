@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.1
+
+### Patch Changes
+
+- [`aa04fb7`](https://github.com/Xellar-Protocol/ew-sdk/commit/aa04fb77431732f6f967df72f29782a84bca62d2) Thanks [@iyansr](https://github.com/iyansr)! - Fix Type
+
 ## 4.2.0
 
 ### Minor Changes
