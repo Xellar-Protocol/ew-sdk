@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.2
+
+### Patch Changes
+
+- [`8943635`](https://github.com/Xellar-Protocol/ew-sdk/commit/8943635313e5cde31c1709d13ab5ec7287801352) Thanks [@iyansr](https://github.com/iyansr)! - add testnet
+
 ## 4.2.1
 
 ### Patch Changes
