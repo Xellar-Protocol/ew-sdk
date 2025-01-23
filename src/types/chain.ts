@@ -13,6 +13,10 @@ export enum Network {
   LISK = 'lisk',
   BASE = 'base',
   KAIA = 'kaia',
+  SKALE_CALYPSO = 'skale-calypso',
+  SKALE_EUROPA = 'skale-europa',
+  SKALE_NEBULA = 'skale-nebula',
+  SKALE_TITAN = 'skale-titan',
 
   // TESTNETS
   ETHEREUM_TESTNET = 'ethereum-testnet',
