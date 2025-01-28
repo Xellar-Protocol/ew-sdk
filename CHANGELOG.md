@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.3
+
+### Patch Changes
+
+- [`a31105b`](https://github.com/Xellar-Protocol/ew-sdk/commit/a31105be1d1d1a581827c4c23297073fecc60905) Thanks [@iyansr](https://github.com/iyansr)! - Add Skale Mainnet
+
 ## 4.2.2
 
 ### Patch Changes
