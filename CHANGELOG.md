@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.4
+
+### Patch Changes
+
+- [`0ca4575`](https://github.com/Xellar-Protocol/ew-sdk/commit/0ca457529b01e8ddaa0974d1432df2d8ca4bd76f) Thanks [@iyansr](https://github.com/iyansr)! - Fix Google Login
+
 ## 4.2.3
 
 ### Patch Changes
