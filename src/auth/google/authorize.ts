@@ -28,7 +28,7 @@ export class XellarEWGoogleAuthorize extends XellarEWBase {
    * @see {@link https://docs.xellar.co/embeddedwallets/how_to/setup_authentication/google/authorize/ Xellar Auth Google Docs}
    */
   async authorize(
-    credentials: string,
+    credential: string,
     expiredDate?: string,
     options?: GoogleAuthorizeOptions,
   ) {
@@ -36,7 +36,7 @@ export class XellarEWGoogleAuthorize extends XellarEWBase {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<AuthSuccessResponse>
       >('/auth/google', {
-        credentials,
+        credential,
         ...(expiredDate ? { expiredDate } : {}),
       });
 

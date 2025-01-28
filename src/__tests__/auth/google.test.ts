@@ -30,7 +30,7 @@ describe('Google Authentication', () => {
         refreshToken: 'mock-refresh-token',
       });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/google', {
-        credentials: 'mocCreds',
+        credential: 'mocCreds',
         expiredDate: 'mock-date',
       });
     });
@@ -56,7 +56,7 @@ describe('Google Authentication', () => {
         refreshToken: 'mock-refresh-token',
       });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/google', {
-        credentials: 'mocCreds',
+        credential: 'mocCreds',
       });
     });
 
@@ -112,7 +112,7 @@ describe('Google Authentication', () => {
         1,
         '/auth/google',
         {
-          credentials: 'mockCredentials',
+          credential: 'mockCredentials',
         },
       );
       expect(mockAxiosInstance.post).toHaveBeenNthCalledWith(
@@ -148,7 +148,7 @@ describe('Google Authentication', () => {
       );
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/google', {
-        credentials: 'wrongCreds',
+        credential: 'wrongCreds',
       });
     });
   });
