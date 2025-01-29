@@ -146,7 +146,7 @@ export class XellarEWSign extends XellarEWBase {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<{ signedTransaction: string }>
       >(
-        '/wallet/sign-message',
+        '/wallet/sign-transaction',
         {
           ...config,
         },
@@ -218,7 +218,7 @@ export class XellarEWSign extends XellarEWBase {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<{ signature: string }>
       >(
-        '/wallet/sign-message',
+        '/wallet/sign-typed-data',
         {
           ...config,
         },
