@@ -105,7 +105,7 @@ describe('Wallet Sign', () => {
 
       expect(result).toEqual({ signature: '0xabcdef1234567890' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/wallet/sign-message',
+        '/wallet/sign-transaction',
         {
           network: Network.ETHEREUM,
           transaction: {
@@ -149,7 +149,7 @@ describe('Wallet Sign', () => {
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/wallet/sign-message',
+        '/wallet/sign-transaction',
         {
           network: Network.ETHEREUM,
           transaction: {
@@ -187,7 +187,7 @@ describe('Wallet Sign', () => {
 
       expect(result).toEqual({ signature: '0xfedcba0987654321' });
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/wallet/sign-message',
+        '/wallet/sign-typed-data',
         {
           network: Network.ETHEREUM,
           data: '0x1234567890abcdef',
@@ -221,7 +221,7 @@ describe('Wallet Sign', () => {
       ).rejects.toThrow(XellarError);
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/wallet/sign-message',
+        '/wallet/sign-typed-data',
         {
           network: Network.ETHEREUM,
           data: '0x1234567890abcdef',
