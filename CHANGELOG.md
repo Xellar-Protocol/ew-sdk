@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.5
+
+### Patch Changes
+
+- [`67dabe1`](https://github.com/Xellar-Protocol/ew-sdk/commit/67dabe1f6ca0b0b26ad9b326404ed06fda15ba8d) Thanks [@iyansr](https://github.com/iyansr)! - Fix wrong enpoint
+
 ## 4.2.4
 
 ### Patch Changes
