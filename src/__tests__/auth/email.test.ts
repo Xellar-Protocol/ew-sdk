@@ -22,9 +22,17 @@ describe('Username Authentication', () => {
       const result = await sdk.auth.email.login('test@mail.com');
 
       expect(result).toEqual('mock_verificationToken');
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/login-otp', {
-        email: 'test@mail.com',
-      });
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/auth/login-otp',
+        {
+          email: 'test@mail.com',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
     });
 
     it('should throw XellarError on failed login with email', async () => {
@@ -43,9 +51,17 @@ describe('Username Authentication', () => {
         XellarError,
       );
 
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith('/auth/login-otp', {
-        email: 'wrongemail',
-      });
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/auth/login-otp',
+        {
+          email: 'wrongemail',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
     });
   });
 
