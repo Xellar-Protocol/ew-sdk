@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.6
+
+### Patch Changes
+
+- [`af9ef98`](https://github.com/Xellar-Protocol/ew-sdk/commit/af9ef9861565f8d86b365d4601b102666ecfe549) Thanks [@iyansr](https://github.com/iyansr)! - Fix OTP Request
+
 ## 4.2.5
 
 ### Patch Changes
