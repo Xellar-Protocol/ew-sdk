@@ -18,9 +18,17 @@ export class XellarEWEmailLogin extends XellarEWBase {
     try {
       const response = await this.axiosInstance.post<
         BaseHttpResponse<EmailLoginResponse>
-      >('/auth/login-otp', {
-        email,
-      });
+      >(
+        '/auth/login-otp',
+        {
+          email,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
 
       return response.data.data.verificationToken;
     } catch (error) {
