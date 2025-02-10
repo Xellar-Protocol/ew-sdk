@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.7
+
+### Patch Changes
+
+- [`7517aeb`](https://github.com/Xellar-Protocol/ew-sdk/commit/7517aeb6db07df329a457bbb7cc0df4af167a0b3) Thanks [@iyansr](https://github.com/iyansr)! - Fix Network not shown
+
 ## 4.2.6
 
 ### Patch Changes
