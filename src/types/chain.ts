@@ -17,8 +17,6 @@ export enum Network {
   SKALE_EUROPA = 'skale-europa',
   SKALE_NEBULA = 'skale-nebula',
   SKALE_TITAN = 'skale-titan',
-
-  // TESTNETS
   ETHEREUM_TESTNET = 'ethereum-testnet',
   BINANCE_SMART_CHAIN_TESTNET = 'binance-smart-chain-testnet',
   POLYGON_POS_TESTNET = 'polygon-pos-testnet',
