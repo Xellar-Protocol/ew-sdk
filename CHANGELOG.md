@@ -1,5 +1,13 @@
 # xellar-ew-sdk
 
+## 4.2.8
+
+### Patch Changes
+
+- [`6710666`](https://github.com/Xellar-Protocol/ew-sdk/commit/67106665663be4a121416c07645bb2fac899148f) Thanks [@iyansr](https://github.com/iyansr)! - Change Enum to Object
+
+- [`9f9d0f4`](https://github.com/Xellar-Protocol/ew-sdk/commit/9f9d0f4c04321ce42f89c7d2a793765e18c365d8) Thanks [@iyansr](https://github.com/iyansr)! - Fix build that cause aggresive tree shaking on enum
+
 ## 4.2.7
 
 ### Patch Changes
