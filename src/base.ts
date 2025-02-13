@@ -34,16 +34,32 @@ export class XellarEWBase {
   }
 
   private _setupAxiosInstance() {
-    const { clientSecret, env = 'sandbox' } =
-      this.container.resolve<Config>('Config');
+    const {
+      clientSecret,
+      env = 'sandbox',
+      appId,
+    } = this.container.resolve<Config>('Config');
 
     const baseURL = XELLAR_API_URL[env];
+
+    const clientSecretHeader = clientSecret
+      ? {
+          'x-client-secret': clientSecret,
+        }
+      : {};
+
+    const appIdHeader = appId
+      ? {
+          'x-app-id': appId,
+        }
+      : {};
 
     const instance = axios.create({
       baseURL: `${baseURL}/api/v2`,
       headers: {
         'Content-Type': 'application/json',
-        'x-client-secret': clientSecret,
+        ...clientSecretHeader,
+        ...appIdHeader,
       },
     });
 

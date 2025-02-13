@@ -2,6 +2,7 @@ import { StateStorage } from '../utils/storage';
 
 export type Config = {
   clientSecret: string;
+  appId?: string;
   rampableClientSecret?: string;
   env?: 'sandbox' | 'production';
   /** Use this to perform HTTP Signature Authentication (Personal Token) on rampable

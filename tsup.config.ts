@@ -4,7 +4,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/index.ts', 'src/react-native/index.ts'],
-  format: ['cjs'],
+  format: ['cjs', 'esm'],
   dts: true, // Generate TypeScript declaration files
   sourcemap: true, // Include sourcemaps
   clean: true, // Clean the output folder before building
