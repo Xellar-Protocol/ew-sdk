@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.9
+
+### Patch Changes
+
+- [`b55e977`](https://github.com/Xellar-Protocol/ew-sdk/commit/b55e9777612cce154fdf06a057d248ddcd6c950f) Thanks [@iyansr](https://github.com/iyansr)! - Add Manta Network
+
 ## 4.2.8
 
 ### Patch Changes
