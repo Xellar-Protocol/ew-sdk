@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.10
+
+### Patch Changes
+
+- [`818aad9`](https://github.com/Xellar-Protocol/ew-sdk/commit/818aad9ff0455c3ef651b5c1734d5f969793ca6b) Thanks [@iyansr](https://github.com/iyansr)! - Add Chain Id Enum
+
 ## 4.2.9
 
 ### Patch Changes
