@@ -8,7 +8,7 @@ export type {
 export type * from './rampable/recipients/types';
 export type * from './rampable/references/types';
 export { XellarSDK } from './sdk-web';
-export { Network } from './types/chain';
+export { ChainId, Network } from './types/chain';
 export type {
   AccountWalletResponse,
   AuthSuccessResponse,

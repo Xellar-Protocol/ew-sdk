@@ -79,7 +79,7 @@ export type {
 } from '../rampable/on-ramps/types';
 export type * from '../rampable/recipients/types';
 export type * from '../rampable/references/types';
-export { Network } from '../types/chain';
+export { ChainId, Network } from '../types/chain';
 export type {
   AccountWalletResponse,
   AuthSuccessResponse,
