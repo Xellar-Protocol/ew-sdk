@@ -1,6 +1,6 @@
 {
   "name": "xellar-ew-sdk",
-  "version": "4.2.10",
+  "version": "4.2.11",
   "description": "Xellar Embedded Wallet SDK for Javascript/Typescript",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
