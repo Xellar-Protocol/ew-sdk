@@ -139,12 +139,27 @@ export class XellarEWBase {
   protected async _refreshToken(
     refreshToken: string,
   ): Promise<{ walletToken: string; refreshToken: string }> {
-    const { clientSecret, env = 'sandbox' } =
-      this.container.resolve<Config>('Config');
+    const {
+      clientSecret,
+      env = 'sandbox',
+      appId,
+    } = this.container.resolve<Config>('Config');
 
     const baseURL = XELLAR_API_URL[env];
 
     try {
+      const clientSecretHeader = clientSecret
+        ? {
+            'x-client-secret': clientSecret,
+          }
+        : {};
+
+      const appIdHeader = appId
+        ? {
+            'x-app-id': appId,
+          }
+        : {};
+
       const response = await axios.request<
         BaseHttpResponse<{ walletToken: string; refreshToken: string }>
       >({
@@ -153,7 +168,8 @@ export class XellarEWBase {
         url: 'wallet/refresh',
         headers: {
           'Content-Type': 'application/json',
-          'x-client-secret': clientSecret,
+          ...clientSecretHeader,
+          ...appIdHeader,
         },
         data: { refreshToken },
       });
