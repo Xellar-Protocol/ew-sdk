@@ -1,5 +1,11 @@
 # xellar-ew-sdk
 
+## 4.2.11
+
+### Patch Changes
+
+- [`a0599fe`](https://github.com/Xellar-Protocol/ew-sdk/commit/a0599fe47df3bf05a80bb5592577800e1dd41473) Thanks [@iyansr](https://github.com/iyansr)! - Fix RefreshToken use AppId
+
 ## 4.2.10
 
 ### Patch Changes
