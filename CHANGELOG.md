@@ -1,4 +1,4 @@
-# xellar-ew-sdk
+# @xellar/sdk
 
 ## 4.2.11
 

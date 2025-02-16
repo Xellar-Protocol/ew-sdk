@@ -27,12 +27,12 @@ To start using the Xellar SDK, follow these steps:
 
 1. **Install the SDK:**
    ```bash
-   npm install xellar-ew-sdk
+   npm install @xellar/sdk
    ```
 
 2. **Import and initialize the SDK:**
    ```typescript
-   import XellarSDK from 'xellar-ew-sdk';
+   import XellarSDK from '@xellar/sdk';
 
    const xellar = new XellarSDK({
       clientSecret: 'YOUR_CLIENT_SECRET',
