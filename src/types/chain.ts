@@ -23,6 +23,9 @@ export enum Network {
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   LISK_SEPOLIA = 'lisk-sepolia',
   STORY_TESTNET = 'story-testnet',
+  STORY_ODYSSEY = 'story-odyssey',
+  STORY_AENEID = 'story-aeneid',
+  STORY = 'story',
   SKALE_CALYPSO_TESTNET = 'skale-calypso-testnet',
   SKALE_EUROPA_TESTNET = 'skale-europa-testnet',
   SKALE_NEBULA_TESTNET = 'skale-nebula-testnet',
@@ -51,6 +54,7 @@ export enum ChainId {
   OPBNB = 204,
   SCROLL = 534352,
   MANTA_PACIFIC = 169,
+  STORY = 1514,
 
   // Testnet chains
   ETHEREUM_GOERLI = 5,
@@ -63,6 +67,7 @@ export enum ChainId {
   KAIA_KAIROS = 1001,
   STORY_TESTNET = 1513,
   STORY_ODYSSEY = 1516,
+  STORY_AENEID = 1315,
   BASE_SEPOLIA = 84532,
   SKALE_CALYPSO_TESTNET = 974399131,
   SKALE_EUROPA_TESTNET = 1444673419,
