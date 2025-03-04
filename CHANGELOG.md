@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.2.12
+
+### Patch Changes
+
+- [`02cecae`](https://github.com/Xellar-Protocol/ew-sdk/commit/02cecae9d57918ea0710fb15d15c6c21b10313d4) Thanks [@iyansr](https://github.com/iyansr)! - Add Story Chain
+
 ## 4.2.11
 
 ### Patch Changes
