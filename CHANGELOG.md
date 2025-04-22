@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.2.13
+
+### Patch Changes
+
+- [`d25216e`](https://github.com/Xellar-Protocol/ew-sdk/commit/d25216e44b39ba275a5a4ccc2cd3d4d38fce90f3) Thanks [@iyansr](https://github.com/iyansr)! - Add JuChain
+
 ## 4.2.12
 
 ### Patch Changes
