@@ -16,6 +16,8 @@ export enum Network {
   SKALE_NEBULA = 'skale-nebula',
   SKALE_TITAN = 'skale-titan',
   MANTA_PACIFIC = 'manta-pacific',
+  JUCHAIN = 'juchain',
+
   ETHEREUM_TESTNET = 'ethereum-testnet',
   BINANCE_SMART_CHAIN_TESTNET = 'binance-smart-chain-testnet',
   POLYGON_POS_TESTNET = 'polygon-pos-testnet',
@@ -31,6 +33,7 @@ export enum Network {
   SKALE_NEBULA_TESTNET = 'skale-nebula-testnet',
   SKALE_TITAN_TESTNET = 'skale-titan-testnet',
   MANTA_PACIFIC_SEPOLIA = 'manta-pacific-sepolia',
+  JUCHAIN_TESTNET = 'juchain-testnet',
 }
 
 export enum ChainId {
@@ -55,6 +58,7 @@ export enum ChainId {
   SCROLL = 534352,
   MANTA_PACIFIC = 169,
   STORY = 1514,
+  JUCHAIN = 210000,
 
   // Testnet chains
   ETHEREUM_GOERLI = 5,
@@ -76,4 +80,5 @@ export enum ChainId {
   OPBNB_TESTNET = 5611,
   SCROLL_SEPOLIA = 534351,
   MANTA_PACIFIC_SEPOLIA = 3441006,
+  JUCHAIN_TESTNET = 202599,
 }
