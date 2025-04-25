@@ -24,6 +24,7 @@ export enum Network {
   ETHEREUM_HOLESKY = 'ethereum-holesky',
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   LISK_SEPOLIA = 'lisk-sepolia',
+  BASE_SEPOLIA = 'base-sepolia',
   STORY_TESTNET = 'story-testnet',
   STORY_ODYSSEY = 'story-odyssey',
   STORY_AENEID = 'story-aeneid',
