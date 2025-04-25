@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.2.14
+
+### Patch Changes
+
+- [`05532f4`](https://github.com/Xellar-Protocol/ew-sdk/commit/05532f4b52a5493e8d485e6d3c637f58d613af4a) Thanks [@iyansr](https://github.com/iyansr)! - Fix Missing Chain
+
 ## 4.2.13
 
 ### Patch Changes
