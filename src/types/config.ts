@@ -1,7 +1,7 @@
 import { StateStorage } from '../utils/storage';
 
 export type Config = {
-  clientSecret: string;
+  clientSecret?: string;
   appId?: string;
   rampableClientSecret?: string;
   env?: 'sandbox' | 'production';
