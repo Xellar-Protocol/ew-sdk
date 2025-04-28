@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.2.15
+
+### Patch Changes
+
+- [`7a15483`](https://github.com/Xellar-Protocol/ew-sdk/commit/7a15483d08de6a6a312432e3d41b0be25a9bcc82) Thanks [@iyansr](https://github.com/iyansr)! - Make Client Secret Optional
+
 ## 4.2.14
 
 ### Patch Changes
