@@ -39,3 +39,74 @@ export interface GasTank {
   tokenName: string;
   decimals: number;
 }
+
+export interface AASubmitUserOpOptions {
+  signature: string;
+  userOpId: string;
+  hash: string;
+  isSponsored?: boolean;
+}
+
+export interface BaseDTO {
+  id: string;
+  createdAt: string;
+  updatedAt: string | null;
+}
+
+export interface GasTankUsageHistoryDTO {
+  id: string;
+  accountId: string;
+  ownerId: string;
+  userOpId: string;
+  gasTankId: string;
+  nativeToGasTankRate: number;
+  amountInNative: string | null;
+  amountInGasTank: string | null;
+  initialDeductedAmountInNative: string | null;
+  initialDeductedAmountInGasTank: string | null;
+  refundedAmountInNative: string | null;
+  refundedAmountInGasTank: string | null;
+  clientFeeInGasTank: string | null;
+  createdAt: string;
+  refundedAt: string | null;
+}
+
+export interface ClientGasTankUsageHistoryDTO {
+  id: string;
+  clientId: string;
+  appId: string;
+  clientGasTankId: string;
+  userOpId: string;
+  nativeToGasTankRate: number;
+  amountInNative: string | null;
+  amountInGasTank: string | null;
+  initialDeductedAmountInNative: string | null;
+  initialDeductedAmountInGasTank: string | null;
+  refundedAmountInNative: string | null;
+  refundedAmountInGasTank: string | null;
+  clientFeeInGasTank: string | null;
+  createdAt: string;
+  refundedAt: string | null;
+}
+
+export interface AASubmitUserOpResponse extends BaseDTO {
+  accountId: string;
+  ownerId: string;
+  clientId: string;
+  appId: string;
+  signature: string | null;
+  userOpHash: string;
+  status: string;
+  type: string;
+  network: string;
+  chainId: number;
+  payer: string;
+  validUntil: string;
+  failedReason: string | null;
+  bundlerVersion: string;
+  successAt: string | null;
+  failedAt: string | null;
+  sentAt: string | null;
+  gasTankUsageHistory?: GasTankUsageHistoryDTO;
+  clientGasTankUsageHistory?: ClientGasTankUsageHistoryDTO;
+}
