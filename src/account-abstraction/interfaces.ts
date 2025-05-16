@@ -162,3 +162,48 @@ export interface CreateUserOpResponse {
   hash: string;
   validUntil: number;
 }
+
+export interface SignMessageHashOptions {
+  accountId: string;
+  message: string;
+}
+
+export interface SignMessageHashResponse {
+  hash: string;
+}
+
+export interface TypedDataDomain {
+  name: string;
+  version: string;
+  chainId: number;
+  verifyingContract: string;
+}
+
+export interface TypedDataField {
+  name: string;
+  type: string;
+}
+
+export interface TypedData {
+  domain: TypedDataDomain;
+  types: {
+    [key: string]: TypedDataField[];
+  };
+  primaryType: string;
+  message: Record<string, any>;
+}
+
+export interface SignTypedDataHashOptions {
+  accountId: string;
+  typedData: TypedData;
+}
+
+export interface SignTypedDataHashResponse {
+  hash: string;
+}
+
+export interface BuildSignatureOptions {
+  accountId: string;
+  signature: string;
+  typedData?: TypedData;
+}

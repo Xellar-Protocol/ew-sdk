@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../base';
 import { Container } from '../container';
 import { XellarAAAuth } from './auth';
+import { XellarAASignature } from './signature';
 import { XellarAACreateActivate } from './user-op/create/activate';
 import { XellarAACreateSendERC721 } from './user-op/create/send-erc721';
 import { XellarAACreateSendERC1155 } from './user-op/create/send-erc1155';
@@ -44,6 +45,8 @@ export class XellarAccountAbstraction extends XellarEWBase {
 
   protected createSignTransactionInstance: XellarAACreateSignTransaction;
 
+  protected signatureInstance: XellarAASignature;
+
   constructor(container: Container) {
     super(container);
 
@@ -67,6 +70,7 @@ export class XellarAccountAbstraction extends XellarEWBase {
     this.createSignTransactionInstance = new XellarAACreateSignTransaction(
       container,
     );
+    this.signatureInstance = new XellarAASignature(container);
   }
 
   get auth() {
@@ -101,6 +105,15 @@ export class XellarAccountAbstraction extends XellarEWBase {
       sendERC1155: this.createSendERC1155Instance.sendERC1155.bind(this),
       signTransaction:
         this.createSignTransactionInstance.signTransaction.bind(this),
+    };
+  }
+
+  get signature() {
+    return {
+      getSignMessageHash: this.signatureInstance.getSignMessageHash.bind(this),
+      getSignTypedDataHash:
+        this.signatureInstance.getSignTypedDataHash.bind(this),
+      buildSignature: this.signatureInstance.buildSignature.bind(this),
     };
   }
 }
