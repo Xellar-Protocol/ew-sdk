@@ -110,3 +110,49 @@ export interface AASubmitUserOpResponse extends BaseDTO {
   gasTankUsageHistory?: GasTankUsageHistoryDTO;
   clientGasTankUsageHistory?: ClientGasTankUsageHistoryDTO;
 }
+
+export interface EstimateResponse {
+  requiredNative: string;
+  requiredGasTankBalance: string;
+  decimal: number;
+}
+
+export interface EstimateSendTokenOptions {
+  accountId: string;
+  tokenAddress: string;
+  to: string;
+  amount: string;
+}
+
+export interface EstimateActivateOptions {
+  accountId: string;
+}
+
+export interface EstimateSendNativeOptions {
+  accountId: string;
+  to: string;
+  amount: string;
+}
+
+export interface EstimateSendERC721Options {
+  accountId: string;
+  tokenAddress: string;
+  to: string;
+  tokenId: string;
+}
+
+export interface EstimateSendERC1155Options {
+  accountId: string;
+  tokenAddress: string;
+  to: string;
+  tokenId: string;
+  amount: string;
+  data?: string;
+}
+
+export interface EstimateSignTransactionOptions {
+  accountId: string;
+  to: string;
+  value: string;
+  callData: string;
+}
