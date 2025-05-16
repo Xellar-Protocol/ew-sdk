@@ -156,3 +156,9 @@ export interface EstimateSignTransactionOptions {
   value: string;
   callData: string;
 }
+
+export interface CreateUserOpResponse {
+  userOpId: string;
+  hash: string;
+  validUntil: number;
+}

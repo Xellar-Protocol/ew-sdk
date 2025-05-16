@@ -1,6 +1,12 @@
 import { XellarEWBase } from '../base';
 import { Container } from '../container';
 import { XellarAAAuth } from './auth';
+import { XellarAACreateActivate } from './user-op/create/activate';
+import { XellarAACreateSendERC721 } from './user-op/create/send-erc721';
+import { XellarAACreateSendERC1155 } from './user-op/create/send-erc1155';
+import { XellarAACreateSendNative } from './user-op/create/send-native';
+import { XellarAACreateSendToken } from './user-op/create/send-token';
+import { XellarAACreateSignTransaction } from './user-op/create/sign-transaction';
 import { XellarAAEstimateActivate } from './user-op/estimate/activate';
 import { XellarAAEstimateSendERC721 } from './user-op/estimate/send-erc721';
 import { XellarAAEstimateSendERC1155 } from './user-op/estimate/send-erc1155';
@@ -26,6 +32,18 @@ export class XellarAccountAbstraction extends XellarEWBase {
 
   protected estimateSignTransactionInstance: XellarAAEstimateSignTransaction;
 
+  protected createActivateInstance: XellarAACreateActivate;
+
+  protected createSendTokenInstance: XellarAACreateSendToken;
+
+  protected createSendNativeInstance: XellarAACreateSendNative;
+
+  protected createSendERC721Instance: XellarAACreateSendERC721;
+
+  protected createSendERC1155Instance: XellarAACreateSendERC1155;
+
+  protected createSignTransactionInstance: XellarAACreateSignTransaction;
+
   constructor(container: Container) {
     super(container);
 
@@ -39,6 +57,14 @@ export class XellarAccountAbstraction extends XellarEWBase {
       container,
     );
     this.estimateSignTransactionInstance = new XellarAAEstimateSignTransaction(
+      container,
+    );
+    this.createActivateInstance = new XellarAACreateActivate(container);
+    this.createSendTokenInstance = new XellarAACreateSendToken(container);
+    this.createSendNativeInstance = new XellarAACreateSendNative(container);
+    this.createSendERC721Instance = new XellarAACreateSendERC721(container);
+    this.createSendERC1155Instance = new XellarAACreateSendERC1155(container);
+    this.createSignTransactionInstance = new XellarAACreateSignTransaction(
       container,
     );
   }
@@ -63,6 +89,18 @@ export class XellarAccountAbstraction extends XellarEWBase {
         this.estimateSendERC1155Instance.estimateSendERC1155.bind(this),
       signTransaction:
         this.estimateSignTransactionInstance.estimateSignTransaction.bind(this),
+    };
+  }
+
+  get create() {
+    return {
+      activate: this.createActivateInstance.activate.bind(this),
+      sendToken: this.createSendTokenInstance.sendToken.bind(this),
+      sendNative: this.createSendNativeInstance.sendNative.bind(this),
+      sendERC721: this.createSendERC721Instance.sendERC721.bind(this),
+      sendERC1155: this.createSendERC1155Instance.sendERC1155.bind(this),
+      signTransaction:
+        this.createSignTransactionInstance.signTransaction.bind(this),
     };
   }
 }
