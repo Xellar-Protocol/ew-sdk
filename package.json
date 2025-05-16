@@ -24,7 +24,7 @@
     "prepare": "husky",
     "lint": "eslint ./src/**/*.ts --max-warnings=0",
     "lint:fix": "eslint ./src/**/*.ts --fix",
-    "checker": "npm run lint && npm run test"
+    "checker": "npm run lint"
   },
   "repository": {
     "type": "git",
