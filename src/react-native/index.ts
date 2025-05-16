@@ -1,4 +1,5 @@
 import { XellarEWAccountOperations } from '../account';
+import { XellarAccountAbstraction } from '../account-abstraction';
 import { XellarEWAuth } from '../auth';
 import { Container } from '../container';
 import { XellarEWOffRamp } from '../rampable/off-ramps';
@@ -7,6 +8,7 @@ import { XellarEWRampableRecipients } from '../rampable/recipients';
 import { XellarEWRampableReference } from '../rampable/references';
 import { XellarEWRampableRefreshToken } from '../rampable/refresh-token';
 import { Config } from '../types/config';
+import { prepareHeadersReactNative } from '../utils/aa-signature-react-native';
 import { generateAssymetricSignatureRN } from '../utils/generate-signature-react-native';
 import { TokenManager } from '../utils/token-manager';
 import { XellarEWWalletOperations } from '../wallet';
@@ -30,6 +32,8 @@ export class XellarSDK {
 
   private rampableRefreshToken: XellarEWRampableRefreshToken;
 
+  public accountAbstraction: XellarAccountAbstraction;
+
   constructor({
     clientSecret,
     env = 'sandbox',
@@ -52,7 +56,7 @@ export class XellarSDK {
       'GenerateAssymetricSignature',
       generateAssymetricSignatureRN,
     );
-
+    this.container.register('PrepareAAHeader', prepareHeadersReactNative);
     this.auth = new XellarEWAuth(this.container);
     this.account = new XellarEWAccountOperations(this.container);
     this.wallet = new XellarEWWalletOperations(this.container);
@@ -63,6 +67,7 @@ export class XellarSDK {
     this.rampableRefreshToken = new XellarEWRampableRefreshToken(
       this.container,
     );
+    this.accountAbstraction = new XellarAccountAbstraction(this.container);
   }
 
   get refreshRampableToken() {

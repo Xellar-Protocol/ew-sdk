@@ -3,6 +3,11 @@ export const XELLAR_API_URL = {
   production: 'https://mpc-api.xellar.co',
 };
 
+export const XELLAR_AA_API_URL = {
+  sandbox: 'https://aa-dev.xellar.co',
+  production: 'https://aa.xellar.co',
+};
+
 export const RAMPABLE_API_URL = {
   sandbox: 'https://staging.rampable.co',
   production: 'https://api.rampable.co',

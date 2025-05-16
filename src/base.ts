@@ -2,9 +2,18 @@
 /* eslint-disable no-param-reassign */
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
-import { RAMPABLE_API_URL, XELLAR_API_URL } from './constants';
+import {
+  RAMPABLE_API_URL,
+  XELLAR_AA_API_URL,
+  XELLAR_API_URL,
+} from './constants';
 import { Container } from './container';
-import { Config, GenerateAssymetricSignatureParams } from './types/config';
+import {
+  AAHeaders,
+  Config,
+  GenerateAssymetricSignatureParams,
+  PrepareAAHeadersParams,
+} from './types/config';
 import { BaseHttpResponse, RampableAccount } from './types/http';
 import { handleError, XellarError } from './utils/error';
 import { TokenManager } from './utils/token-manager';
@@ -14,12 +23,19 @@ export class XellarEWBase {
 
   protected rampableAxiosInstance: AxiosInstance;
 
+  protected aaInstance: AxiosInstance;
+
   protected container: Container;
 
   protected generateAssymetricSignature: (
     // eslint-disable-next-line no-unused-vars
     _params: GenerateAssymetricSignatureParams,
   ) => string;
+
+  protected prepareAAHeader: (
+    // eslint-disable-next-line no-unused-vars
+    _params: PrepareAAHeadersParams,
+  ) => AAHeaders;
 
   protected tokenManager: TokenManager;
 
@@ -30,7 +46,9 @@ export class XellarEWBase {
     this.generateAssymetricSignature = this.container.resolve(
       'GenerateAssymetricSignature',
     );
+    this.prepareAAHeader = this.container.resolve('PrepareAAHeader');
     this.tokenManager = this.container.resolve('TokenManager');
+    this.aaInstance = this._setupAaInstance();
   }
 
   private _setupAxiosInstance() {
@@ -42,12 +60,6 @@ export class XellarEWBase {
 
     const baseURL = XELLAR_API_URL[env];
 
-    const clientSecretHeader = clientSecret
-      ? {
-          'x-client-secret': clientSecret,
-        }
-      : {};
-
     const appIdHeader = appId
       ? {
           'x-app-id': appId,
@@ -58,10 +70,45 @@ export class XellarEWBase {
       baseURL: `${baseURL}/api/v2`,
       headers: {
         'Content-Type': 'application/json',
-        ...clientSecretHeader,
         ...appIdHeader,
       },
     });
+
+    return instance;
+  }
+
+  private _setupAaInstance() {
+    const {
+      clientSecret,
+      env = 'sandbox',
+      appId,
+    } = this.container.resolve<Config>('Config');
+
+    const baseURL = XELLAR_AA_API_URL[env];
+
+    const instance = axios.create({
+      baseURL: `${baseURL}/api/v1`,
+    });
+
+    instance.interceptors.request.use(
+      async (cfg: InternalAxiosRequestConfig) => {
+        const headers = this.prepareAAHeader({
+          appId,
+          clientSecret: clientSecret || '',
+          method: cfg.method?.toUpperCase() || '',
+          url: cfg.url || '',
+          requestBody: cfg.data,
+        });
+
+        cfg.headers = cfg.headers || {};
+        cfg.headers['Content-Type'] = headers['Content-Type'];
+        cfg.headers['X-TIMESTAMP'] = headers['X-TIMESTAMP'];
+        cfg.headers['X-APP-ID'] = headers['X-APP-ID'];
+        cfg.headers['X-SIGNATURE'] = headers['X-SIGNATURE'];
+
+        return cfg;
+      },
+    );
 
     return instance;
   }
@@ -148,12 +195,6 @@ export class XellarEWBase {
     const baseURL = XELLAR_API_URL[env];
 
     try {
-      const clientSecretHeader = clientSecret
-        ? {
-            'x-client-secret': clientSecret,
-          }
-        : {};
-
       const appIdHeader = appId
         ? {
             'x-app-id': appId,
@@ -168,7 +209,6 @@ export class XellarEWBase {
         url: 'wallet/refresh',
         headers: {
           'Content-Type': 'application/json',
-          ...clientSecretHeader,
           ...appIdHeader,
         },
         data: { refreshToken },
