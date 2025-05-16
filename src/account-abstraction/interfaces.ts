@@ -207,3 +207,27 @@ export interface BuildSignatureOptions {
   signature: string;
   typedData?: TypedData;
 }
+
+export interface TopUpByTxOptions {
+  txHash: string;
+  chainId: number;
+  receiverOwnerId: string;
+  tokenAddress: string;
+  poolAddress: string;
+  immediate?: boolean;
+  signature: string;
+}
+
+export interface TopUpHistoryDTO extends BaseDTO {
+  clientId?: string;
+  appId?: string;
+  ownerId?: string;
+  txHash?: string;
+  network?: string;
+  chainId?: number;
+  poolAddress?: string;
+  amount?: string;
+  tokenAddress?: string;
+  status?: string;
+  failReason?: string | null;
+}
