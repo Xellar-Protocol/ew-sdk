@@ -97,7 +97,7 @@ export class XellarEWBase {
           clientSecret: clientSecret || '',
           method: cfg.method?.toUpperCase() || '',
           url: cfg.url || '',
-          requestBody: cfg.data,
+          requestBody: JSON.stringify(cfg.data),
         });
 
         cfg.headers = cfg.headers || {};
