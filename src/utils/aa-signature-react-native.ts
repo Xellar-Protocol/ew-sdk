@@ -55,7 +55,7 @@ function generateSignature({
 /**
  * Prepares headers for an authorized request.
  */
-export function prepareHeadersReactNative({
+export async function prepareHeadersReactNative({
   method,
   url,
   appId,

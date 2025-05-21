@@ -35,7 +35,7 @@ export class XellarEWBase {
   protected prepareAAHeader: (
     // eslint-disable-next-line no-unused-vars
     _params: PrepareAAHeadersParams,
-  ) => AAHeaders;
+  ) => Promise<AAHeaders>;
 
   protected tokenManager: TokenManager;
 
@@ -92,7 +92,7 @@ export class XellarEWBase {
 
     instance.interceptors.request.use(
       async (cfg: InternalAxiosRequestConfig) => {
-        const headers = this.prepareAAHeader({
+        const headers = await this.prepareAAHeader({
           appId,
           clientSecret: clientSecret || '',
           method: cfg.method?.toUpperCase() || '',
