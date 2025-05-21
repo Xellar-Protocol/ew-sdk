@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.3.4
+
+### Patch Changes
+
+- [`ff01c2f`](https://github.com/Xellar-Protocol/ew-sdk/commit/ff01c2fde2a77d58ee9440ecdef6768d0e4c92b2) Thanks [@iyansr](https://github.com/iyansr)! - Fix
+
 ## 4.3.3
 
 ### Patch Changes
