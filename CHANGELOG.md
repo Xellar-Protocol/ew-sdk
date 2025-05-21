@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.3.1
+
+### Patch Changes
+
+- [`37dd1fa`](https://github.com/Xellar-Protocol/ew-sdk/commit/37dd1fa68735c2ef50d91727d03d1a35da546ff7) Thanks [@iyansr](https://github.com/iyansr)! - Expose AA Interface
+
 ## 4.3.0
 
 ### Minor Changes
