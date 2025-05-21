@@ -1,5 +1,13 @@
 # @xellar/sdk
 
+## 4.3.2
+
+### Patch Changes
+
+- [`81baf76`](https://github.com/Xellar-Protocol/ew-sdk/commit/81baf764a41ca585d6cbdb5546f51a480f63745f) Thanks [@iyansr](https://github.com/iyansr)! - Fix AA Instance
+
+- [`aa2270f`](https://github.com/Xellar-Protocol/ew-sdk/commit/aa2270f5218afbf5f9e081ec69b7112472a705e5) Thanks [@iyansr](https://github.com/iyansr)! - Fix Signature AA
+
 ## 4.3.1
 
 ### Patch Changes
