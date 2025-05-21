@@ -72,8 +72,12 @@ async function generateSignature({
       key,
       encoder.encode(stringToSign),
     );
-    const signatureArray = Array.from(new Uint8Array(signature)); // convert buffer to byte array
-    const signatureBase64 = Buffer.from(signatureArray).toString('base64');
+    const signatureArray = Array.from(new Uint8Array(signature));
+    // More robust approach for large arrays
+    const signatureString = signatureArray
+      .map(byte => String.fromCharCode(byte))
+      .join('');
+    const signatureBase64 = btoa(signatureString);
     return signatureBase64;
   }
 
