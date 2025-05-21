@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.3.3
+
+### Patch Changes
+
+- [`56a96a3`](https://github.com/Xellar-Protocol/ew-sdk/commit/56a96a392825f9a81d0188896ac5d10280324ab2) Thanks [@iyansr](https://github.com/iyansr)! - Fix AA Signature for browser
+
 ## 4.3.2
 
 ### Patch Changes
