@@ -96,7 +96,7 @@ export class XellarEWBase {
           appId,
           clientSecret: clientSecret || '',
           method: cfg.method?.toUpperCase() || '',
-          url: cfg.url || '',
+          url: `/api/v1${cfg.url || ''}`,
           requestBody: JSON.stringify(cfg.data),
         });
 
