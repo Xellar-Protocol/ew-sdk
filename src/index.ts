@@ -1,3 +1,4 @@
+export type * from './account-abstraction/interfaces';
 export type * from './rampable/off-ramps/types';
 export type {
   XellarOnRampQuoteRequest,

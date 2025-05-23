@@ -1,5 +1,41 @@
 # @xellar/sdk
 
+## 4.3.4
+
+### Patch Changes
+
+- [`ff01c2f`](https://github.com/Xellar-Protocol/ew-sdk/commit/ff01c2fde2a77d58ee9440ecdef6768d0e4c92b2) Thanks [@iyansr](https://github.com/iyansr)! - Fix
+
+## 4.3.3
+
+### Patch Changes
+
+- [`56a96a3`](https://github.com/Xellar-Protocol/ew-sdk/commit/56a96a392825f9a81d0188896ac5d10280324ab2) Thanks [@iyansr](https://github.com/iyansr)! - Fix AA Signature for browser
+
+## 4.3.2
+
+### Patch Changes
+
+- [`81baf76`](https://github.com/Xellar-Protocol/ew-sdk/commit/81baf764a41ca585d6cbdb5546f51a480f63745f) Thanks [@iyansr](https://github.com/iyansr)! - Fix AA Instance
+
+- [`aa2270f`](https://github.com/Xellar-Protocol/ew-sdk/commit/aa2270f5218afbf5f9e081ec69b7112472a705e5) Thanks [@iyansr](https://github.com/iyansr)! - Fix Signature AA
+
+## 4.3.1
+
+### Patch Changes
+
+- [`37dd1fa`](https://github.com/Xellar-Protocol/ew-sdk/commit/37dd1fa68735c2ef50d91727d03d1a35da546ff7) Thanks [@iyansr](https://github.com/iyansr)! - Expose AA Interface
+
+## 4.3.0
+
+### Minor Changes
+
+- [`3ce954a`](https://github.com/Xellar-Protocol/ew-sdk/commit/3ce954a437685673cf6749a68aae845a6dec7920) Thanks [@iyansr](https://github.com/iyansr)! - Add Account Abstraction
+
+### Patch Changes
+
+- [`7a15483`](https://github.com/Xellar-Protocol/ew-sdk/commit/7a15483d08de6a6a312432e3d41b0be25a9bcc82) Thanks [@iyansr](https://github.com/iyansr)! - Make Client Secret Optional
+
 ## 4.2.14
 
 ### Patch Changes
