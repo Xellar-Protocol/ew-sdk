@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.4.0
+
+### Minor Changes
+
+- [#52](https://github.com/Xellar-Protocol/ew-sdk/pull/52) [`e1f33ae`](https://github.com/Xellar-Protocol/ew-sdk/commit/e1f33aef3e6042d55ba935fa85b3b52190168b3c) Thanks [@yoms07](https://github.com/yoms07)! - add signHash in embedded wallet operation
+
 ## 4.3.4
 
 ### Patch Changes
