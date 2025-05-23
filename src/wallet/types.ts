@@ -11,6 +11,17 @@ export type SignMessageConfig = {
   refreshToken?: string;
 };
 
+export type SignHashConfig = {
+  /** (required): Some hash user want to sign.  */
+  hash: string;
+  /** (required): The network used for transactions. */
+  network: Network;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
+};
+
 export type SignTransactionConfig = {
   /** (required): The network used for transactions. */
   network: Network;

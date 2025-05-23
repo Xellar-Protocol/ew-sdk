@@ -3,6 +3,7 @@ import { XellarEWBase } from '../base';
 import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
 import {
+  SignHashConfig,
   SignMessageConfig,
   SignTransactionConfig,
   SignTypedDataConfig,
@@ -219,6 +220,74 @@ export class XellarEWSign extends XellarEWBase {
         BaseHttpResponse<{ signature: string }>
       >(
         '/wallet/sign-typed-data',
+        {
+          ...config,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${walletToken}`,
+          },
+        },
+      );
+
+      if (refreshToken) {
+        const refreshTokenResult = await this._refreshToken(refreshToken);
+
+        return {
+          signature: response.data.data.signature,
+          refreshToken: refreshTokenResult.refreshToken,
+          walletToken: refreshTokenResult.walletToken,
+        };
+      }
+
+      return { signature: response.data.data.signature };
+    } catch (error) {
+      const handledError = handleError(error);
+      throw new XellarError(
+        handledError.message,
+        handledError.code,
+        handledError.details,
+      );
+    }
+  }
+
+  /**
+   * Allow users to sign some typed data message using their MPC wallet.
+   * @param config Configuration object.
+   *
+   *  - `network` (required): The network used for transactions.
+   *  - `hash` (required): The hash you want to sign. Must be a hex string.
+   *
+   * @returns The signature of the hash.
+   *
+   * @example
+   *
+   * ```typescript
+   * const body: SignHashConfig = {
+   *   network: 'ethereum',
+   *   hash: '0x',
+   * };
+   *
+   * const signature = await sdk.wallet.sign.signHash(body);
+   * ```
+   *
+   * @see {@link https://docs.xellar.co/embeddedwallets/how_to/wallet_operation/Sign_Hash/ Xellar Wallet Signed Hash Docs}
+   */
+
+  async signHash(
+    config: SignHashConfig & { refreshToken: string },
+  ): Promise<WithTokenResponse<{ signature: string }>>;
+
+  async signHash(
+    config: SignHashConfig & { refreshToken?: undefined },
+  ): Promise<{ signature: string }>;
+
+  async signHash({ walletToken, refreshToken, ...config }: SignHashConfig) {
+    try {
+      const response = await this.axiosInstance.post<
+        BaseHttpResponse<{ signature: string }>
+      >(
+        '/wallet/sign-hash',
         {
           ...config,
         },

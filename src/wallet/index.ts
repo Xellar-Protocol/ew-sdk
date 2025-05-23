@@ -61,6 +61,10 @@ export class XellarEWWalletOperations extends XellarEWBase {
     return this.sign.signTypedData.bind(this);
   }
 
+  get signHash() {
+    return this.sign.signHash.bind(this);
+  }
+
   get cancelTransaction() {
     return this.xellarCancelTransaction.cancelTransaction.bind(this);
   }
