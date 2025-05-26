@@ -15,7 +15,7 @@ export class XellarAAEstimateSendNative extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.sendNative({
+   * const result = await sdk.accountAbstraction.estimate.sendNative({
    *   accountId: "67959f7927373a6808679de2",
    *   to: "0x...",
    *   amount: "1000000000000"

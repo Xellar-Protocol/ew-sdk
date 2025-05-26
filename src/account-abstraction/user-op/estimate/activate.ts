@@ -13,7 +13,7 @@ export class XellarAAEstimateActivate extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.activate({
+   * const result = await sdk.accountAbstraction.estimate.activate({
    *   accountId: "67b1f9310521667c3e94d625"
    * });
    * ```

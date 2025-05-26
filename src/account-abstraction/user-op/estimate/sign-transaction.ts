@@ -19,7 +19,7 @@ export class XellarAAEstimateSignTransaction extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.signTransaction({
+   * const result = await sdk.accountAbstraction.estimate.signTransaction({
    *   accountId: "67959f7927373a6808679de2",
    *   to: "0x...",
    *   value: "0",

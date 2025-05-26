@@ -208,6 +208,10 @@ export interface BuildSignatureOptions {
   typedData?: TypedData;
 }
 
+export interface BuildSignatureResponse {
+  signature: string;
+}
+
 export interface TopUpByTxOptions {
   txHash: string;
   chainId: number;

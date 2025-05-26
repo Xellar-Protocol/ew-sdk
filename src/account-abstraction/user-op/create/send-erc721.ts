@@ -19,7 +19,7 @@ export class XellarAACreateSendERC721 extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.create.sendERC721({
+   * const result = await sdk.accountAbstraction.create.sendERC721({
    *   accountId: "67959f7927373a6808679de2",
    *   tokenAddress: "0x...",
    *   to: "0x...",

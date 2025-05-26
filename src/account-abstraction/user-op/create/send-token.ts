@@ -19,7 +19,7 @@ export class XellarAACreateSendToken extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.create.sendToken({
+   * const result = await sdk.accountAbstraction.create.sendToken({
    *   accountId: "67959f7927373a6808679de2",
    *   tokenAddress: "0x...",
    *   to: "0x...",

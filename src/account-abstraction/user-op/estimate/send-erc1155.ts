@@ -18,7 +18,7 @@ export class XellarAAEstimateSendERC1155 extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.sendERC1155({
+   * const result = await sdk.accountAbstraction.estimate.sendERC1155({
    *   accountId: "67959f7927373a6808679de2",
    *   tokenAddress: "0x...",
    *   to: "0x...",
