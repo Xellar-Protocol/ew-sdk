@@ -1,5 +1,15 @@
 # @xellar/sdk
 
+## 4.5.0
+
+### Minor Changes
+
+- [#54](https://github.com/Xellar-Protocol/ew-sdk/pull/54) [`30fdf0f`](https://github.com/Xellar-Protocol/ew-sdk/commit/30fdf0f9685626677397cb6783ffcd12ecac6558) Thanks [@yoms07](https://github.com/yoms07)! - Add check balance functionality for AA
+
+### Patch Changes
+
+- [#54](https://github.com/Xellar-Protocol/ew-sdk/pull/54) [`30fdf0f`](https://github.com/Xellar-Protocol/ew-sdk/commit/30fdf0f9685626677397cb6783ffcd12ecac6558) Thanks [@yoms07](https://github.com/yoms07)! - fix aa sdk example
+
 ## 4.4.0
 
 ### Minor Changes
