@@ -235,3 +235,26 @@ export interface TopUpHistoryDTO extends BaseDTO {
   status?: string;
   failReason?: string | null;
 }
+
+export interface BalanceDTO {
+  balance: string;
+  formattedBalance: string;
+}
+
+export interface TokenBalanceDTO {
+  balance: string;
+  symbol: string;
+  decimals: number;
+  formattedBalance: string;
+}
+
+export interface TokenBatchBalanceDTO {
+  accountId: string;
+  tokens: TokenBalanceDTO[];
+}
+
+export interface BalanceResponse {
+  status: number;
+  message: string;
+  data: BalanceDTO;
+}
