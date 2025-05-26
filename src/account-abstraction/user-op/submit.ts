@@ -16,7 +16,7 @@ export class XellarAASubmit extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.submitUserOp({
+   * const result = await sdk.accountAbstraction.submitUserOp({
    *   signature: "0x...",
    *   userOpId: "67b1fc9a442f26832dadd881",
    *   hash: "0x...",

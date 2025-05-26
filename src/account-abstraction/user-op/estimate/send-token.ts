@@ -16,7 +16,7 @@ export class XellarAAEstimateSendToken extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.sendToken({
+   * const result = await sdk.accountAbstraction.estimate.sendToken({
    *   accountId: "67959f7927373a6808679de2",
    *   tokenAddress: "0x...",
    *   to: "0x...",

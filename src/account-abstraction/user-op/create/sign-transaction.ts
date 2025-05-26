@@ -19,7 +19,7 @@ export class XellarAACreateSignTransaction extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.create.signTransaction({
+   * const result = await sdk.accountAbstraction.create.signTransaction({
    *   accountId: "67959f7927373a6808679de2",
    *   to: "0x...",
    *   value: "0",

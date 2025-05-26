@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../base';
 import { Container } from '../container';
 import { XellarAAAuth } from './auth';
+import { XellarAABalance } from './balance';
 import { XellarAAGasTankTopUp } from './gas-tank/top-up';
 import { XellarAASignature } from './signature';
 import { XellarAACreateActivate } from './user-op/create/activate';
@@ -50,6 +51,8 @@ export class XellarAccountAbstraction extends XellarEWBase {
 
   protected gasTankTopUpInstance: XellarAAGasTankTopUp;
 
+  protected balanceInstance: XellarAABalance;
+
   constructor(container: Container) {
     super(container);
 
@@ -75,6 +78,7 @@ export class XellarAccountAbstraction extends XellarEWBase {
     );
     this.signatureInstance = new XellarAASignature(container);
     this.gasTankTopUpInstance = new XellarAAGasTankTopUp(container);
+    this.balanceInstance = new XellarAABalance(container);
   }
 
   get auth() {
@@ -124,6 +128,15 @@ export class XellarAccountAbstraction extends XellarEWBase {
   get gasTank() {
     return {
       topUp: this.gasTankTopUpInstance.topUp.bind(this),
+    };
+  }
+
+  get balance() {
+    return {
+      getNativeBalance: this.balanceInstance.getNativeBalance.bind(this),
+      getTokenBalance: this.balanceInstance.getTokenBalance.bind(this),
+      getBatchTokenBalances:
+        this.balanceInstance.getBatchTokenBalances.bind(this),
     };
   }
 }

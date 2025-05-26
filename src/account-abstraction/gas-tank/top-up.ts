@@ -19,7 +19,7 @@ export class XellarAAGasTankTopUp extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.gasTank.topUp({
+   * const result = await sdk.accountAbstraction.gasTank.topUp({
    *   txHash: "0x...",
    *   chainId: 11155111,
    *   receiverOwnerId: "67b1f9310521667c3e94d625",

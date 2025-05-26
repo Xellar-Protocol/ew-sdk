@@ -11,7 +11,7 @@ export class XellarAACreateActivate extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.create.activate("67b1f9310521667c3e94d625");
+   * const result = await sdk.accountAbstraction.create.activate("67b1f9310521667c3e94d625");
    * // Returns:
    * // {
    * //   userOpId: "...",
