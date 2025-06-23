@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../base';
 import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
@@ -35,14 +37,19 @@ export class XellarAASignature extends XellarEWBase {
    */
   async getSignMessageHash(
     options: SignMessageHashOptions,
+    config?: AxiosRequestConfig,
   ): Promise<SignMessageHashResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<SignMessageHashResponse>
-      >('/smart-account/signMessage/hash', {
-        accountId: options.accountId,
-        message: options.message,
-      });
+      >(
+        '/smart-account/signMessage/hash',
+        {
+          accountId: options.accountId,
+          message: options.message,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

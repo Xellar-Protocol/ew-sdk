@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -20,13 +22,20 @@ export class XellarAAEstimateActivate extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/user_operation/estimate/activate/ Xellar Account Abstraction Estimate Activate Docs}
    */
-  async estimateActivate(options: EstimateActivateOptions) {
+  async estimateActivate(
+    options: EstimateActivateOptions,
+    config?: AxiosRequestConfig,
+  ) {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<EstimateResponse>
-      >('/userOp/deploy/estimate', {
-        accountId: options.accountId,
-      });
+      >(
+        '/userOp/deploy/estimate',
+        {
+          accountId: options.accountId,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

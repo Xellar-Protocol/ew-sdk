@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -37,16 +39,21 @@ export class XellarAACreateSendToken extends XellarEWBase {
    */
   async sendToken(
     options: EstimateSendTokenOptions,
+    config?: AxiosRequestConfig,
   ): Promise<CreateUserOpResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<CreateUserOpResponse>
-      >('/userOp/sendToken/hash', {
-        accountId: options.accountId,
-        tokenAddress: options.tokenAddress,
-        to: options.to,
-        amount: options.amount,
-      });
+      >(
+        '/userOp/sendToken/hash',
+        {
+          accountId: options.accountId,
+          tokenAddress: options.tokenAddress,
+          to: options.to,
+          amount: options.amount,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

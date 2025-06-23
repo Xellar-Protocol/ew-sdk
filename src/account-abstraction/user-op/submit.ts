@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
@@ -26,16 +28,23 @@ export class XellarAASubmit extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/user_operation/submit/ Xellar Account Abstraction Submit User Operation Docs}
    */
-  async submitUserOp(options: AASubmitUserOpOptions) {
+  async submitUserOp(
+    options: AASubmitUserOpOptions,
+    config?: AxiosRequestConfig,
+  ) {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<AASubmitUserOpResponse>
-      >('/userOp/submit', {
-        signature: options.signature,
-        userOpId: options.userOpId,
-        hash: options.hash,
-        isSponsored: options.isSponsored ?? false,
-      });
+      >(
+        '/userOp/submit',
+        {
+          signature: options.signature,
+          userOpId: options.userOpId,
+          hash: options.hash,
+          isSponsored: options.isSponsored ?? false,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

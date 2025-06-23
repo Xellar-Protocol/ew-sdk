@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -37,16 +39,21 @@ export class XellarAACreateSendERC721 extends XellarEWBase {
    */
   async sendERC721(
     options: EstimateSendERC721Options,
+    config?: AxiosRequestConfig,
   ): Promise<CreateUserOpResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<CreateUserOpResponse>
-      >('/userOp/sendERC721/hash', {
-        accountId: options.accountId,
-        tokenAddress: options.tokenAddress,
-        to: options.to,
-        tokenId: options.tokenId,
-      });
+      >(
+        '/userOp/sendERC721/hash',
+        {
+          accountId: options.accountId,
+          tokenAddress: options.tokenAddress,
+          to: options.to,
+          tokenId: options.tokenId,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

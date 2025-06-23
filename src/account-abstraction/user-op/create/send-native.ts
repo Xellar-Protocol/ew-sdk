@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -35,15 +37,20 @@ export class XellarAACreateSendNative extends XellarEWBase {
    */
   async sendNative(
     options: EstimateSendNativeOptions,
+    config?: AxiosRequestConfig,
   ): Promise<CreateUserOpResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<CreateUserOpResponse>
-      >('/userOp/sendCoin/hash', {
-        accountId: options.accountId,
-        to: options.to,
-        amount: options.amount,
-      });
+      >(
+        '/userOp/sendCoin/hash',
+        {
+          accountId: options.accountId,
+          to: options.to,
+          amount: options.amount,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

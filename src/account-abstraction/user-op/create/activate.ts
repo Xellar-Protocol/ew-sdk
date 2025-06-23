@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -22,13 +24,20 @@ export class XellarAACreateActivate extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/user_operation/hash/activate/ Xellar Account Abstraction Create Activate Docs}
    */
-  async activate(accountId: string): Promise<CreateUserOpResponse> {
+  async activate(
+    accountId: string,
+    config?: AxiosRequestConfig,
+  ): Promise<CreateUserOpResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<CreateUserOpResponse>
-      >('/userOp/deploy/hash', {
-        accountId,
-      });
+      >(
+        '/userOp/deploy/hash',
+        {
+          accountId,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {
