@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.5.1
+
+### Patch Changes
+
+- [`689aa3d`](https://github.com/Xellar-Protocol/ew-sdk/commit/689aa3d75357db21c1437c15cbc9fad0e091726c) Thanks [@iyansr](https://github.com/iyansr)! - Adjust AA Config
+
 ## 4.5.0
 
 ### Minor Changes
