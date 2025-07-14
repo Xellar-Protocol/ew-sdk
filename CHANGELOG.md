@@ -1,5 +1,15 @@
 # @xellar/sdk
 
+## 4.5.2
+
+### Patch Changes
+
+- [`4d147ad`](https://github.com/Xellar-Protocol/ew-sdk/commit/4d147ad2dfadf606d3e1a05b83dcada1cf630f37) Thanks [@iyansr](https://github.com/iyansr)! - Expose Xellar Error Class
+
+- [`442826b`](https://github.com/Xellar-Protocol/ew-sdk/commit/442826b67598ef974de970c8de1ea2f250e7b527) Thanks [@iyansr](https://github.com/iyansr)! - Add Get Address Endpoint
+
+- [`179bf4a`](https://github.com/Xellar-Protocol/ew-sdk/commit/179bf4acf5db8477e6fa101509b4f1ea3c909b82) Thanks [@iyansr](https://github.com/iyansr)! - Fix Type Error
+
 ## 4.5.1
 
 ### Patch Changes
