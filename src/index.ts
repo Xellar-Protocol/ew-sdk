@@ -15,5 +15,6 @@ export type {
   AuthSuccessResponse,
   RampableAccount,
 } from './types/http';
+export { XellarError } from './utils/error';
 export { type StateStorage } from './utils/storage';
 export type * from './wallet/types';
