@@ -1,8 +1,11 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../base';
 import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
 import {
   BuildSignatureOptions,
+  BuildSignatureResponse,
   SignMessageHashOptions,
   SignMessageHashResponse,
   SignTypedDataHashOptions,
@@ -20,7 +23,7 @@ export class XellarAASignature extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.signature.getSignMessageHash({
+   * const result = await sdk.accountAbstraction.signature.getSignMessageHash({
    *   accountId: "67b1f9310521667c3e94d625",
    *   message: "Hello World"
    * });
@@ -34,14 +37,19 @@ export class XellarAASignature extends XellarEWBase {
    */
   async getSignMessageHash(
     options: SignMessageHashOptions,
+    config?: AxiosRequestConfig,
   ): Promise<SignMessageHashResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<SignMessageHashResponse>
-      >('/smart-account/signMessage/hash', {
-        accountId: options.accountId,
-        message: options.message,
-      });
+      >(
+        '/smart-account/signMessage/hash',
+        {
+          accountId: options.accountId,
+          message: options.message,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {
@@ -64,7 +72,7 @@ export class XellarAASignature extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.signature.getSignTypedDataHash({
+   * const result = await sdk.accountAbstraction.signature.getSignTypedDataHash({
    *   accountId: "67b1f9310521667c3e94d625",
    *   typedData: {
    *     domain: {
@@ -134,13 +142,13 @@ export class XellarAASignature extends XellarEWBase {
    *
    * ```typescript
    * // For message signature
-   * const result = await sdk.aa.signature.buildSignature({
+   * const result = await sdk.accountAbstraction.signature.buildSignature({
    *   accountId: "67b1f9310521667c3e94d625",
    *   signature: "0xd32432583645f69b7ef2f38dbfe6d9dc9a99fc0949222a8a6c37645bb5ae2eff646e193c6970ecab6b7e63e81fdc6546f146eda932b78d8f41b869524d4238ec00"
    * });
    *
    * // For typed data signature
-   * const result = await sdk.aa.signature.buildSignature({
+   * const result = await sdk.accountAbstraction.signature.buildSignature({
    *   accountId: "67b1f9310521667c3e94d625",
    *   signature: "0xd32432583645f69b7ef2f38dbfe6d9dc9a99fc0949222a8a6c37645bb5ae2eff646e193c6970ecab6b7e63e81fdc6546f146eda932b78d8f41b869524d4238ec00",
    *   typedData: {
@@ -173,13 +181,19 @@ export class XellarAASignature extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/signing/build_signature/ Xellar Account Abstraction Build Signature Docs}
    */
-  async buildSignature(options: BuildSignatureOptions): Promise<void> {
+  async buildSignature(
+    options: BuildSignatureOptions,
+  ): Promise<BuildSignatureResponse> {
     try {
-      await this.aaInstance.post('/smart-account/buildSignature', {
+      const response = await this.aaInstance.post<
+        BaseHttpResponse<BuildSignatureResponse>
+      >('/smart-account/buildSignature', {
         accountId: options.accountId,
         signature: options.signature,
         typedData: options.typedData,
       });
+
+      return response.data.data;
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(

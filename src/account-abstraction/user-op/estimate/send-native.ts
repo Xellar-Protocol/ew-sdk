@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -15,7 +17,7 @@ export class XellarAAEstimateSendNative extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.sendNative({
+   * const result = await sdk.accountAbstraction.estimate.sendNative({
    *   accountId: "67959f7927373a6808679de2",
    *   to: "0x...",
    *   amount: "1000000000000"
@@ -24,15 +26,22 @@ export class XellarAAEstimateSendNative extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/user_operation/estimate/transfer_coin/ Xellar Account Abstraction Estimate Send Native Docs}
    */
-  async estimateSendNative(options: EstimateSendNativeOptions) {
+  async estimateSendNative(
+    options: EstimateSendNativeOptions,
+    config?: AxiosRequestConfig,
+  ) {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<EstimateResponse>
-      >('/userOp/sendCoin/estimate', {
-        accountId: options.accountId,
-        to: options.to,
-        amount: options.amount,
-      });
+      >(
+        '/userOp/sendCoin/estimate',
+        {
+          accountId: options.accountId,
+          to: options.to,
+          amount: options.amount,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

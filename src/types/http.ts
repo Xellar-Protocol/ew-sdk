@@ -16,6 +16,10 @@ export interface UsernameRegisterResponse {
 type WalletCreatedResponse = {
   isWalletCreated: true;
   walletToken: string;
+  addresses: {
+    network: string;
+    address: string;
+  }[];
 };
 
 type WalletNotCreatedResponse = {

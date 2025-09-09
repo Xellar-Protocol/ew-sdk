@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -16,7 +18,7 @@ export class XellarAAEstimateSendERC721 extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.estimate.sendERC721({
+   * const result = await sdk.accountAbstraction.estimate.sendERC721({
    *   accountId: "67959f7927373a6808679de2",
    *   tokenAddress: "0x...",
    *   to: "0x...",
@@ -26,16 +28,23 @@ export class XellarAAEstimateSendERC721 extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/user_operation/estimate/transfer_erc721/ Xellar Account Abstraction Estimate Send ERC721 Docs}
    */
-  async estimateSendERC721(options: EstimateSendERC721Options) {
+  async estimateSendERC721(
+    options: EstimateSendERC721Options,
+    config?: AxiosRequestConfig,
+  ) {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<EstimateResponse>
-      >('/userOp/sendERC721/estimate', {
-        accountId: options.accountId,
-        tokenAddress: options.tokenAddress,
-        to: options.to,
-        tokenId: options.tokenId,
-      });
+      >(
+        '/userOp/sendERC721/estimate',
+        {
+          accountId: options.accountId,
+          tokenAddress: options.tokenAddress,
+          to: options.to,
+          tokenId: options.tokenId,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../../base';
 import { BaseHttpResponse } from '../../../types/http';
 import { handleError, XellarError } from '../../../utils/error';
@@ -21,7 +23,7 @@ export class XellarAACreateSendERC1155 extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.create.sendERC1155({
+   * const result = await sdk.accountAbstraction.create.sendERC1155({
    *   accountId: "67959f7927373a6808679de2",
    *   tokenAddress: "0x...",
    *   to: "0x...",
@@ -41,18 +43,23 @@ export class XellarAACreateSendERC1155 extends XellarEWBase {
    */
   async sendERC1155(
     options: EstimateSendERC1155Options,
+    config?: AxiosRequestConfig,
   ): Promise<CreateUserOpResponse> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<CreateUserOpResponse>
-      >('/userOp/sendERC1155/hash', {
-        accountId: options.accountId,
-        tokenAddress: options.tokenAddress,
-        to: options.to,
-        tokenId: options.tokenId,
-        amount: options.amount,
-        data: options.data || '0x',
-      });
+      >(
+        '/userOp/sendERC1155/hash',
+        {
+          accountId: options.accountId,
+          tokenAddress: options.tokenAddress,
+          to: options.to,
+          tokenId: options.tokenId,
+          amount: options.amount,
+          data: options.data || '0x',
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

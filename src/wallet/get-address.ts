@@ -1,8 +1,9 @@
+import { XellarEWBase } from '../base';
+import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
-import { decodeJWT } from '../utils/jwt';
-import { Address, DecodedWalletToken } from './types';
+import { Address } from './types';
 
-export class XellarEWGetAddresses {
+export class XellarEWGetAddresses extends XellarEWBase {
   /**
    * Allows you to get the addresses from the wallet token
    * @param {string} walletToken The wallet token for authentication.
@@ -15,9 +16,21 @@ export class XellarEWGetAddresses {
    * const addresses = await sdk.wallet.getAddresses("your-wallet-token");
    * ```
    */
-  static async getAddresses(walletToken: string): Promise<Address[] | null> {
+  async getAddresses(walletToken: string): Promise<Address[] | null> {
     try {
-      return decodeJWT<DecodedWalletToken>(walletToken)?.address || null;
+      const response = await this.axiosInstance.post<
+        BaseHttpResponse<{ address: Address[] }>
+      >(
+        '/wallet/address',
+
+        {
+          headers: {
+            Authorization: `Bearer ${walletToken}`,
+          },
+        },
+      );
+
+      return response.data.data.address;
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(

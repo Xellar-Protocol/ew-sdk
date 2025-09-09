@@ -92,6 +92,17 @@ export class XellarEWBase {
 
     instance.interceptors.request.use(
       async (cfg: InternalAxiosRequestConfig) => {
+        cfg.headers = cfg.headers || {};
+
+        const referer = cfg.headers['x-referer'];
+
+        if (referer === 'xellar-kit') {
+          cfg.headers['x-referer'] = 'xellar-kit';
+          cfg.headers['x-app-id'] = appId;
+
+          return cfg;
+        }
+
         const headers = await this.prepareAAHeader({
           appId,
           clientSecret: clientSecret || '',
@@ -100,7 +111,6 @@ export class XellarEWBase {
           requestBody: JSON.stringify(cfg.data),
         });
 
-        cfg.headers = cfg.headers || {};
         cfg.headers['Content-Type'] = headers['Content-Type'];
         cfg.headers['X-TIMESTAMP'] = headers['X-TIMESTAMP'];
         cfg.headers['X-APP-ID'] = headers['X-APP-ID'];

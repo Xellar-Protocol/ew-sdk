@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 import { XellarEWBase } from '../../base';
 import { BaseHttpResponse } from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
@@ -19,7 +21,7 @@ export class XellarAAGasTankTopUp extends XellarEWBase {
    * @example
    *
    * ```typescript
-   * const result = await sdk.aa.gasTank.topUp({
+   * const result = await sdk.accountAbstraction.gasTank.topUp({
    *   txHash: "0x...",
    *   chainId: 11155111,
    *   receiverOwnerId: "67b1f9310521667c3e94d625",
@@ -49,19 +51,26 @@ export class XellarAAGasTankTopUp extends XellarEWBase {
    *
    * @see {@link https://docs.xellar.co/accountabstraction/api_reference/gas_tank/top_up/ Xellar Account Abstraction Gas Tank Top Up Docs}
    */
-  async topUp(options: TopUpByTxOptions): Promise<TopUpHistoryDTO> {
+  async topUp(
+    options: TopUpByTxOptions,
+    config?: AxiosRequestConfig,
+  ): Promise<TopUpHistoryDTO> {
     try {
       const response = await this.aaInstance.post<
         BaseHttpResponse<TopUpHistoryDTO>
-      >('/smart-account/topUp', {
-        txHash: options.txHash,
-        chainId: options.chainId,
-        receiverOwnerId: options.receiverOwnerId,
-        tokenAddress: options.tokenAddress,
-        poolAddress: options.poolAddress,
-        immediate: options.immediate,
-        signature: options.signature,
-      });
+      >(
+        '/smart-account/topUp',
+        {
+          txHash: options.txHash,
+          chainId: options.chainId,
+          receiverOwnerId: options.receiverOwnerId,
+          tokenAddress: options.tokenAddress,
+          poolAddress: options.poolAddress,
+          immediate: options.immediate,
+          signature: options.signature,
+        },
+        config,
+      );
 
       return response.data.data;
     } catch (error) {

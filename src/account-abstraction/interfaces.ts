@@ -208,6 +208,10 @@ export interface BuildSignatureOptions {
   typedData?: TypedData;
 }
 
+export interface BuildSignatureResponse {
+  signature: string;
+}
+
 export interface TopUpByTxOptions {
   txHash: string;
   chainId: number;
@@ -230,4 +234,27 @@ export interface TopUpHistoryDTO extends BaseDTO {
   tokenAddress?: string;
   status?: string;
   failReason?: string | null;
+}
+
+export interface BalanceDTO {
+  balance: string;
+  formattedBalance: string;
+}
+
+export interface TokenBalanceDTO {
+  balance: string;
+  symbol: string;
+  decimals: number;
+  formattedBalance: string;
+}
+
+export interface TokenBatchBalanceDTO {
+  accountId: string;
+  tokens: TokenBalanceDTO[];
+}
+
+export interface BalanceResponse {
+  status: number;
+  message: string;
+  data: BalanceDTO;
 }
