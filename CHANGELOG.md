@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.6.0
+
+### Minor Changes
+
+- [#58](https://github.com/Xellar-Protocol/ew-sdk/pull/58) [`0d36c30`](https://github.com/Xellar-Protocol/ew-sdk/commit/0d36c309023ff17295f0f1c13e5f6cadb9a45115) Thanks [@yoms07](https://github.com/yoms07)! - add get user op by id
+
 ## 4.5.2
 
 ### Patch Changes
