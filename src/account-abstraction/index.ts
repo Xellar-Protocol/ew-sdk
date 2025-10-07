@@ -16,12 +16,15 @@ import { XellarAAEstimateSendERC1155 } from './user-op/estimate/send-erc1155';
 import { XellarAAEstimateSendNative } from './user-op/estimate/send-native';
 import { XellarAAEstimateSendToken } from './user-op/estimate/send-token';
 import { XellarAAEstimateSignTransaction } from './user-op/estimate/sign-transaction';
+import { XellarAAGetById } from './user-op/get-by-id';
 import { XellarAASubmit } from './user-op/submit';
 
 export class XellarAccountAbstraction extends XellarEWBase {
   protected authInstance: XellarAAAuth;
 
   protected submitInstance: XellarAASubmit;
+
+  protected getByIdInstance: XellarAAGetById;
 
   protected estimateActivateInstance: XellarAAEstimateActivate;
 
@@ -58,6 +61,7 @@ export class XellarAccountAbstraction extends XellarEWBase {
 
     this.authInstance = new XellarAAAuth(container);
     this.submitInstance = new XellarAASubmit(container);
+    this.getByIdInstance = new XellarAAGetById(container);
     this.estimateActivateInstance = new XellarAAEstimateActivate(container);
     this.estimateSendTokenInstance = new XellarAAEstimateSendToken(container);
     this.estimateSendNativeInstance = new XellarAAEstimateSendNative(container);
@@ -89,6 +93,10 @@ export class XellarAccountAbstraction extends XellarEWBase {
 
   get submitUserOp() {
     return this.submitInstance.submitUserOp.bind(this);
+  }
+
+  get getUserOpById() {
+    return this.getByIdInstance.getById.bind(this);
   }
 
   get estimate() {

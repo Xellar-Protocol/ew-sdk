@@ -96,6 +96,7 @@ export interface AASubmitUserOpResponse extends BaseDTO {
   appId: string;
   signature: string | null;
   userOpHash: string;
+  txHash: string | null;
   status: string;
   type: string;
   network: string;
@@ -110,6 +111,8 @@ export interface AASubmitUserOpResponse extends BaseDTO {
   gasTankUsageHistory?: GasTankUsageHistoryDTO;
   clientGasTankUsageHistory?: ClientGasTankUsageHistoryDTO;
 }
+
+export interface AAGetByIdUserOpResponse extends AASubmitUserOpResponse {}
 
 export interface EstimateResponse {
   requiredNative: string;
