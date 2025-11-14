@@ -280,6 +280,8 @@ export type SendTransactionConfig = {
     maxFeePerGas?: string;
     /** The maximum priority fee per gas (for EIP-1559 transactions). */
     maxPriorityFeePerGas?: string;
+    /** The list of authorizations for the transaction. */
+    authorizationList?: SignAuthorizationResponse['authorization'][];
   };
   /** (required): The wallet token for authentication. */
   walletToken: string;
