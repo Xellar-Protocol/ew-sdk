@@ -23,9 +23,7 @@ export type SignHashConfig = {
 };
 
 export type SignAuthorizationConfig = {
-  /** (required): The network used for transactions. */
-  network: Network;
-  chainId?: number | string;
+  chainId: number | string;
   /** (required): The contract address. */
   contractAddress: string;
   executor?: string;
