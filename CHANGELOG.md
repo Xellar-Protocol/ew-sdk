@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.6.1
+
+### Patch Changes
+
+- [`ed7592d`](https://github.com/Xellar-Protocol/ew-sdk/commit/ed7592da65dc04a9d2ef8a62d540f1105e1c9db6) Thanks [@iyansr](https://github.com/iyansr)! - Make Only Chain ID Required
+
 ## 4.6.0
 
 ### Minor Changes
