@@ -3,6 +3,8 @@ import { XellarEWBase } from '../base';
 import { BaseHttpResponse } from '../types/http';
 import { handleError, XellarError } from '../utils/error';
 import {
+  SignAuthorizationConfig,
+  SignAuthorizationResponse,
   SignHashConfig,
   SignMessageConfig,
   SignTransactionConfig,
@@ -309,6 +311,47 @@ export class XellarEWSign extends XellarEWBase {
       }
 
       return { signature: response.data.data.signature };
+    } catch (error) {
+      const handledError = handleError(error);
+      throw new XellarError(
+        handledError.message,
+        handledError.code,
+        handledError.details,
+      );
+    }
+  }
+
+  async signAuthorization({
+    walletToken,
+    refreshToken,
+    ...config
+  }: SignAuthorizationConfig) {
+    try {
+      const response = await this.axiosInstance.post<
+        BaseHttpResponse<SignAuthorizationResponse>
+      >(
+        '/wallet/sign-authorization',
+        {
+          ...config,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${walletToken}`,
+          },
+        },
+      );
+
+      if (refreshToken) {
+        const refreshTokenResult = await this._refreshToken(refreshToken);
+
+        return {
+          authorization: response.data.data.authorization,
+          refreshToken: refreshTokenResult.refreshToken,
+          walletToken: refreshTokenResult.walletToken,
+        };
+      }
+
+      return { authorization: response.data.data.authorization };
     } catch (error) {
       const handledError = handleError(error);
       throw new XellarError(
