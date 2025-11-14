@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.7.0
+
+### Minor Changes
+
+- [#61](https://github.com/Xellar-Protocol/ew-sdk/pull/61) [`8d902d7`](https://github.com/Xellar-Protocol/ew-sdk/commit/8d902d7e89055bdd74feba220ed89db74b9c5c50) Thanks [@yoms07](https://github.com/yoms07)! - Add authorization list on send transaction
+
 ## 4.6.1
 
 ### Patch Changes
