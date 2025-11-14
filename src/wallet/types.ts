@@ -22,6 +22,30 @@ export type SignHashConfig = {
   refreshToken?: string;
 };
 
+export type SignAuthorizationConfig = {
+  chainId: number | string;
+  /** (required): The contract address. */
+  contractAddress: string;
+  executor?: string;
+  nonce?: string;
+  /** (required): The wallet token for authentication. */
+  walletToken: string;
+  /** (optional): The refresh token for authentication. Use this if you want to allow SDK automatically refresh the wallet token. */
+  refreshToken?: string;
+};
+
+export type SignAuthorizationResponse = {
+  authorization: {
+    address: string;
+    chainId: number;
+    nonce: number;
+    r: string;
+    s: string;
+    v: number;
+    yParity: number;
+  };
+};
+
 export type SignTransactionConfig = {
   /** (required): The network used for transactions. */
   network: Network;
