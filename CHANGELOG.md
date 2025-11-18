@@ -1,5 +1,15 @@
 # @xellar/sdk
 
+## 4.8.0
+
+### Minor Changes
+
+- [#63](https://github.com/Xellar-Protocol/ew-sdk/pull/63) [`3b258b1`](https://github.com/Xellar-Protocol/ew-sdk/commit/3b258b130325172f5ca909f5b0650f68604799c2) Thanks [@yoms07](https://github.com/yoms07)! - add get user op by id
+
+### Patch Changes
+
+- [#63](https://github.com/Xellar-Protocol/ew-sdk/pull/63) [`3b258b1`](https://github.com/Xellar-Protocol/ew-sdk/commit/3b258b130325172f5ca909f5b0650f68604799c2) Thanks [@yoms07](https://github.com/yoms07)! - fix missing sign authorization
+
 ## 4.7.0
 
 ### Minor Changes
