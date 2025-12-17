@@ -9,6 +9,7 @@ jest.mock('axios');
 
 export const setupTests = () => {
   const mockConfig: Config = {
+    appId: 'test-app-id',
     clientSecret: 'test-client-secret',
     env: 'sandbox',
   };

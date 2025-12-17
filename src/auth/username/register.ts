@@ -1,13 +1,16 @@
 import { XellarEWBase } from '../../base';
-import { BaseHttpResponse, UsernameRegisterResponse } from '../../types/http';
+import type {
+  BaseHttpResponse,
+  UsernameRegisterResponse,
+} from '../../types/http';
 import { handleError, XellarError } from '../../utils/error';
-import { UsernameAuthOptions } from './type';
 
 export class XellarEWUsernameRegister extends XellarEWBase {
   /**
-   * Allows you to register a new account in your Xellar Embedded wallet using the User’s username and password.
-   * @param username (required): User’s chosen username.
-   * @param password (required): User’s password.
+   * @deprecated Use sdk.auth.custody.register instead
+   * Allows you to register a new account in your Xellar Embedded wallet using the User's username and password.
+   * @param username (required): User's chosen username.
+   * @param password (required): User's password.
    *
    * @example
    * const response = await sdk.auth.username.register(username, password);

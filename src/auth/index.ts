@@ -1,6 +1,7 @@
 import { XellarEWBase } from '../base';
-import { Container } from '../container';
+import type { Container } from '../container';
 import { XellarEWAppleAuthorize } from './apple';
+import { XellarEWCustodyRegister } from './custody';
 import { XellarEWEmailLogin, XellarEWEmailVerify } from './email';
 import { XellarEWGoogleAuthorize } from './google/authorize';
 import { XellarEWTelegramAuthorize } from './telegram';
@@ -15,6 +16,8 @@ export class XellarEWAuth extends XellarEWBase {
   protected usernameLogin: XellarEWUsernameLogin;
 
   protected usernameRegister: XellarEWUsernameRegister;
+
+  protected custodyRegister: XellarEWCustodyRegister;
 
   protected googleAuthorize: XellarEWGoogleAuthorize;
 
@@ -33,6 +36,7 @@ export class XellarEWAuth extends XellarEWBase {
     this.emailVerify = new XellarEWEmailVerify(container);
     this.usernameLogin = new XellarEWUsernameLogin(container);
     this.usernameRegister = new XellarEWUsernameRegister(container);
+    this.custodyRegister = new XellarEWCustodyRegister(container);
     this.googleAuthorize = new XellarEWGoogleAuthorize(container);
     this.telegramAuthorize = new XellarEWTelegramAuthorize(container);
     this.whatsappLogin = new XellarEWWhatsAppLogin(container);
@@ -51,6 +55,12 @@ export class XellarEWAuth extends XellarEWBase {
     return {
       login: this.usernameLogin.login.bind(this),
       register: this.usernameRegister.register.bind(this),
+    };
+  }
+
+  get custody() {
+    return {
+      register: this.custodyRegister.register.bind(this),
     };
   }
 

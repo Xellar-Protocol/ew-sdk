@@ -13,6 +13,10 @@ export interface UsernameRegisterResponse {
   isWalletCreated: boolean;
 }
 
+export interface CustodyRegisterResponse {
+  accessToken: string;
+}
+
 type WalletCreatedResponse = {
   isWalletCreated: true;
   walletToken: string;
