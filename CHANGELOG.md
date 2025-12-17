@@ -1,5 +1,11 @@
 # @xellar/sdk
 
+## 4.9.0
+
+### Minor Changes
+
+- [`7e2c36e`](https://github.com/Xellar-Protocol/ew-sdk/commit/7e2c36e1c47448169b60f51cd640cc282d5ba967) Thanks [@iyansr](https://github.com/iyansr)! - feat: add custody authentication register endpoint and tests
+
 ## 4.8.0
 
 ### Minor Changes
